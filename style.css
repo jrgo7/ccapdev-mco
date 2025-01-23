@@ -1,0 +1,33 @@
+*{
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.game-info-container{
+    display: flex;
+    background-image: linear-gradient(rgba(255, 255, 255, 0.885), rgb(255, 255, 255)), url("bg_mario.jpg");
+    /* background-size: contain; */
+    background-repeat: no-repeat;
+    padding: 10%;
+}
+
+.game-description-title{
+    font-size: xx-large;
+    font-weight: bold;
+}
+
+.text-description{
+    text-indent: 50px;
+    text-align: justify;
+}
+
+.game-cover{
+    width: 100%;
+    align-self: center;
+    height: auto;
+    max-width: 30vw;
+    margin: 10%;
+}
+
+.checked{
+    color: gold;
+}
