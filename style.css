@@ -1,5 +1,15 @@
+@import url('https://fonts.googleapis.com/css2?family=Doto:wght@100..900&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+
+:root {
+    --primary: #5c5978;
+}
+
 * {
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: Inter, Arial, Helvetica, sans-serif;
+}
+
+.branding-name {
+    font-family: Doto;
 }
 
 .bold {
@@ -14,15 +24,16 @@
     color: var(--bs-secondary);
 }
 
-.game-info-container {
-    display: flex;
+.game-back {
     background-image: linear-gradient(rgba(255, 255, 255, 0.25), rgb(255, 255, 255, 1)), url("img/back/Super Mario Bros. (World).png");
-    background-size: 100% auto;
+    background-size: cover;
     background-repeat: repeat;
     background-position: 50%;
     image-rendering: pixelated;
-    padding: 10%;
-    /* text-shadow: 1px 1px #00000045; */
+}
+
+.game-info {
+    display: flex;
 }
 
 .game-title {
@@ -35,11 +46,11 @@
 }
 
 .game-cover {
-    height: 100%;
-    align-self: center;
-    width: auto;
+    width: 100%;
+    height: auto;
     max-width: 30vw;
-    margin: 10%;
+    margin: 5%;
+    align-self: center;
 }
 
 .star-rating {
@@ -60,7 +71,7 @@
 .review {
     padding: 16px;
     margin: 16px;
-    flex-basis: calc(50% - 32px);
+    flex-basis: calc(50% - 33px);
 }
 
 .profile-picture {
