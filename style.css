@@ -71,10 +71,15 @@
 .star-rating {
     display: block;
     margin-bottom: 1rem;
+    width: 100%;
 }
 
 .checked {
     color: gold;
+}
+
+.separator {
+    margin-left: auto;
 }
 
 /* Reviews */
@@ -88,6 +93,11 @@
     padding: 16px;
     margin: 16px;
     flex-basis: calc(50% - 33px);
+}
+
+.votes {
+    margin-left: auto;
+    float: right;
 }
 
 .review-link {
