@@ -123,12 +123,9 @@
     background-color: var(--bs-gray-500);
 }
 
-.profile-picture {
-    background-image: url("../img/profile/bluekachu.png");
-    background-size: contain;
+.avatar {
     height: 3rem;
     width: 3rem;
-    background-repeat: no-repeat;
     border: 2px solid white;
     border-radius: 50%;
 }
@@ -155,7 +152,7 @@
 
 /* TODO: Organize this. */
 
-.profile-picture-big {
+.avatar-big {
     height: 8rem;
     width: 8rem
 }
