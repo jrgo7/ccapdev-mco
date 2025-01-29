@@ -53,8 +53,8 @@
 
 .game-back {
     background-image: linear-gradient(rgba(255, 255, 255, 0.25),
-            rgb(255, 255, 255, 1)),
-        url("img/back/Super Mario Bros. (World).png");
+    rgb(248, 249, 250)),
+        url("../img/back/Super Mario Bros. (World).png");
     background-size: cover;
     background-repeat: repeat;
     background-position: 50%;
@@ -143,6 +143,26 @@
 
 .review-date {
     color: var(--bs-secondary);
+}
+
+/* Member List */
+
+.clickable-table-rows > tr {
+    cursor: pointer;
+}
+
+/* Profile */
+
+/* TODO: Organize this. */
+
+.profile-picture-big {
+    height: 8rem;
+    width: 8rem
+}
+
+.profile-header {
+    font-size: large;
+    font-weight: bold;
 }
 
 /* Media queries */
