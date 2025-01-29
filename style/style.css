@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Doto:wght@100..900&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Doto:wght@100..900&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap");
 
 :root {
     --primary: #5c5978;
@@ -52,7 +52,9 @@
 /* View individual game */
 
 .game-back {
-    background-image: linear-gradient(rgba(255, 255, 255, 0.25), rgb(255, 255, 255, 1)), url("img/back/Super Mario Bros. (World).png");
+    background-image: linear-gradient(rgba(255, 255, 255, 0.25),
+            rgb(255, 255, 255, 1)),
+        url("img/back/Super Mario Bros. (World).png");
     background-size: cover;
     background-repeat: repeat;
     background-position: 50%;
@@ -122,7 +124,7 @@
 }
 
 .profile-picture {
-    background-image: url("img/profile/bluekachu.png");
+    background-image: url("../img/profile/bluekachu.png");
     background-size: contain;
     height: 3rem;
     width: 3rem;
@@ -151,12 +153,11 @@
 
     /* Landing Page + View Games: make games appear in a 3-column layout */
     .game {
-        flex-basis: calc(100%/3 - 32px);
+        flex-basis: calc(100% / 3 - 32px);
     }
 
     /* View Individual Game Reviews + Info Page: make cover appear beside game description */
     .game-info {
         display: flex;
     }
-
 }
