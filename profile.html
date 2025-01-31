@@ -28,36 +28,26 @@
     </nav>
     <div class="container mt-5">
         <div id="hero" class="d-flex flex-wrap mb-5">
-            <img class="avatar avatar-big me-4" src="img/profile/18.png">
+            <img id="avatar" class="avatar avatar-big me-4" src="img/profile/18.png">
             <div class="profile-hero">
-                <h1 class="fw-bold">mainFrog</h1>
-                <div class="fst-italic fs-2 mb-2">FrogCritic site owner and admin</div>
-                <div class="fw-bold">Last seen 12 years ago</div>
+                <h1 id="username" class="fw-bold">mainFrog</h1>
+                <div id="subtitle" class="fst-italic fs-2 mb-2">FrogCritic site owner and admin</div>
+                <div id="last-seen" class="fw-bold">Last seen 12 years ago</div>
             </div>
         </div>
         <div id="profile-details" class="d-flex flex-wrap">
             <hgroup id="about-me" class="border col-8 rounded px-2 py-2">
                 <h2 class="profile-header">About me</h2>
-                <p>I'm Roemer</p>
-                <p>I check my inbox pretty frequently, so feel free to send something!</p>
-                <p>
-                    Good morning. Order for Roemer? No, not Robert, swap the B with an M. Also, there is no T. No it's
-                    not Romer, it's like Ro-E-mer. No, it's not Roymer. There is an E. Yeah it's before the M. No,
-                    replace the Y with an E. No, that's still not it... </p>
-                <p>Yeah.... Here, let me just show you my ID...</p>
+                <p id="description"></p>
             </hgroup>
             <div id="profile-details-right" class="col-4">
                 <hgroup class="border rounded px-2 py-2 mx-2 mb-2">
                     <h2 class="profile-header">Favorite Game</h2>
-                    <span>Frogger 69</span>
+                    <span id="favorite-game">Frogger 69</span>
                 </hgroup>
                 <hgroup class="border rounded px-2 py-2 mx-2 my-2">
                     <h2 class="profile-header">Account Age</h2>
-                    <span>12 years</span>
-                </hgroup>
-                <hgroup class="border rounded px-2 py-2 mx-2 mt-2">
-                    <h2 class="profile-header">Additional Stuff</h2>
-                    <span>Goes here</span>
+                    <span id="account-age">12 years</span>
                 </hgroup>
             </div>
         </div>
@@ -66,10 +56,6 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
     crossorigin="anonymous"></script>
-<script>
-    function sendToProfile() {
-        window.location = `profile.html`
-    }
-</script>
+<script src="script.js"></script>
 
 </html>

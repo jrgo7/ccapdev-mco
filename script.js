@@ -1,32 +1,48 @@
 const users = [
     {
-        username: "LowestOfTheLow",
+        username: "lowy",
         subtitle: "Gacha addict",
         avatar: "18.png",
         description: "Gacha addict・Draws sometimes・Inaantok pero ayaw matulog・飛ぶにゃん♪・学マス/Blue Archive(Asia)/プリコネ/ヘブバン/FGO(NA)",
-        lastSeen: "6 years, 9 months ago",
-        accountAge: "12 years"
+        lastSeen: "Online",
+        accountAge: "2 years",
+        favoriteGame: "Gakuen Idolmaster"
     },
     {
-        username: "waflrain",
+        username: "wafl",
         subtitle: "Zenshoku zenshin, Yousoro!",
-        avatar: "16.png"
+        avatar: "5.png",
+        description: "Together, we can show the world what we can do!",
+        lastSeen: "Online",
+        accountAge: "1 years",
+        favoriteGame: "Super Mario World"
     },
     {
         username: "mainFrog",
         subtitle: "FrogCritic site owner and admin",
-        avatar: "1.png"
+        avatar: "24.png",
+        description: "greninja",
+        lastSeen: "1 years, 2 months ago",
+        accountAge: "3 years",
+        favoriteGame: "Pokemon TCG"
     },
     {
-        username: "roymer",
+        username: "Roymer",
         subtitle: ":mew:",
-        avatar: "2.png",
-        description: "I'm Roemer I check my inbox pretty frequently, so feel free to send something! Good morning. Order for Roemer? No, not Robert, swap the B with an M. Also, there is no T. No it's not Romer, it's like Ro-E-mer. No, it's not Roymer. There is an E. Yeah it's before the M. No, replace the Y with an E. No, that's still not it... Yeah.... Here, let me just show you my ID..."
+        avatar: "29.png",
+        description: "I'm Roemer I check my inbox pretty frequently, so feel free to send something! Good morning. Order for Roemer? No, not Robert, swap the B with an M. Also, there is no T. No it's not Romer, it's like Ro-E-mer. No, it's not Roymer. There is an E. Yeah it's before the M. No, replace the Y with an E. No, that's still not it... Yeah.... Here, let me just show you my ID...",
+        lastSeen: "4 years, 5 months ago",
+        accountAge: "6 years",
+        favoriteGame: "Valorant"
     },
     {
         username: "pow",
         subtitle: "•_•",
-        avatar: "3.png",
+        avatar: "13.png",
+        description: "",
+        lastSeen: "Online",
+        accountAge: "10 years",
+        favoriteGame: "FL Studio"
     }
 ]
 
@@ -45,7 +61,7 @@ const games = [
         reviews: [
             {
                 title: "Mario, the Idea vs. Mario, the Man",
-                username: "LowestOfTheLow",
+                username: "lowy",
                 date: "March 10, 2024",
                 rating: 4,
                 upvotes: 12,
@@ -53,7 +69,7 @@ const games = [
             },
             {
                 title: "The super game of all time",
-                username: "waflrain",
+                username: "wafl",
                 date: "January 8, 2025",
                 rating: 5,
                 upvotes: 310,
@@ -83,7 +99,7 @@ const games = [
         reviews: [
             {
                 title: "An arcade classic, ported",
-                username: "waflrain",
+                username: "wafl",
                 date: "July 9, 1993",
                 rating: 5,
                 upvotes: 100,
@@ -91,7 +107,7 @@ const games = [
             },
             {
                 title: "Absolute garbage",
-                username: "LowestOfTheLow",
+                username: "lowy",
                 date: "July 10, 1993",
                 rating: -0,
                 upvotes: -100,
@@ -247,14 +263,50 @@ function showGameData(title) {
     }));
 }
 
+// Users
+
+function addUserEntry(user) {
+    document.getElementById("users-table").innerHTML += `
+    <tr onclick="sendToProfile('${user.username}')" ${user.lastSeen == 'Online' ? 'class="table-success"' : ''}>
+        <td><img class="avatar" src="img/avatar/${user.avatar}" alt="Avatar"></td>
+        <td>${user.username}</td>
+        <td>${user.lastSeen}</td>
+        <td>${user.accountAge}</td>
+    </tr>
+`;
+}
+
+function sendToProfile(username) {
+    window.location = `profile.html?user=${username}`;
+}
+
+function showUserData(username) {
+    user = users.find(user => user.username == username);
+    document.getElementById("username").innerText = username;
+    document.getElementById("subtitle").innerText = user.subtitle;
+    document.getElementById("last-seen").innerText = user.lastSeen;
+    document.getElementById("description").innerText = user.description || "No description provided.";
+    document.getElementById("favorite-game").innerText = user.favoriteGame;
+    document.getElementById("account-age").innerText = user.accountAge;
+    document.getElementById("avatar").src = `img/avatar/${user.avatar}`;
+}
+
+// ---
+
 url = document.URL;
+let queryString = window.location.search;
+let params = new URLSearchParams(queryString);
 
 if (url.endsWith('/')) { // is Index / Game List
     games.forEach(game => {
         addGameEntry(game);
     })
 } else if (url.includes("reviews.html")) {
-    let queryString = window.location.search;
-    let title = new URLSearchParams(queryString).get("title");
-    showGameData(title);
+    showGameData(params.get("title"));
+} else if (url.includes("users.html")) {
+    users.forEach(user => {
+        addUserEntry(user);
+    });
+} else if (url.includes("profile.html")) {
+    showUserData(params.get("user"));
 }

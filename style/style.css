@@ -103,8 +103,9 @@
 .avatar {
     height: 3rem;
     width: 3rem;
-    border: 2px solid white;
-    border-radius: 50%;
+    /* border-radius: 50%; */
+    rotate: -5deg;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
 
 .reviewer-info {
