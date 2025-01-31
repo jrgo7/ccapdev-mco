@@ -1,11 +1,15 @@
 @import url("https://fonts.googleapis.com/css2?family=Doto:wght@100..900&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap");
 
 :root {
-    --primary: #5c5978;
+    --primary: #8c51ff;
+    --secondary: #9c89b3;
+    --white: #fcf8ff;
+    --black: #1f1926;
 }
 
 * {
     font-family: Inter, Arial, Helvetica, sans-serif;
+    color: var(--white);
 }
 
 .ff-doto {
@@ -19,21 +23,33 @@
 }
 
 .block-link {
-    color: black;
+    color: var(--white);
     text-decoration: none;
 }
 
+a:hover {
+    color: var(--primary);
+    text-decoration: underline;
+}
+
 /* Index */
+
+.logo {
+    max-width: 512px;
+    height: auto;
+}
 
 .index-game-entry {
     padding: 16px;
     margin: 16px;
     width: 100%;
+    background-color: var(--secondary);
 }
 
 .index-game-cover-container {
     height: 24rem;
     display: flex;
+    background-color: var(--black);
 }
 
 .index-game-cover {
@@ -43,7 +59,7 @@
 }
 
 .index-game-cover-container:hover {
-    background-color: var(--bs-gray-500);
+    background-color: var(--white);
 }
 
 /* View individual game */
@@ -59,16 +75,13 @@
 }
 
 .game-description {
-    background-color: #ffffff50;
     text-align: justify;
     padding: 16px;
     margin: 8px;
 }
 
 .individual-game-cover {
-    max-width: 30vw;
-    height: auto;
-    max-height: 30vh;
+    max-height: 32rem;
     align-self: center;
     display: block;
     margin: auto;
@@ -80,8 +93,12 @@
     width: 100%;
 }
 
+.unchecked {
+    color: var(--white);
+}
+
 .checked {
-    color: gold;
+    color: var(--primary);
 }
 
 /* Reviews */
@@ -89,15 +106,12 @@
     padding: 16px;
     margin: 16px;
     flex-basis: calc(50% - 33px);
+    background-color: var(--black);
 }
 
 .votes {
     margin-left: auto;
     float: right;
-}
-
-.review:hover {
-    background-color: var(--bs-gray-500);
 }
 
 .avatar {
@@ -117,7 +131,7 @@
 }
 
 .review-date {
-    color: var(--bs-secondary);
+    color: var(--secondary);
 }
 
 /* Member List */

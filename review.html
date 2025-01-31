@@ -11,7 +11,7 @@
     <title>Document</title>
 </head>
 
-<body>
+<body class="bg-dark">
     <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: var(--primary);">
         <a class="navbar-brand ff-doto" href="/">FrogCritic</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
@@ -27,54 +27,32 @@
         </div>
     </nav>
     <div class="container pt-5">
-        <a href="reviews.html">Return to Super Mario Bros.</a>
-        <div class="star-rating pt-5">
+        <p><a id="return-game" href="reviews.html">View Super Mario Bros.</a></p>
+        <div id="star-rating" class="star-rating pt-5">
             <span class="fa fa-star checked"></span>
             <span class="fa fa-star checked"></span>
             <span class="fa fa-star checked"></span>
             <span class="fa fa-star checked"></span>
             <span class="fa fa-star"></span>
-            <div class="votes">
-                <span class="fa fa-thumbs-up"></span>
-                12
-                <span class="fa fa-thumbs-down"></span>
-            </div>
         </div>
-        <h1 class="fw-bold fs-2">Mario, the Idea vs. Mario, the Man</h3>
+        <div class="votes">
+            <span class="fa fa-thumbs-up"></span>
+            <span id="upvotes">12</span>
+            <span class="fa fa-thumbs-down"></span>
+        </div>
+        <h1 id="title" class="fw-bold fs-2">Mario, the Idea vs. Mario, the Man</h3>
             <div class="review-info-text">
-                <p>
-                    Everyone knows Mario is cool. But who knows what he's thinking? Who knows why he crushes
-                    turtles? And why do we think about him as fondly as we think of the mystical (nonexistent?) Dr
-                    Pepper?
-                    Perchance.
-
-                    I believe it was Kant who said "Experience without theory is blind, but theory without experience is
-                    mere intellectual play." Mario exhibits experience by crushing turts all day, but he exhibits theory
-                    by
-                    stating "Lets-a go!" Keep it up, baby!
-
-                    When Mario leaves his place of safety to stomp a turty, he knows that he may Die. And yet, for a man
-                    who
-                    can purchase lives with money, a life becomes a mere store of value. A tax that can be paid for,
-                    much as
-                    a rich man feels any law with a fine is a price. We think of Mario as a hero,but he is simply a one
-                    percenter of a more privileged variety. The lifekind. Perchance.
-                </p>
-                <div class="reviewer-info">
-                    <img src="img/avatar/0.png" class="avatar">
-                    <div class="author-date">
-                        <p class="fw-bold reviewer-name">LowestOfTheLow</p>
-                        <p class="fst-italic review-date">March 10, 2024</p>
-                    </div>
+                <p id="text"></p>
+                <div id="reviewer-info" class="reviewer-info">
                 </div>
-            </div>
 
-            <h2 class="fw-bold fs-2 pt-5">Developer Response</h2>
-            <p>Perchance.</p>
-    </div>
+                <h2 class="fw-bold fs-2 pt-5">Developer Response</h2>
+                <p id="developer-response">Perchance.</p>
+            </div>
 </body>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
     crossorigin="anonymous"></script>
+<script src="script.js"></script>
 
 </html>

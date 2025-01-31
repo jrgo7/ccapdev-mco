@@ -24,7 +24,7 @@ const users = [
         description: "greninja",
         lastSeen: "1 years, 2 months ago",
         accountAge: "3 years",
-        favoriteGame: "Pokemon TCG"
+        favoriteGame: "Girls' Frontline"
     },
     {
         username: "Roymer",
@@ -33,7 +33,7 @@ const users = [
         description: "I'm Roemer I check my inbox pretty frequently, so feel free to send something! Good morning. Order for Roemer? No, not Robert, swap the B with an M. Also, there is no T. No it's not Romer, it's like Ro-E-mer. No, it's not Roymer. There is an E. Yeah it's before the M. No, replace the Y with an E. No, that's still not it... Yeah.... Here, let me just show you my ID...",
         lastSeen: "4 years, 5 months ago",
         accountAge: "6 years",
-        favoriteGame: "Valorant"
+        favoriteGame: "Robotek"
     },
     {
         username: "pow",
@@ -43,6 +43,15 @@ const users = [
         lastSeen: "Online",
         accountAge: "10 years",
         favoriteGame: "FL Studio"
+    },
+    {
+        username: "cgkghj",
+        subtitle: "average elation enjoyer",
+        avatar: "1.png",
+        description: "Yes, I picked this username on purpose",
+        lastSeen: "1 week ago",
+        accountAge: "3 months",
+        favoriteGame: "Minecraft"
     }
 ]
 
@@ -57,33 +66,7 @@ const games = [
         source: {
             name: "IMDb",
             link: "https://www.imdb.com/title/tt0177266/"
-        },
-        reviews: [
-            {
-                title: "Mario, the Idea vs. Mario, the Man",
-                username: "lowy",
-                date: "March 10, 2024",
-                rating: 4,
-                upvotes: 12,
-                text: "Everyone knows Mario is cool. But who knows what he's thinking? Who knows why he crushes turtles? And why do we think about him as fondly as we think of the mystical (nonexistent?) Dr Pepper? Perchance. I believe it was Kant who said \"Experience without theory is blind, but theory without experience is mere intellectual play.\" Mario exhibits experience by crushing turts all day, but he exhibits theory by stating \"Lets-a go!\" Keep it up, baby! When Mario leaves his place of safety to stomp a turty, he knows that he may Die. And yet, for a man who can purchase lives with money, a life becomes a mere store of value. A tax that can be paid for, much as a rich man feels any law with a fine is a price. We think of Mario as a hero,but he is simply a one percenter of a more privileged variety. The lifekind. Perchance."
-            },
-            {
-                title: "The super game of all time",
-                username: "wafl",
-                date: "January 8, 2025",
-                rating: 5,
-                upvotes: 310,
-                text: "This is super!"
-            },
-            {
-                title: "I didn't feel powerful enough",
-                username: "pow",
-                date: "June 9, 1987",
-                rating: 3,
-                upvotes: 20,
-                text: "It was fun, but I didn't really feel powerful after finishing the game; I just felt like I had finally gotten rid of a nuisance."
-            }
-        ]
+        }
     },
     {
         title: "Pac-Man",
@@ -96,24 +79,6 @@ const games = [
             name: "IMDb",
             link: "https://www.imdb.com/title/tt0260264/"
         },
-        reviews: [
-            {
-                title: "An arcade classic, ported",
-                username: "wafl",
-                date: "July 9, 1993",
-                rating: 5,
-                upvotes: 100,
-                text: "Ever since Pac-Man chomped his way through the arcades, he's become a worldwide star. His latest rendezvous to the Nintendo Entertainment System is just one of his many showstopping successes!"
-            },
-            {
-                title: "Absolute garbage",
-                username: "lowy",
-                date: "July 10, 1993",
-                rating: -0,
-                upvotes: -100,
-                text: "No BGM, confusing story, the ghosts move weirdly."
-            }
-        ]
     },
     {
         title: "Pokémon: Red Version",
@@ -140,7 +105,7 @@ const games = [
         }
     },
     {
-        title: "Fire Emblem: Genealogy of the Holy War",
+        title: "Fire Emblem: Seisen no Keifu",
         rating: 4,
         developer: "Intelligent Systems",
         release_date: "1996",
@@ -151,6 +116,55 @@ const games = [
             link: "https://www.imdb.com/title/tt7468122/"
         }
     },
+]
+
+const reviews = [
+    {
+        game: "Super Mario Bros.",
+        title: "Mario, the Idea vs. Mario, the Man",
+        username: "lowy",
+        date: "March 10, 2024",
+        rating: 4,
+        upvotes: 12,
+        text: "Everyone knows Mario is cool. But who knows what he's thinking? Who knows why he crushes turtles? And why do we think about him as fondly as we think of the mystical (nonexistent?) Dr Pepper? Perchance. I believe it was Kant who said \"Experience without theory is blind, but theory without experience is mere intellectual play.\" Mario exhibits experience by crushing turts all day, but he exhibits theory by stating \"Lets-a go!\" Keep it up, baby! When Mario leaves his place of safety to stomp a turty, he knows that he may Die. And yet, for a man who can purchase lives with money, a life becomes a mere store of value. A tax that can be paid for, much as a rich man feels any law with a fine is a price. We think of Mario as a hero,but he is simply a one percenter of a more privileged variety. The lifekind. Perchance.",
+        developer_response: "You can't just say perchance."
+    },
+    {
+        game: "Super Mario Bros.",
+        title: "The super game of all time",
+        username: "wafl",
+        date: "January 8, 2025",
+        rating: 5,
+        upvotes: 310,
+        text: "This is super!"
+    },
+    {
+        game: "Super Mario Bros.",
+        title: "I didn't feel powerful enough",
+        username: "pow",
+        date: "June 9, 1987",
+        rating: 3,
+        upvotes: 20,
+        text: "It was fun, but I didn't really feel powerful after finishing the game; I just felt like I had finally gotten rid of a nuisance."
+    },
+    {
+        game: "Pac-Man",
+        title: "An arcade classic, ported",
+        username: "wafl",
+        date: "July 9, 1993",
+        rating: 5,
+        upvotes: 100,
+        text: "Ever since Pac-Man chomped his way through the arcades, he's become a worldwide star. His latest rendezvous to the Nintendo Entertainment System is just one of his many showstopping successes!"
+    },
+    {
+        game: "Pac-Man",
+        title: "Absolute garbage",
+        username: "lowy",
+        date: "July 10, 1993",
+        rating: -0,
+        upvotes: -100,
+        text: "No BGM, confusing story, the ghosts move weirdly."
+    }
 ]
 
 function truncateNoCutoff(text, wordCount) {
@@ -172,7 +186,7 @@ function truncateNoCutoff(text, wordCount) {
 
 function generateStarRating(stars) {
     return '<span class="fa fa-star checked"></span>'.repeat(stars)
-        + '<span class="fa fa-star"></span>'.repeat(5 - stars);
+        + '<span class="fa fa-star unchecked"></span>'.repeat(5 - stars);
 }
 
 // Index
@@ -183,12 +197,12 @@ function addGameEntry(game) {
      * @param {game} - The game entry to add
      */
     var template = `
-        <div class="game index-game-entry bg-white">
-            <a class="index-game-cover-container" href="reviews.html?title=${game.title}">
+        <div class="game index-game-entry border rounded">
+            <a class="index-game-cover-container border rounded" href="reviews.html?title=${game.title}">
                 <img class="index-game-cover d-block mx-auto my-auto" src="img/cover/${game.file}.png">
             </a>
             <div class="mx-5 my-5">
-                <h2 class="fs-4 fw-bold">${game.title}</h2>
+                <h2 class="fs-4 fw-bold"><a class="block-link" href="reviews.html?title=${game.title}">${game.title}</a></h2>
                 <div class="star-rating">
                     ${generateStarRating(game.rating)}
                 </div>
@@ -200,7 +214,7 @@ function addGameEntry(game) {
                 </p>
                 <p class="fst-italic">
                     Source:
-                    <a href="${game.source.link}">
+                    <a class="block-link" href="${game.source.link}">
                     ${game.source.name}
                     </a>
                 </p>
@@ -212,34 +226,51 @@ function addGameEntry(game) {
 
 // View Reviews
 
+function generateReviewAuthorData(user, review) {
+    return `
+        <a href="profile.html?user=${user.username}">
+            <img class="avatar me-2" src="img/avatar/${user.avatar}">
+        </a>
+        <div class="author-date">
+            <p class="fw-bold reviewer-name" >
+                <a class="block-link" href="profile.html?user=${user.username}">
+                    ${user.username}
+                </a>
+            </p>
+            <p class="fst-italic review-date">${review.date}</p>
+        </div>
+    `;
+}
+
 function addReview(review) {
+    /**
+     * Add a review entry to the View Reviews page.
+     */
     let user = users.find((user) => user.username == review.username);
     template = `
-    <a class="block-link col-6" href="review.html">
-                <div class="border rounded review">
-                    <div class="star-rating">
-                        ${generateStarRating(review.rating)}
-                        <div class="votes">
-                            <span class="fa fa-thumbs-up"></span>
-                            ${review.upvotes}
-                            <span class="fa fa-thumbs-down"></span>
-                        </div>
-                    </div>
-                    <h3 class="fw-bold fs-4">${review.title}</h3>
-                    <div class="review-info-text">
-                        <p>
-                            ${truncateNoCutoff(review.text, 3)}
-                        </p>
-                        <div class="reviewer-info">
-                            <img class="avatar me-2" src="img/avatar/${user.avatar}">
-                            <div class="author-date">
-                                <p class="fw-bold reviewer-name">${review.username}</p>
-                                <p class="fst-italic review-date">${review.date}</p>
-                            </div>
-                        </div>
-                    </div>
+        <div class="col-6 border rounded review">
+            <div class="star-rating">
+                ${generateStarRating(review.rating)}
+                <div class="votes">
+                    <span class="fa fa-thumbs-up"></span>
+                    ${review.upvotes}
+                    <span class="fa fa-thumbs-down"></span>
                 </div>
-            </a>
+            </div>
+            <h3 class="fw-bold fs-4">
+                <a class="block-link" href="review.html?user=${user.username}&game=${review.game}">
+                ${review.title}
+                </a>
+            </h3>
+            <div class="review-info-text">
+                <p>
+                    ${truncateNoCutoff(review.text, 3)}
+                </p>
+            </div>
+            <div class="reviewer-info">
+                    ${generateReviewAuthorData(user, review)}
+            </div>
+        </div>
     `;
     document.getElementById("reviews").innerHTML += template;
 }
@@ -253,12 +284,13 @@ function showGameData(title) {
     let gameDescriptionText = document.getElementById("game-description-text");
 
     gameCover.src = "img/cover/" + game['file'] + '.png';
-    gameInfoContainer.style.backgroundImage = `linear-gradient(rgba(255, 255, 255, 0.25),rgb(248, 249, 250)), url("/img/back/${game['file']}.png")`;
+    gameInfoContainer.style.backgroundImage = `linear-gradient(rgba(0, 0, 0, 0.25),var(--bs-dark)), url("/img/back/${game['file']}.png")`;
     gameTitle.innerText = game.title;
     gameDeveloperDate.innerText = `${game.developer}, ${game.release_date}`;
     gameDescriptionText.innerText = game['description'];
 
-    game.reviews.forEach((review => {
+    let game_reviews = reviews.filter(review => review.game == title);
+    game_reviews.forEach((review => {
         addReview(review);
     }));
 }
@@ -289,6 +321,23 @@ function showUserData(username) {
     document.getElementById("favorite-game").innerText = user.favoriteGame;
     document.getElementById("account-age").innerText = user.accountAge;
     document.getElementById("avatar").src = `img/avatar/${user.avatar}`;
+    let user_reviews = reviews.filter(review => review.username == username);
+    user_reviews.forEach(review => {
+        addReview(review);
+    })
+}
+
+// Reviews
+
+function showReviewData(username, gameTitle) {
+    let review = reviews.find(review => review.username == username && review.game == gameTitle);
+    document.getElementById("star-rating").innerHTML = generateStarRating(review.rating);
+    document.getElementById("title").innerHTML = review.title;
+    document.getElementById("return-game").innerHTML = `<a href="reviews.html?title=${review.game}">View ${review.game}</a>`;
+    document.getElementById("upvotes").innerHTML = review.upvotes;
+    document.getElementById("text").innerText = review.text;
+    document.getElementById("developer-response").innerText = review.developer_response || "No response.";
+    document.getElementById("reviewer-info").innerHTML = generateReviewAuthorData(users.find(user => user.username == username), review);
 }
 
 // ---
@@ -303,10 +352,14 @@ if (url.endsWith('/')) { // is Index / Game List
     })
 } else if (url.includes("reviews.html")) {
     showGameData(params.get("title"));
+} else if (url.includes("review.html")) {
+    showReviewData(params.get("user"), params.get("game"));
 } else if (url.includes("users.html")) {
     users.forEach(user => {
         addUserEntry(user);
     });
 } else if (url.includes("profile.html")) {
+    showUserData(params.get("user"));
+} else if (url.includes("self.html")) {
     showUserData(params.get("user"));
 }

@@ -11,7 +11,7 @@
     <title>View Reviews: Super Mario Bros.</title>
 </head>
 
-<body class="bg-light">
+<body class="bg-dark">
     <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: var(--primary);">
         <a class="navbar-brand ff-doto" href="/">FrogCritic</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
@@ -30,10 +30,10 @@
         <div class="container d-flex flex-wrap flex-lg-nowrap pt-5 pb-5">
             <img id="game-cover" class="individual-game-cover" src="img/cover/Super Mario Bros. (World).png"
                 alt="Super Mario Bros.">
-            <div class="game-description">
+            <div class="game-descriptio col-lg-6">
                 <h1 id="game-title" class="fw-bold">Game Title: It Which Must Not Be Seen</h1>
                 <p id="game-developer-date" class="fst-italic">Oh No, 0000</p>
-                <div class="star-rating">
+                <div id="star-rating" class="star-rating">
                     <span class="fa fa-star checked"></span>
                     <span class="fa fa-star checked"></span>
                     <span class="fa fa-star checked"></span>
@@ -45,7 +45,7 @@
                 </p>
                 <div class="leave-rating">
                     <h2 class="fw-bold fs-2">Have you played this game before?</h2>
-                    <button class="btn btn-dark">Leave a review</button>
+                    <button class="btn btn-light">Leave a review</button>
                 </div>
             </div>
         </div>
@@ -53,7 +53,6 @@
     <div class="container">
         <h2 class="fw-bold">Latest reviews</h2>
         <div id="reviews" class="d-flex flex-wrap">
-
         </div>
     </div>
 </body>
