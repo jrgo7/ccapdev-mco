@@ -27,16 +27,15 @@
         </div>
     </nav>
     <div class="container mt-5">
-        <div id="hero" class="flex-wrap mb-5">
-            <img class="avatar avatar-big me-4" src="img/profile/18.png">
+        <div id="hero" class="d-flex flex-wrap mb-5">
+            <img class="avatar avatar-big me-4" src="img/avatar/18.png">
             <div class="profile-hero">
-                <h1 class="bold">mainFrog</h1>
-                <div class="subtitle x-large mb-2">FrogCritic site owner and admin</div>
-                <div class="bold">Last seen 12 years ago</div>
+                <h1 class="fw-bold">mainFrog</h1>
+                <div class="fst-italic fs-2 mb-2">FrogCritic site owner and admin</div>
+                <div class="fw-bold">Last seen 12 years ago</div>
             </div>
         </div>
-
-        <div id="profile-details" class="flex-wrap">
+        <div id="profile-details" class="d-flex flex-wrap">
             <hgroup id="about-me" class="border col-8 rounded px-2 py-2">
                 <h2 class="profile-header">About me</h2>
                 <p>I'm Roemer</p>
@@ -48,7 +47,7 @@
                 <p>Yeah.... Here, let me just show you my ID...</p>
                 <button method="POST" class="btn btn-dark">Edit Bio</button>
             </hgroup>
-            
+
             <div id="profile-details-right" class="col-4">
                 <hgroup class="border rounded px-2 py-2 mx-2 mb-2">
                     <h2 class="profile-header">Favorite Game</h2>
@@ -65,11 +64,11 @@
                     <span>Goes here</span>
                 </hgroup>
             </div>
-            <hgroup id="about-me" class="border col-8 rounded px-2 py-2">
-                <h2 class="profile-header">My Reviews</h2>
-            </hgroup>
         </div>
-        <div class="flex-wrap">
+        <hgroup id="about-me" class="px-2 py-2 mt-4">
+            <h2 class="profile-header">My Reviews</h2>
+        </hgroup>
+        <div class="d-flex flex-wrap">
             <a class="block-link" href="review.html">
                 <div class="border rounded review">
                     <div class="star-rating">
@@ -100,7 +99,7 @@
                 </div>
             </a>
         </div>
-        <div class="flex-wrap">
+        <div class="d-flex flex-wrap">
             <a class="block-link" href="review.html">
                 <div class="border rounded review">
                     <div class="star-rating">
@@ -136,10 +135,5 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
     crossorigin="anonymous"></script>
-<script>
-    function sendToProfile() {
-        window.location = `profile.html`
-    }
-</script>
 
 </html>
