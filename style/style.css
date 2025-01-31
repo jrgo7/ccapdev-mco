@@ -8,20 +8,8 @@
     font-family: Inter, Arial, Helvetica, sans-serif;
 }
 
-.branding-name {
+.ff-doto {
     font-family: Doto;
-}
-
-.bold {
-    font-weight: bold;
-}
-
-.x-large {
-    font-size: x-large;
-}
-
-.subtitle {
-    font-style: italic;
 }
 
 .center {
@@ -30,28 +18,37 @@
     margin: auto;
 }
 
-.flex-wrap {
-    display: flex;
-    flex-wrap: wrap;
+.block-link {
+    color: black;
+    text-decoration: none;
 }
 
 /* Index */
 
-.game {
+.index-game-entry {
     padding: 16px;
     margin: 16px;
     width: 100%;
 }
 
-.index-game-cover {
+.index-game-cover-container {
     height: 24rem;
-    width: auto;
-    display: block;
+    display: flex;
+}
+
+.index-game-cover {
+    height: auto;
+    max-height: 22rem;
+    max-width: 18rem;
+}
+
+.index-game-cover-container:hover {
+    background-color: var(--bs-gray-500);
 }
 
 /* View individual game */
 
-.game-back {
+.bg-game {
     background-image: linear-gradient(rgba(255, 255, 255, 0.25),
     rgb(248, 249, 250)),
         url("../img/back/Super Mario Bros. (World).png");
@@ -63,28 +60,18 @@
 
 .game-description {
     background-color: #ffffff50;
+    text-align: justify;
     padding: 16px;
     margin: 8px;
 }
 
-.game-title {
-    font-size: xx-large;
-    font-weight: bold;
-}
-
-.text-description {
-    text-align: justify;
-}
-
 .individual-game-cover {
-    width: 100%;
-    height: auto;
     max-width: 30vw;
-    margin: 5%;
+    height: auto;
+    max-height: 30vh;
     align-self: center;
     display: block;
-    margin-left: auto;
-    margin-right: auto;
+    margin: auto;
 }
 
 .star-rating {
@@ -97,12 +84,7 @@
     color: gold;
 }
 
-.separator {
-    margin-left: auto;
-}
-
 /* Reviews */
-
 .review {
     padding: 16px;
     margin: 16px;
@@ -112,11 +94,6 @@
 .votes {
     margin-left: auto;
     float: right;
-}
-
-.block-link {
-    color: black;
-    text-decoration: none;
 }
 
 .review:hover {
@@ -150,8 +127,6 @@
 
 /* Profile */
 
-/* TODO: Organize this. */
-
 .avatar-big {
     height: 8rem;
     width: 8rem
@@ -167,14 +142,8 @@
 /* Desktop layout exclusive */
 
 @media only screen and (min-width: 900px) {
-
     /* Landing Page + View Games: make games appear in a 3-column layout */
     .game {
         flex-basis: calc(100% / 3 - 32px);
-    }
-
-    /* View Individual Game Reviews + Info Page: make cover appear beside game description */
-    .game-info {
-        display: flex;
     }
 }
