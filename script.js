@@ -363,3 +363,16 @@ if (url.endsWith('/')) { // is Index / Game List
 } else if (url.includes("self.html")) {
     showUserData(params.get("user"));
 }
+
+// Button Hiding in Profile
+function hideEdit(elem){
+
+    for(let x = 0; x < elem.length; x++){
+        if(document.getElementById(elem[x]).style.display == 'none') {
+            document.getElementById(elem[x]).style.display = 'block';
+        } else {
+            document.getElementById(elem[x]).style.display = 'none';
+        }
+    }
+}
+
