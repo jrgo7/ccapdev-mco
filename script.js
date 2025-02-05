@@ -148,6 +148,24 @@ const reviews = [
         text: "It was fun, but I didn't really feel powerful after finishing the game; I just felt like I had finally gotten rid of a nuisance."
     },
     {
+        game: "Super Mario Bros.",
+        title: "A good game for roaming",
+        username: "Roymer",
+        date: "June 2, 1987",
+        rating: 5,
+        upvotes: 23,
+        text: "I was able to roam around a lot in this game; so I think this is a nice game."
+    },
+    {
+        game: "Super Mario Bros.",
+        title: "A good game for hopping",
+        username: "mainFrog",
+        date: "June 2, 1987",
+        rating: 5,
+        upvotes: 69,
+        text: "I was able to hop around a lot in this game; so I think this is a nice game."
+    },
+    {
         game: "Pac-Man",
         title: "An arcade classic, ported",
         username: "wafl",
@@ -168,9 +186,10 @@ const reviews = [
 ]
 
 function truncateNoCutoff(text, wordCount) {
-    splitText = text.split(" ").splice(0, wordCount).join(" ");
+    let splitText = text.split(" ").splice(0, wordCount).join(" ");
     splitText.trimEnd(",");
     let lastCharacter;
+    let lastCharacterIsPunctuation;
     do {
         lastCharacter = splitText.slice(-1);
         lastCharacterIsPunctuation = lastCharacter == ',';
@@ -196,32 +215,35 @@ function addGameEntry(game) {
      * Add a game entry inside the `game-entries` container.
      * @param {game} - The game entry to add
      */
-    var template = `
-        <div class="game index-game-entry border rounded">
-            <a class="index-game-cover-container border rounded" href="reviews.html?title=${game.title}">
-                <img class="index-game-cover d-block mx-auto my-auto" src="img/cover/${game.file}.png">
-            </a>
-            <div class="mx-5 my-5">
-                <h2 class="fs-4 fw-bold"><a class="block-link" href="reviews.html?title=${game.title}">${game.title}</a></h2>
-                <div class="star-rating">
-                    ${generateStarRating(game.rating)}
-                </div>
-                <p class="fst-italic">
-                    ${game.developer}, ${game.release_date}
-                </p>
-                <p>
-                    ${truncateNoCutoff(game.description, 20)}
-                </p>
-                <p class="fst-italic">
-                    Source:
-                    <a class="block-link" href="${game.source.link}">
-                    ${game.source.name}
-                    </a>
-                </p>
-            </div>
-        </div>
-        `;
-    document.getElementById("game-entries").innerHTML += template;
+    const template = document.querySelector("template");
+    const copy = template.content.cloneNode(true);
+    
+    const a = copy.querySelectorAll("a");
+    const imgLink = a[0];
+    imgLink.href = `reviews.html?title=${game.title}`;
+    
+    const h2Link = a[1];
+    h2Link.href = `reviews.html?title=${game.title}`;
+    h2Link.innerText = game.title; // Header link
+
+    const img = copy.querySelector("img");
+    img.src = `img/cover/${game.file}.png`;
+    img.alt = game.title;
+
+    const starRating = copy.querySelector("#star-rating");
+    starRating.innerHTML = generateStarRating(game.rating);
+
+    const developerDate = copy.querySelector("#developer-date");
+    developerDate.innerText = `${game.developer}, ${game.release_date}`;
+
+    const description = copy.querySelector("#description");
+    description.innerText = truncateNoCutoff(game.description, 20);
+
+    const source = a[2];
+    source.innerText = game.source.name;
+    source.href = game.source.link;
+
+    document.querySelector("#game-entries").append(copy);
 }
 
 // View Reviews
@@ -247,7 +269,7 @@ function addReview(review) {
      * Add a review entry to the View Reviews page.
      */
     let user = users.find((user) => user.username == review.username);
-    template = `
+    let template = `
         <div class="col-6 border rounded review">
             <div class="star-rating">
                 ${generateStarRating(review.rating)}
@@ -298,14 +320,28 @@ function showGameData(title) {
 // Users
 
 function addUserEntry(user) {
-    document.getElementById("users-table").innerHTML += `
-    <tr onclick="sendToProfile('${user.username}')" ${user.lastSeen == 'Online' ? 'class="table-success"' : ''}>
-        <td><img class="avatar" src="img/avatar/${user.avatar}" alt="Avatar"></td>
-        <td>${user.username}</td>
-        <td>${user.lastSeen}</td>
-        <td>${user.accountAge}</td>
-    </tr>
-`;
+    const tbody = document.querySelector("tbody");
+    const template = document.querySelector("#user-row");
+    const clone = template.content.cloneNode(true);
+
+    const tr = clone.querySelector("tr");
+    tr.onclick = () => sendToProfile(user.username);
+    if (user.lastSeen == 'Online') {
+        tr.classList.add("table-success")
+    }
+
+    const img = document.createElement("img");
+    img.classList.add("avatar");
+    img.src = `img/avatar/${user.avatar}`
+    img.alt = `Avatar`;
+
+    const td = clone.querySelectorAll("td");
+    td[0].append(img);
+    td[1].innerText = user.username;
+    td[2].innerText = user.lastSeen;
+    td[3].innerText = user.accountAge;
+
+    tbody.append(clone);
 }
 
 function sendToProfile(username) {
@@ -342,11 +378,11 @@ function showReviewData(username, gameTitle) {
 
 // ---
 
-url = document.URL;
+let url = document.URL;
 let queryString = window.location.search;
 let params = new URLSearchParams(queryString);
 
-if (url.endsWith('/')) { // is Index / Game List
+if (url.endsWith('/') || url.includes("index.html")) { // is Index / Game List
     games.forEach(game => {
         addGameEntry(game);
     })
@@ -365,14 +401,12 @@ if (url.endsWith('/')) { // is Index / Game List
 }
 
 // Button Hiding in Profile
-function hideEdit(elem){
-
-    for(let x = 0; x < elem.length; x++){
-        if(document.getElementById(elem[x]).style.display == 'none') {
+function hideEdit(elem) {
+    for (let x = 0; x < elem.length; x++) {
+        if (document.getElementById(elem[x]).style.display == 'none') {
             document.getElementById(elem[x]).style.display = 'block';
         } else {
             document.getElementById(elem[x]).style.display = 'none';
         }
     }
 }
-
