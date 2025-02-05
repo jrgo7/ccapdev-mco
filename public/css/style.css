@@ -1,0 +1,234 @@
+@import url("https://fonts.googleapis.com/css2?family=Doto:wght@100..900&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap");
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+        transform: translateY(32px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+:root {
+    --primary: #8c51ff;
+    --secondary: #9c89b3;
+    --white: #fcf8ff;
+    --black: #1f1926;
+}
+
+* {
+    font-family: Inter, Arial, Helvetica, sans-serif;
+    color: var(--white);
+}
+
+.ff-doto {
+    font-family: Doto;
+}
+
+.center {
+    text-align: center;
+    display: block;
+    margin: auto;
+}
+
+.block-link {
+    color: var(--white);
+    text-decoration: none;
+}
+
+a:hover {
+    color: var(--primary);
+    text-decoration: underline;
+}
+
+/* Index */
+
+.logo {
+    max-width: 512px;
+    height: auto;
+    animation: fadeIn 0.6s ease-out;
+}
+
+.index-game-entry {
+    padding: 16px;
+    margin: 16px;
+    width: 100%;
+    background-color: var(--secondary);
+}
+
+.index-game-cover-container {
+    height: 24rem;
+    display: flex;
+    background-color: var(--black);
+}
+
+.index-game-cover {
+    height: auto;
+    max-height: 22rem;
+    max-width: 18rem;
+}
+
+.index-game-cover-container:hover {
+    background-color: var(--white);
+}
+
+/* View individual game */
+
+.bg-game {
+    background-image: linear-gradient(rgba(255, 255, 255, 0.25),
+    rgb(248, 249, 250)),
+        url("../img/back/Super Mario Bros. (World).png");
+    background-size: cover;
+    background-repeat: repeat;
+    background-position: 50%;
+    image-rendering: pixelated;
+}
+
+.game-description {
+    text-align: justify;
+    padding: 16px;
+    margin: 8px;
+}
+
+.individual-game-cover {
+    max-height: 32rem;
+    align-self: center;
+    display: block;
+    margin: auto;
+}
+
+.star-rating {
+    display: block;
+    margin-bottom: 1rem;
+    width: 100%;
+}
+
+.unchecked {
+    color: var(--white);
+}
+
+.checked {
+    color: var(--primary);
+}
+
+/* Reviews */
+.review {
+    padding: 16px;
+    margin: 16px;
+    flex-basis: calc(50% - 33px);
+    background-color: var(--black);
+}
+
+.votes {
+    margin-left: auto;
+    float: right;
+}
+
+.avatar {
+    height: 3rem;
+    width: 3rem;
+    /* border-radius: 50%; */
+    rotate: -5deg;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+.reviewer-info {
+    display: flex;
+}
+
+.author-date>p {
+    margin-bottom: 0;
+}
+
+.review-date {
+    color: var(--secondary);
+}
+
+/* Member List */
+
+.clickable-table-rows > tr {
+    cursor: pointer;
+}
+
+/* Profile */
+
+.avatar-big {
+    height: 8rem;
+    width: 8rem
+}
+
+.profile-header {
+    font-size: large;
+    font-weight: bold;
+}
+
+.checkbox-container {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+/* Registration*/
+.register-box{
+    margin-top: 30px;
+    padding: 20px;
+    border-radius: 8px;
+    border-style: solid;
+    border-color: var(--primary);
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    width: 500px;
+    animation: fadeIn 0.6s ease-out;
+}
+
+.register-input {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.register-btn {
+    width: 100%;
+    background-color: var(--primary);
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.register-btn:hover {
+    background-color: var(--secondary);
+}
+
+.register-label {
+    font-weight: bold;
+    display: block;
+    margin: 10px 0 5px;
+}
+
+.terms {
+    font-size: 12px;
+    color: #777;
+    margin-left: 22px;
+}
+
+.terms-conditions-popup{
+    height: 500px;
+}
+
+#terms-conditions{
+    animation: fadeIn 0.6s ease-out;
+}
+/* Media queries */
+
+/* Desktop layout exclusive */
+
+@media only screen and (min-width: 900px) {
+    /* Landing Page + View Games: make games appear in a 3-column layout */
+    .game {
+        flex-basis: calc(100% / 3 - 32px);
+    }
+}
