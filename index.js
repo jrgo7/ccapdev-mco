@@ -15,6 +15,11 @@ app.get('/', async(req, res) => {
     res.render("index")
 })
 
+app.get('/register', async(req, res) => {
+    res.render("register")
+})
+
+
 const PORT = 3000;
 app.listen(PORT, () => {
     console.log("Handlebars app is running on http://localhost:3000")
