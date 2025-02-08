@@ -227,7 +227,7 @@ function addGameEntry(game) {
     h2Link.innerText = game.title; // Header link
 
     const img = copy.querySelector("img");
-    img.src = `img/cover/${game.file}.png`;
+    img.src = `public/img/cover/${game.file}.png`;
     img.alt = game.title;
 
     const starRating = copy.querySelector("#star-rating");
@@ -251,7 +251,7 @@ function addGameEntry(game) {
 function generateReviewAuthorData(user, review) {
     return `
         <a href="profile.html?user=${user.username}">
-            <img class="avatar me-2" src="img/avatar/${user.avatar}">
+            <img class="avatar me-2" src="public/img/avatar/${user.avatar}">
         </a>
         <div class="author-date">
             <p class="fw-bold reviewer-name" >
@@ -305,8 +305,8 @@ function showGameData(title) {
     let gameDeveloperDate = document.getElementById("game-developer-date");
     let gameDescriptionText = document.getElementById("game-description-text");
 
-    gameCover.src = "img/cover/" + game['file'] + '.png';
-    gameInfoContainer.style.backgroundImage = `linear-gradient(rgba(0, 0, 0, 0.25),var(--bs-dark)), url("/img/back/${game['file']}.png")`;
+    gameCover.src = "public/img/cover/" + game['file'] + '.png';
+    gameInfoContainer.style.backgroundImage = `linear-gradient(rgba(0, 0, 0, 0.25),var(--bs-dark)), url("public/img/back/${game['file']}.png")`;
     gameTitle.innerText = game.title;
     gameDeveloperDate.innerText = `${game.developer}, ${game.release_date}`;
     gameDescriptionText.innerText = game['description'];
