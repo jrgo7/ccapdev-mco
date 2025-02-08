@@ -48,6 +48,15 @@ app.get('/register', async(req, res) => {
     res.render("register")
 })
 
+app.get('/users', async(req, res) => {
+    const updatedUsers = users.map(user => ({
+        ...user, 
+        isOnline: user.lastSeen.toLowerCase() === "online"
+    }));
+    
+    res.render("users", {"users": updatedUsers})
+})
+
 
 const PORT = 3000;
 app.listen(PORT, () => {
