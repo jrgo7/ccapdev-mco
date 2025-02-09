@@ -1,0 +1,29 @@
+{{log game}}
+{{log reviews}}
+<div id="game-info-container" class="bg-game" style="background-image: linear-gradient(rgba(255, 255, 255, 0.25),
+    var(--bs-dark)), url('/img/back/{{game.file}}.png');">
+    <div class="container d-flex flex-wrap flex-lg-nowrap pt-5 pb-5">
+        <img id="game-cover" class="individual-game-cover" src="img/cover/{{game.file}}.png" alt="{{game.title}}">
+        <div class="game-description col-lg-6">
+            <h1 id="game-title" class="fw-bold">{{game.title}}</h1>
+            <p id="game-developer-date" class="fst-italic">{{game.developer}}, {{game.release_date}}</p>
+            <div id="star-rating" class="star-rating">
+                {{{generateStarRating game.rating}}}
+            </div>
+            <p id="game-description-text">
+                {{game.description}}
+            </p>
+            <div class="leave-rating">
+                <h2 class="fw-bold fs-2">Have you played this game before?</h2>
+                <button class="btn btn-light">Leave a review</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <h2 class="fw-bold">Latest reviews</h2>
+    {{!-- TODO: Create a review partial (since these will be used elsewhere too) and use it here --}}
+    <h1 style="color:yellow">TODO: Create a review partial (since these will be used elsewhere too) and use it here</h1>
+    <div id="reviews" class="d-flex flex-wrap">
+    </div>
+</div>

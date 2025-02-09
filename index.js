@@ -41,20 +41,29 @@ app.use(express.static('public'));
 mongoose.connect("mongodb://127.0.0.1:27017/reviewapp");
 
 app.get('/', async (req, res) => {
-    res.render("index", {"games": games});
+    res.render("index", { "title": "Main Page", "games": games });
 })
 
-app.get('/register', async(req, res) => {
-    res.render("register")
+app.get('/reviews', async (req, res) => {
+    let title = req.query.title;
+    res.render("reviews", {
+        "title": title,
+        "game": games.find(game => game.title == title),
+        "reviews": reviews.filter(review => review.game == title)
+    });
 })
 
-app.get('/users', async(req, res) => {
+app.get('/register', async (req, res) => {
+    res.render("register");
+})
+
+app.get('/users', async (req, res) => {
     const updatedUsers = users.map(user => ({
-        ...user, 
+        ...user,
         isOnline: user.lastSeen.toLowerCase() === "online"
     }));
-    
-    res.render("users", {"users": updatedUsers})
+
+    res.render("users", { "users": updatedUsers })
 })
 
 

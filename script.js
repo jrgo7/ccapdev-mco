@@ -1,3 +1,5 @@
+// ! This will be deprecated soon
+
 const users = [
     {
         username: "lowy",
