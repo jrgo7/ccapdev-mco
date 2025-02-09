@@ -43,58 +43,6 @@
         </div>
     </div>
 
-    <!-- Register Modal -->
-    <div class="modal fade" id="register" tabindex="-1" role="dialog" aria-labelledby="registerLabel"
-        aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content bg-dark">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="registerLabel">Register</h5>
-                </div>
-                <div class="modal-body">
-                    <form>
-                        <div class="form-group py-2">
-                            <label for="input-email">Email address</label>
-                            <input type="email" class="form-control" id="input-email" aria-describedby="emailHelp"
-                                placeholder="Enter your email">
-                        </div>
-
-                        <div class="form-group py-2">
-                            <label for="input-username">Username</label>
-                            <input type="email" class="form-control" id="input-username" aria-describedby="username"
-                                placeholder="Enter a username">
-                        </div>
-
-                        <div class="form-group py-2">
-                            <label for="password1">Password</label>
-                            <input type="password" class="form-control" id="password1" placeholder="Password">
-                        </div>
-
-                        <div class="form-group py-2">
-                            <label for="password2">Confirm Password</label>
-                            <input type="password" class="form-control" id="password2" placeholder="Password">
-                        </div>
-
-                        <div class="form-group py-2">
-                            <label for="register-description">Enter a short description! (Optional)</label>
-                            <textarea class="form-control" id="register-description" rows="2"></textarea>
-                        </div>
-
-                        <div class="form-group py-2">
-                            <label for="avatar-file-register">Enter an avatar!</label>
-                            <input type="file" class="form-content-file" id="avatar-file-register">
-                        </div>
-
-                        <hr>
-                        <div class="float-end">
-                            <button type="submit" class="btn btn-primary">Register!</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <nav class="navbar navbar-expand-lg navbar-dark px-5" style="background-color: var(--primary)">
         <a class="navbar-brand ff-doto px-3 " href="/">FrogCritic</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
@@ -104,10 +52,10 @@
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item mx-3">
-                    <a class="nav-link" aria-current="page" href="#">Games</a>
+                    <a class="nav-link" aria-current="page" href="/">Games</a>
                 </li>
                 <li class="nav-item mx-3">
-                    <a class="nav-link" aria-current="page" href="users.html">Users</a>
+                    <a class="nav-link" aria-current="page" href="users">Users</a>
                 </li>
             </ul>
             <div class="ms-auto dropdown mx-4 ">
@@ -117,12 +65,11 @@
                     <span class="caret"></span>
                 </button>
                 <div class="dropdown-menu">
-                    <a class="dropdown-item" href="self.html">Account</a>
+                    <a class="dropdown-item" href="self">Account</a>
 
                     <div class="dropdown-divider"></div>
                     <a class="dropdown-item" href="#login" data-bs-toggle="modal" data-target="#login">Log In</a>
-                    <a class="dropdown-item" href="#register" data-bs-toggle="modal"
-                        data-target="#register">Register</a>
+                    <a class="dropdown-item" href="register" >Register</a>
                 </div>
             </div>
         </div>
