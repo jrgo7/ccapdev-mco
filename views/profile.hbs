@@ -1,0 +1,56 @@
+
+
+<div class="container my-5">
+    <div id="hero" class="d-flex flex-wrap mb-5">
+        <img id="avatar" class="avatar avatar-big me-4" src="/img/avatar/{{user.avatar}}">
+        <div class="profile-hero">
+            <h1 id="username" class="fw-bold">{{user.username}}</h1>
+            <div id="subtitle" class="fst-italic fs-2">{{user.subtitle}}</div>
+            <button type="button" id="edit-flair" class="btn btn-outline-secondary my-2">
+                Edit Flair
+            </button>
+             <div id="last-seen" class="fw-bold">
+            {{#if isOnline}}
+                {{user.lastSeen}}
+            {{else}}
+                Last seen {{user.lastSeen}}
+            {{/if}}
+           </div>
+        </div>
+    </div>
+
+    <button onclick=""> Edit Mode </button>
+    {{!-- TODO: fix hideEdit --}}
+    {{!-- {{{hideEdit ['edit-flair', 'edit-favorite-game', 'edit-about-me']}}} --}}
+
+    <div id="profile-details" class="d-flex flex-wrap">
+        <hgroup id="about-me" class="border col-8 rounded px-2 py-2">
+            <h2 class="profile-header">About me</h2>
+            <p id="description">{{user.description}}</p>
+        </hgroup>
+        <div id="profile-details-right" class="col-4">
+            <hgroup class="border rounded px-2 py-2 mx-2 mb-2">
+                <h2 class="profile-header">Favorite Game</h2>
+                <span id="favorite-game">{{user.favoriteGame}}</span>
+            </hgroup>
+            <button id="edit-favorite-game" type="button" class="btn btn-outline-secondary mx-2">
+                Edit Favorite Game
+            </button>
+            <hgroup class="border rounded px-2 py-2 mx-2 my-2">
+                <h2 class="profile-header">Account Age</h2>
+                <span id="account-age">{{user.accountAge}}</span>
+            </hgroup>
+        </div>
+    </div>
+
+        <button type="button" id="edit-about-me" class="btn btn-outline-secondary my-2">
+            Edit About Me
+        </button>
+    </div>
+    
+</div>
+
+<div class="container">
+    <h2 class="fw-bold">My reviews</h2>
+    <div id="reviews" class="d-flex flex-wrap"></div>
+</div>

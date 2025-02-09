@@ -28,6 +28,16 @@ const hbs = create({
                 splitText += "...";
             }
             return splitText;
+        },
+        // NEEDS FIXING!!
+        hideEdit(elem) {
+            for (let x = 0; x < elem.length; x++) {
+                if (document.getElementById(elem[x]).style.display == 'none') {
+                    document.getElementById(elem[x]).style.display = 'block';
+                } else {
+                    document.getElementById(elem[x]).style.display = 'none';
+                }
+            }
         }
     },
     extname: ".hbs",
@@ -50,6 +60,16 @@ app.get('/reviews', async (req, res) => {
         "title": title,
         "game": games.find(game => game.title == title),
         "reviews": reviews.filter(review => review.game == title)
+    });
+})
+
+app.get('/profile', async (req, res) => {
+    let username = req.query.username;
+    let user = users.find(user => user.username == username);
+    res.render("profile", {
+        "username": username,
+        "user": user,
+        "isOnline": user.lastSeen.toLowerCase === "online"
     });
 })
 
