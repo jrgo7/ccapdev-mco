@@ -11,6 +11,11 @@
     }
 }
 
+@keyframes shiftDiagonal {
+    from {background-position: bottom left;}
+    to {background-position: top right;}
+  }
+
 :root {
     --primary: #8c51ff;
     --secondary: #9c89b3;
@@ -28,6 +33,13 @@ p, h1, h2 {
 
 .ff-doto {
     font-family: Doto;
+}
+
+body {
+    background-image: url("/img/background.png");
+    background-position: center top;   
+    background-repeat: repeat;
+    animation: shiftDiagonal 60s linear infinite;
 }
 
 .center {
