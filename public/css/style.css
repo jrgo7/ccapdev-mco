@@ -25,15 +25,25 @@
 
 * {
     font-family: Inter, Arial, Helvetica, sans-serif;
+    color: var(--white);
 }
 
-p, h1, h2, h3, h4, h5, label {
-    color: var(--white);
+option {
+    color: var(--black);
 }
 
 .ff-doto {
     font-family: Doto;
 }
+
+nav {
+    background-color: var(--primary);
+}
+
+.navbar-brand, .nav-item > a {
+    color: var(--white);
+}
+
 
 body {
     background-image: url("/img/background.png");
