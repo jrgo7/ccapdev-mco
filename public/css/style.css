@@ -5,6 +5,7 @@
         opacity: 0;
         transform: translateY(32px);
     }
+
     100% {
         opacity: 1;
         transform: translateY(0);
@@ -12,9 +13,14 @@
 }
 
 @keyframes shiftDiagonal {
-    from {background-position: bottom left;}
-    to {background-position: top right;}
-  }
+    from {
+        background-position: bottom left;
+    }
+
+    to {
+        background-position: top right;
+    }
+}
 
 :root {
     --primary: #8c51ff;
@@ -40,14 +46,16 @@ nav {
     background-color: var(--primary);
 }
 
-.navbar-brand, .nav-item > a {
+.navbar-brand,
+.nav-item>a {
     color: var(--white);
 }
 
 
 body {
     background-image: url("/img/background.png");
-    background-position: center top;   
+    background-color: var(--black);
+    background-position: center top;
     background-repeat: repeat;
     animation: shiftDiagonal 60s linear infinite;
 }
@@ -92,7 +100,7 @@ a:hover {
 .index-game-cover-container {
     height: 24rem;
     display: flex;
-    background-color: var(--black);
+    background-color: var(--bs-dark);
 }
 
 .index-game-cover {
@@ -176,7 +184,7 @@ a:hover {
 
 /* Member List */
 
-.clickable-table-rows > tr {
+.clickable-table-rows>tr {
     cursor: pointer;
 }
 
@@ -184,7 +192,7 @@ a:hover {
 
 .avatar-big {
     height: 8rem;
-    width: 8rem
+    width: 8rem;
 }
 
 .profile-header {
@@ -198,8 +206,9 @@ a:hover {
     margin-bottom: 10px;
 }
 
-/* Registration*/
-.register-box{
+/* Registration */
+
+.register-box {
     margin-top: 30px;
     padding: 20px;
     color: white;
@@ -228,6 +237,7 @@ a:hover {
     border-radius: 5px;
     cursor: pointer;
 }
+
 .register-btn:hover {
     background-color: var(--secondary);
 }
@@ -244,18 +254,20 @@ a:hover {
     margin-left: 22px;
 }
 
-.terms-conditions-popup{
+.terms-conditions-popup {
     height: 500px;
 }
 
-#terms-conditions{
+#terms-conditions {
     animation: fadeIn 0.6s ease-out;
 }
+
 /* Media queries */
 
 /* Desktop layout exclusive */
 
 @media only screen and (min-width: 900px) {
+
     /* Landing Page + View Games: make games appear in a 3-column layout */
     .game {
         flex-basis: calc(100% / 3 - 32px);

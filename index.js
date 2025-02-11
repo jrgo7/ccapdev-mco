@@ -28,16 +28,6 @@ const hbs = create({
                 splitText += "...";
             }
             return splitText;
-        },
-        // NEEDS FIXING!!
-        hideEdit(elem) {
-            for (let x = 0; x < elem.length; x++) {
-                if (document.getElementById(elem[x]).style.display == 'none') {
-                    document.getElementById(elem[x]).style.display = 'block';
-                } else {
-                    document.getElementById(elem[x]).style.display = 'none';
-                }
-            }
         }
     },
     extname: ".hbs",
