@@ -28,11 +28,11 @@
         {{#each games}}
         {{log "*" title}}
         <div class="game index-game-entry shadow">
-            <a class="index-game-cover-container shadow" href="reviews?title={{title}}">
+            <a class="index-game-cover-container shadow" href="reviews?game={{title}}">
                 <img class="index-game-cover d-block mx-auto my-auto" src="img/cover/{{file}}.png">
             </a>
             <div class="mx-4 my-4">
-                <h2 class="fs-4 fw-bold"><a class="block-link" href="reviews?title={{title}}">
+                <h2 class="fs-4 fw-bold"><a class="block-link" href="reviews?game={{title}}">
                         {{title}}
                     </a></h2>
                 <div class="star-rating">

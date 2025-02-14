@@ -1,0 +1,29 @@
+<div class="container pt-5">
+    <div class="review-info-text mt-2 bg-dark shadow px-4 py-4">
+        <p><a id="return-game" href="reviews?game={{review.game}}">View {{review.game}}</a></p>
+        <div id="star-rating" class="star-rating pt-5">
+            {{{generateStarRating review.rating}}}
+            <div class="votes">
+                <span class="fa fa-thumbs-up"></span>
+                <span id="upvotes">{{review.upvotes}}</span>
+                <span class="fa fa-thumbs-down"></span>
+            </div>
+        </div>
+
+        <h1 id="title" class="allow-editing fw-bold fs-2 mb-2">{{review.title}}</h1>
+        <p id="text" class="allow-editing">
+            {{review.text}}
+        </p>
+
+        {{> review-author-data review=review user=user}}
+
+        <h2 class="fw-bold fs-2 pt-5">Developer Response</h2>
+        <p id="developer-response" class="allow-editing">
+            {{review.developer_response}}
+        </p>
+
+        <button id="edit-button" class="btn btn-light btn-outline-secondary my-2" onclick="toggleEdit()">
+            Edit review data
+        </button>
+    </div>
+</div>

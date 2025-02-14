@@ -1,15 +1,3 @@
-{{!-- ! Is there a way to put the script elsewhere? --}}
-<script>
-    function toggleEdit() {
-        document.querySelectorAll(".allow-editing").forEach(element => {
-            element.toggleAttribute("contenteditable");
-            element.style.textDecoration = element.style.textDecoration ? "" : "underline";
-        }
-        );
-        let editButton = document.querySelector("#edit-button");
-        editButton.textContent = (editButton.textContent == "Save changes") ? "Edit profile" : "Save changes";
-    }
-</script>
 <div class="container my-5 py-5 px-5">
     <div id="hero" class="bg-dark shadow d-flex flex-wrap mb-5 px-4 py-4">
         <img id="avatar" class="avatar avatar-big me-4" src="/img/avatar/{{user.avatar}}">
@@ -43,7 +31,8 @@
         </div>
     </div>
 
-    <button id="edit-button" class="btn btn-light btn-outline-secondary my-2" onclick="toggleEdit()"> Edit profile
+    <button id="edit-button" class="btn btn-light btn-outline-secondary my-2" onclick="toggleEdit()">
+        Edit profile
     </button>
 
 </div>

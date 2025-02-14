@@ -1,0 +1,18 @@
+{{log "----review-author-data----"}}
+{{log review}}
+{{log user}}
+{{log "--------"}}
+
+<div id="reviews" class="d-flex flex-wrap">
+    <a href="profile?user={{user.username}}">
+        <img class="avatar me-2" src="/img/avatar/{{user.avatar}}">
+    </a>
+    <div class="author-date">
+        <p class="fw-bold reviewer-name">
+            <a class="block-link" href="profile?user={{user.username}}">
+                {{user.username}}
+            </a>
+        </p>
+        <p class="fst-italic review-date">{{review.date}}</p>
+    </div>
+</div>

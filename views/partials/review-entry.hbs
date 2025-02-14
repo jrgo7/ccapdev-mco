@@ -1,0 +1,26 @@
+{{log "----review-entry----"}}
+{{log review}}
+{{log user}}
+
+<div class="col-6 bg-dark shadow review">
+    <div class="star-rating">
+        {{{generateStarRating review.rating}}}
+        <div class="votes">
+            <span class="fa fa-thumbs-up"></span>
+            {{review.upvotes}}
+            <span class="fa fa-thumbs-down"></span>
+        </div>
+    </div>
+    <h3 class="fw-bold fs-4">
+        <a class="block-link" href="review?user={{review.username}}&game={{review.game}}">
+            {{review.title}}
+        </a>
+    </h3>
+    <div class="review-info-text">
+        <p>
+            {{truncateWords review.text 3}}
+        </p>
+    </div>
+    {{>review-author-data review=review user=user}}
+</div>
+{{log "--------"}}
