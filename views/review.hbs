@@ -2,7 +2,7 @@
     <div class="mt-2 bg-dark shadow px-4 py-4">
         <p><a id="return-game" href="reviews?game={{review.game}}">View {{review.game}}</a></p>
         <div id="star-rating" class="star-rating pt-2">
-            {{{generateStarRating review.rating}}}
+            {{{generateStarRating review.rating true}}}
             <div class="votes">
                 <span class="fa fa-thumbs-up"></span>
                 <span id="upvotes">{{review.upvotes}}</span>

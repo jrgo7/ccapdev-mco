@@ -13,9 +13,24 @@ const hbs = create({
             return x === y;
         },
 
-        generateStarRating(stars) {
-            return '<span class="fa fa-star checked"></span>'.repeat(stars)
-                + '<span class="fa fa-star unchecked"></span>'.repeat(5 - stars);
+        generateStarRating(stars, isEditable) {
+            let out = "";
+            for (i = 1; i <= 5; i++) {
+                let checked = "unchecked";
+                let onclick = "";
+                let unclickable = "";
+                let id = "";
+                if (isEditable) {
+                    onclick = `onclick=setStarRating(${i})`
+                    id = `id=star-${i}`;
+                    unclickable = "unclickable";
+                }
+                if (i < stars) {
+                    checked = "checked";
+                }
+                out += `<span ${id} ${onclick} class="fa fa-star ${unclickable} ${checked}"></span>`;
+            }
+            return out;
         },
 
         truncateWords(text, wordCount) {

@@ -40,8 +40,8 @@ option {
     color: var(--black);
 }
 
-.ff-doto {
-    font-family: Doto;
+.unclickable {
+    pointer-events: none;
 }
 
 nav {
@@ -150,7 +150,9 @@ a:hover {
     display: block;
     margin-bottom: 1rem;
     width: 100%;
+    text-underline-offset: 0.25rem;
 }
+
 
 .unchecked {
     color: var(--white);

@@ -11,7 +11,7 @@
                 <span id="game-release-date" class="allow-editing">{{game.release_date}}</span>
             </p>
             <div id="star-rating" class="star-rating">
-                {{{generateStarRating game.rating}}}
+                {{{generateStarRating game.rating false}}}
             </div>
             <p id="game-description-text" class="allow-editing">
                 {{game.description}}
@@ -24,6 +24,12 @@
             <div class="my-2">
                 <button id="edit-button" class="btn btn-primary" onclick="toggleEdit()">
                     Edit
+                </button>
+                <button id="change-boxart-button" class="btn btn-primary" onclick="uploadFile()">
+                    Change boxart
+                </button>
+                <button id="change-wallpaper-button" class="btn btn-primary" onclick="uploadFile()">
+                    Change wallpaper
                 </button>
                 <button id="delete-button" class="btn btn-danger" disabled>
                     Delete
@@ -52,8 +58,8 @@
                 <form id="leave-review-form" method="post">
                     <div class="form-group mb-3">
                         <label for="leave-review-rating">Rating</label>
-                        <div id="leave-review-rating">
-                            {{{generateStarRating 0}}}
+                        <div id="leave-review-rating" class="star-rating-allow-editing">
+                            {{{generateStarRating 0 true}}}
                         </div>
                     </div>
 

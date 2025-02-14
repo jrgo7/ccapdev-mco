@@ -36,7 +36,8 @@
                         {{title}}
                     </a></h2>
                 <div class="star-rating">
-                    {{{generateStarRating rating}}}
+                    {{log rating}}
+                    {{{generateStarRating rating false}}}
                 </div>
                 <p class="fst-italic">
                     {{developer}}, {{release_date}}

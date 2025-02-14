@@ -4,6 +4,34 @@ function toggleEdit() {
         element.style.textDecoration = element.style.textDecoration ? "" : "underline";
     }
     );
+    for (i = 1; i <= 5; i++) {
+        let star = document.querySelector(`#star-${i}`);
+        if (star.classList.contains("unclickable")) {
+            star.classList.remove("unclickable");
+            star.style.textDecoration = 'underline';
+        } else {
+            star.classList.add("unclickable");
+            star.style.textDecoration = 'none';
+        }
+    }
+
     let editButton = document.querySelector("#edit-button");
     editButton.textContent = (editButton.textContent == "Save changes") ? "Edit" : "Save changes";
+}
+
+function setStarRating(rating) {
+    for (i = 1; i <= 5; i++) {
+        let star = document.getElementById(`star-${i}`);
+        if (i <= rating) {
+            star.style.color = "var(--gold)";
+        } else {
+            star.style.color = "var(--white)";
+        }
+    }
+}
+
+function uploadFile() {
+    let input = document.createElement("input");
+    input.type = "file";
+    input.click();
 }
