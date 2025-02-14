@@ -1,6 +1,7 @@
 {{log game.title}}
-<div id="game-info-container" class="bg-game" style="background-image: linear-gradient(rgba(255, 255, 255, 0.25),
+<div id="game-info-container" class="bg-game" style="background-image: linear-gradient(rgba(0, 0, 0, 0.5),
     rgb(31, 25, 38)), url('/img/back/{{game.file}}.png');">
+
     <div class="container d-flex flex-wrap flex-lg-nowrap pt-5 pb-5">
         <img id="game-cover" class="individual-game-cover" src="img/cover/{{game.file}}.png" alt="{{game.title}}">
         <div class="game-description col-lg-6">
@@ -17,12 +18,16 @@
             </p>
             <div class="leave-rating">
                 <h2 class="fw-bold fs-2">Have you played this game before?</h2>
-                <button class="btn btn-light">Leave a review</button>
+                <button class="btn btn-primary">Leave a review</button>
             </div>
-            <button id="edit-button" class="btn btn-light btn-outline-secondary my-2" onclick="toggleEdit()">
-                Edit game info
-            </button>
-
+            <div class="my-2">
+                <button id="edit-button" class="btn btn-primary" onclick="toggleEdit()">
+                    Edit
+                </button>
+                <button id="delete-button" class="btn btn-danger" disabled>
+                    Delete
+                </button>
+            </div>
         </div>
     </div>
 </div>

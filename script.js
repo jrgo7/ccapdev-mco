@@ -286,7 +286,7 @@ function addReview(review) {
                 ${review.title}
                 </a>
             </h3>
-            <div class="review-info-text">
+            <div class="">
                 <p>
                     ${truncateNoCutoff(review.text, 3)}
                 </p>

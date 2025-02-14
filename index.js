@@ -7,6 +7,10 @@ const app = express();
 
 const hbs = create({
     helpers: {
+        equals(x, y) {
+            return x === y;
+        },
+
         generateStarRating(stars) {
             return '<span class="fa fa-star checked"></span>'.repeat(stars)
                 + '<span class="fa fa-star unchecked"></span>'.repeat(5 - stars);
@@ -32,7 +36,8 @@ const hbs = create({
         },
 
         findUser(username) {
-            return users.find(user => user.username == username);
+            let user = users.find(user => user.username == username);
+            return user;
         }
     },
     extname: ".hbs",
@@ -43,7 +48,7 @@ app.engine('hbs', hbs.engine);
 app.set("view engine", "hbs");
 app.use(express.static('public'));
 
-mongoose.connect("mongodb://127.0.0.1:27017/reviewapp");
+// mongoose.connect("mongodb://127.0.0.1:27017/reviewapp");
 
 app.get('/', async (req, res) => {
     res.render("index", { "title": "Main Page", "games": games });
@@ -64,7 +69,7 @@ app.get('/review', async (req, res) => {
     let gameTitle = req.query.game;
     let review = reviews.find(review => review.username == username && review.game == gameTitle);
     let user = users.find(user => user.username = username);
-    res.render("review", { "review": review, "user": user });
+    res.render("review", { "title": review.title, "review": review, "user": user });
 })
 
 app.get('/profile', async (req, res) => {
@@ -73,9 +78,11 @@ app.get('/profile', async (req, res) => {
     let user = users.find(user => user.username == username);
     console.log("Searching for " + username + " and found " + user);
     res.render("profile", {
+        "title": username,
         "username": username,
         "user": user,
-        "isOnline": user.lastSeen.toLowerCase === "online"
+        "isOnline": user.lastSeen.toLowerCase === "online",
+        "reviews": reviews.filter(review => review.username == username)
     });
 })
 
@@ -91,7 +98,7 @@ app.get('/users', async (req, res) => {
         isOnline: user.lastSeen.toLowerCase() === "online"
     }));
 
-    res.render("users", { "users": updatedUsers })
+    res.render("users", { "title": "Users", "users": updatedUsers })
 })
 
 
@@ -230,6 +237,10 @@ var reviews = [
         rating: 4,
         upvotes: 12,
         text: "Everyone knows Mario is cool. But who knows what he's thinking? Who knows why he crushes turtles? And why do we think about him as fondly as we think of the mystical (nonexistent?) Dr Pepper? Perchance. I believe it was Kant who said \"Experience without theory is blind, but theory without experience is mere intellectual play.\" Mario exhibits experience by crushing turts all day, but he exhibits theory by stating \"Lets-a go!\" Keep it up, baby! When Mario leaves his place of safety to stomp a turty, he knows that he may Die. And yet, for a man who can purchase lives with money, a life becomes a mere store of value. A tax that can be paid for, much as a rich man feels any law with a fine is a price. We think of Mario as a hero,but he is simply a one percenter of a more privileged variety. The lifekind. Perchance.",
+        attachment: {
+            type: "image",
+            filename: "mario.png"
+        },
         developer_response: "You can't just say perchance."
     },
     {
@@ -239,7 +250,12 @@ var reviews = [
         date: "January 8, 2025",
         rating: 5,
         upvotes: 310,
-        text: "This is super!"
+        text: "This is super!",
+        attachment: {
+            type: "video",
+            filename: "tetris.mp4"
+        },
+        developer_response: "Wrong game, dude."
     },
     {
         game: "Super Mario Bros.",

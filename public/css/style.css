@@ -23,10 +23,11 @@
 }
 
 :root {
-    --primary: #8c51ff;
-    --secondary: #9c89b3;
+    --primary: #732dff;
+    --secondary: #693f9c;
     --white: #fcf8ff;
     --black: #1f1926;
+    --gold: #fffb00;
 }
 
 * {
@@ -82,6 +83,7 @@ a:hover {
     max-width: 512px;
     height: auto;
     animation: fadeIn 0.6s ease-out;
+    filter: drop-shadow(5px 5px 5px #222);
 }
 
 .search-box {
@@ -146,10 +148,15 @@ a:hover {
 }
 
 .checked {
-    color: var(--primary);
+    color: var(--gold);
 }
 
 /* Reviews */
+
+#game-info-container {
+    text-shadow: 2px 2px 4px#000000;
+}
+
 .review {
     padding: 16px;
     margin: 16px;
@@ -168,6 +175,10 @@ a:hover {
     /* border-radius: 50%; */
     rotate: -5deg;
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+.avatar:hover {
+    rotate: -10deg;
 }
 
 .reviewer-info {
@@ -209,14 +220,6 @@ a:hover {
 /* Registration */
 
 .register-box {
-    margin-top: 30px;
-    padding: 20px;
-    color: white;
-    border-radius: 8px;
-    border-style: solid;
-    border-color: var(--primary);
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-    width: 500px;
     animation: fadeIn 0.6s ease-out;
 }
 

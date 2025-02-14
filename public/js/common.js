@@ -5,5 +5,5 @@ function toggleEdit() {
     }
     );
     let editButton = document.querySelector("#edit-button");
-    editButton.textContent = (editButton.textContent == "Save changes") ? "Edit profile" : "Save changes";
+    editButton.textContent = (editButton.textContent == "Save changes") ? "Edit" : "Save changes";
 }
