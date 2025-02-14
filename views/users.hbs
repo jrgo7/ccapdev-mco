@@ -27,7 +27,13 @@
             </tr>
         </thead>
         <tbody id="users-table" class="table-group-divider clickable-table-rows">
+            {{log}}
+            {{log "## Users"}}
+            {{log}}
+            {{log "|" (pad "Username" 20) "|" (pad "Last Seen" 32) "|" (pad "Account Age" 20) "|"}}
+            {{log "| -------------------- | -------------------------------- | -------------------- |" }}
             {{#each users}}
+            {{log "|" (pad username 20) "|" (pad lastSeen 32) "|" (pad accountAge 20) "|"}}
             {{#if isOnline}}
             <tr class="table-success" onclick="window.location.href='profile?user={{username}}'">
                 {{else}}

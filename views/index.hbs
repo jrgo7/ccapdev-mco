@@ -1,7 +1,3 @@
-{{log "---"}}
-{{log "page: index"}}
-{{log "---"}}
-{{log}}
 <div class="container">
     <img class="logo center py-5" src=img/FrogCritic.png alt="FrogCritic">
     <div class="input-group search-box mb-3">
@@ -23,6 +19,7 @@
         </div>
     </div>
     <div id="game-entries" class="container mx-auto d-flex flex-wrap">
+        {{log}}
         {{log "# Games"}}
         {{log}}
         {{#each games}}
@@ -36,7 +33,6 @@
                         {{title}}
                     </a></h2>
                 <div class="star-rating">
-                    {{log rating}}
                     {{{generateStarRating rating false}}}
                 </div>
                 <p class="fst-italic">

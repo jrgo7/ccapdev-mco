@@ -5,12 +5,18 @@ const path = require('path');
 
 const { users, games, reviews } = require("./data.js");
 
+console.clear();
+
 const app = express();
 
 const hbs = create({
     helpers: {
         equals(x, y) {
             return x === y;
+        },
+
+        pad(string, chars) {
+            return string.padStart(chars, " ");
         },
 
         generateStarRating(stars, isEditable) {
@@ -34,7 +40,6 @@ const hbs = create({
         },
 
         truncateWords(text, wordCount) {
-            console.log('\t' + text);
             let splitText = text.split(" ").splice(0, wordCount).join(" ");
             splitText.trimEnd(",");
             let lastCharacter;
@@ -73,7 +78,7 @@ app.get('/', async (req, res) => {
 
 app.get('/reviews', async (req, res) => {
     let title = req.query.game;
-    console.clear();
+    
     res.render("reviews", {
         "title": title,
         "game": games.find(game => game.title === title),
@@ -90,7 +95,7 @@ app.get('/review', async (req, res) => {
 })
 
 app.get('/profile', async (req, res) => {
-    console.clear();
+    
     let username = req.query.user;
     let user = users.find(user => user.username === username);
     console.log("Searching for " + username + " and found " + user);
@@ -98,18 +103,17 @@ app.get('/profile', async (req, res) => {
         "title": username,
         "username": username,
         "user": user,
-        "isOnline": user.lastSeen.toLowerCase === "online",
         "reviews": reviews.filter(review => review.username === username)
     });
 })
 
 app.get('/register', async (req, res) => {
-    console.clear();
+    
     res.render("register");
 })
 
 app.get('/users', async (req, res) => {
-    console.clear();
+    
     const updatedUsers = users.map(user => ({
         ...user,
         "isOnline": user.lastSeen.toLowerCase() === "online"
@@ -121,6 +125,6 @@ app.get('/users', async (req, res) => {
 
 const PORT = 3000;
 app.listen(PORT, () => {
-    console.clear();
+    
     console.log("Handlebars app is running on http://localhost:3000")
 })

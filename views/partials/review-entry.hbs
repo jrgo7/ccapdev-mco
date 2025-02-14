@@ -1,6 +1,4 @@
-{{log "----review-entry----"}}
-{{log review}}
-{{log user}}
+{{log "*" review.title "-" user.username}}
 
 <div class="col-6 bg-dark shadow review">
     <div class="star-rating">
@@ -23,4 +21,3 @@
     </div>
     {{>review-author-data review=review user=user}}
 </div>
-{{log "--------"}}
