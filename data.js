@@ -1,5 +1,14 @@
 exports.users = [
     {
+        username: "mainFrog",
+        subtitle: "FrogCritic site owner and admin",
+        avatar: "24.png",
+        description: "greninja",
+        lastSeen: "1 years, 2 months ago",
+        accountAge: "3 years",
+        favoriteGame: "Girls' Frontline"
+    },
+    {
         username: "lowy",
         subtitle: "Gacha addict",
         avatar: "18.png",
@@ -16,15 +25,6 @@ exports.users = [
         lastSeen: "Online",
         accountAge: "1 years",
         favoriteGame: "Super Mario World"
-    },
-    {
-        username: "mainFrog",
-        subtitle: "FrogCritic site owner and admin",
-        avatar: "24.png",
-        description: "greninja",
-        lastSeen: "1 years, 2 months ago",
-        accountAge: "3 years",
-        favoriteGame: "Girls' Frontline"
     },
     {
         username: "Roymer",
@@ -121,20 +121,6 @@ exports.games = [
 exports.reviews = [
     {
         game: "Super Mario Bros.",
-        title: "Mario, the Idea vs. Mario, the Man",
-        username: "lowy",
-        date: "March 10, 2024",
-        rating: 4,
-        upvotes: 12,
-        text: "Everyone knows Mario is cool. But who knows what he's thinking? Who knows why he crushes turtles? And why do we think about him as fondly as we think of the mystical (nonexistent?) Dr Pepper? Perchance. I believe it was Kant who said \"Experience without theory is blind, but theory without experience is mere intellectual play.\" Mario exhibits experience by crushing turts all day, but he exhibits theory by stating \"Lets-a go!\" Keep it up, baby! When Mario leaves his place of safety to stomp a turty, he knows that he may Die. And yet, for a man who can purchase lives with money, a life becomes a mere store of value. A tax that can be paid for, much as a rich man feels any law with a fine is a price. We think of Mario as a hero,but he is simply a one percenter of a more privileged export constiety. The lifekind. Perchance.",
-        attachment: {
-            type: "image",
-            filename: "mario.png"
-        },
-        developer_response: "You can't just say perchance."
-    },
-    {
-        game: "Super Mario Bros.",
         title: "The super game of all time",
         username: "wafl",
         date: "January 8, 2025",
@@ -146,6 +132,20 @@ exports.reviews = [
             filename: "tetris.mp4"
         },
         developer_response: "Wrong game, dude."
+    },
+    {
+        game: "Super Mario Bros.",
+        title: "Mario, the Idea vs. Mario, the Man",
+        username: "lowy",
+        date: "March 10, 2024",
+        rating: 4,
+        upvotes: 12,
+        text: "Everyone knows Mario is cool. But who knows what he's thinking? Who knows why he crushes turtles? And why do we think about him as fondly as we think of the mystical (nonexistent?) Dr Pepper? Perchance. I believe it was Kant who said \"Experience without theory is blind, but theory without experience is mere intellectual play.\" Mario exhibits experience by crushing turts all day, but he exhibits theory by stating \"Lets-a go!\" Keep it up, baby! When Mario leaves his place of safety to stomp a turty, he knows that he may Die. And yet, for a man who can purchase lives with money, a life becomes a mere store of value. A tax that can be paid for, much as a rich man feels any law with a fine is a price. We think of Mario as a hero,but he is simply a one percenter of a more privileged export constiety. The lifekind. Perchance.",
+        attachment: {
+            type: "image",
+            filename: "mario.png"
+        },
+        developer_response: "You can't just say perchance."
     },
     {
         game: "Super Mario Bros.",

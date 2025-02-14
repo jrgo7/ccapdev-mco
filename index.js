@@ -26,7 +26,7 @@ const hbs = create({
             let lastCharacterIsPunctuation;
             do {
                 lastCharacter = splitText.slice(-1);
-                lastCharacterIsPunctuation = lastCharacter == ',';
+                lastCharacterIsPunctuation = lastCharacter === ',';
                 if (lastCharacterIsPunctuation) {
                     splitText = splitText.substring(0, splitText.length - 1);
                 }
@@ -38,7 +38,7 @@ const hbs = create({
         },
 
         findUser(username) {
-            let user = users.find(user => user.username == username);
+            let user = users.find(user => user.username === username);
             return user;
         }
     },
@@ -61,30 +61,30 @@ app.get('/reviews', async (req, res) => {
     console.clear();
     res.render("reviews", {
         "title": title,
-        "game": games.find(game => game.title == title),
-        "reviews": reviews.filter(review => review.game == title),
+        "game": games.find(game => game.title === title),
+        "reviews": reviews.filter(review => review.game === title),
     });
 })
 
 app.get('/review', async (req, res) => {
     let username = req.query.user;
     let gameTitle = req.query.game;
-    let review = reviews.find(review => review.username == username && review.game == gameTitle);
-    let user = users.find(user => user.username = username);
+    let review = reviews.find(review => review.username === username && review.game === gameTitle);
+    let user = users.find(user => user.username === username);
     res.render("review", { "title": review.title, "review": review, "user": user });
 })
 
 app.get('/profile', async (req, res) => {
     console.clear();
     let username = req.query.user;
-    let user = users.find(user => user.username == username);
+    let user = users.find(user => user.username === username);
     console.log("Searching for " + username + " and found " + user);
     res.render("profile", {
         "title": username,
         "username": username,
         "user": user,
         "isOnline": user.lastSeen.toLowerCase === "online",
-        "reviews": reviews.filter(review => review.username == username)
+        "reviews": reviews.filter(review => review.username === username)
     });
 })
 
@@ -97,7 +97,7 @@ app.get('/users', async (req, res) => {
     console.clear();
     const updatedUsers = users.map(user => ({
         ...user,
-        isOnline: user.lastSeen.toLowerCase() === "online"
+        "isOnline": user.lastSeen.toLowerCase() === "online"
     }));
 
     res.render("users", { "title": "Users", "users": updatedUsers })

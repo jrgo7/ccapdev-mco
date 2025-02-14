@@ -13,18 +13,19 @@
 }
 
 @keyframes shiftDiagonal {
-    from {
-        background-position: bottom left;
+    0% {
+        background-position: 0 0;
     }
 
-    to {
-        background-position: top right;
+    100% {
+        /* img dimensions are 626x626px*/
+        background-position: 626px -626px;
     }
 }
 
 :root {
     --primary: #732dff;
-    --secondary: #693f9c;
+    --secondary: #411774;
     --white: #fcf8ff;
     --black: #1f1926;
     --gold: #fffb00;
@@ -58,7 +59,7 @@ body {
     background-color: var(--black);
     background-position: center top;
     background-repeat: repeat;
-    animation: shiftDiagonal 60s linear infinite;
+    animation: shiftDiagonal 32s linear infinite;
 }
 
 .center {
@@ -90,6 +91,11 @@ a:hover {
     filter: drop-shadow(5px 5px 5px #222);
 }
 
+.logo-sm {
+    height: 2rem;
+    width: auto;
+}
+
 .search-box {
     max-width: 728px;
     margin: auto;
@@ -115,7 +121,7 @@ a:hover {
 }
 
 .index-game-cover-container:hover {
-    background-color: var(--white);
+    background-color: var(--primary);
 }
 
 /* View individual game */
