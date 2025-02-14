@@ -30,6 +30,9 @@ const hbs = create({
                     onclick = `onclick=setStarRating(${i})`
                     id = `id=star-${i}`;
                     unclickable = "unclickable";
+                    if (stars === -1) { // for leaving a review, you can always "edit" the star rating
+                        unclickable = "allow-editing-always";
+                    }
                 }
                 if (i < stars) {
                     checked = "checked";
