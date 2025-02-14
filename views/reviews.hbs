@@ -45,14 +45,18 @@
 </div>
 
 <div class="container">
-    <h2 class="fw-bold">Latest reviews</h2>
+    <h2 class="fw-bold">Top reviews</h2>
     <div class="d-flex flex-wrap">
         {{log}}
         {{log "##" game.title}}
         {{log}}
+        {{#if reviews}}
         {{#each reviews}}
         {{> review-entry review=this user=(findUser username)}}
         {{/each}}
+        {{else}}
+        <p class="bg-dark shadow py-4 px-4">There are no reviews for this game!</p>
+        {{/if}}
     </div>
 </div>
 

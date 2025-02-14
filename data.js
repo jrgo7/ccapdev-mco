@@ -13,7 +13,7 @@ exports.users = [
         subtitle: "Gacha addict",
         avatar: "lowy.png",
         description: "Gacha addict・Draws sometimes・Inaantok pero ayaw matulog・飛ぶにゃん♪・学マス/Blue Archive(Asia)/プリコネ/ヘブバン/FGO(NA)",
-        lastSeen: "Online",
+        lastSeen: "1 day ago",
         accountAge: "2 years",
         favoriteGame: "Gakuen Idolmaster"
     },
@@ -49,7 +49,7 @@ exports.users = [
         subtitle: "average elation enjoyer",
         avatar: "cgkghj.png",
         description: "Yes, I picked this username on purpose",
-        lastSeen: "1 week ago",
+        lastSeen: "Online",
         accountAge: "3 months",
         favoriteGame: "Minecraft"
     }
@@ -121,20 +121,6 @@ exports.games = [
 exports.reviews = [
     {
         game: "Super Mario Bros.",
-        title: "The super game of all time",
-        username: "wafl",
-        date: "January 8, 2025",
-        rating: 5,
-        upvotes: 310,
-        text: "This is super!",
-        attachment: {
-            type: "video",
-            filename: "tetris.mp4"
-        },
-        developer_response: "Wrong game, dude."
-    },
-    {
-        game: "Super Mario Bros.",
         title: "Mario, the Idea vs. Mario, the Man",
         username: "lowy",
         date: "March 10, 2024",
@@ -146,6 +132,20 @@ exports.reviews = [
             filename: "mario.png"
         },
         developer_response: "You can't just say perchance."
+    },
+    {
+        game: "Super Mario Bros.",
+        title: "The super game of all time",
+        username: "wafl",
+        date: "January 8, 2025",
+        rating: 5,
+        upvotes: 310,
+        text: "This is super!",
+        attachment: {
+            type: "video",
+            filename: "tetris.mp4"
+        },
+        developer_response: "Wrong game, dude."
     },
     {
         game: "Super Mario Bros.",
@@ -188,8 +188,27 @@ exports.reviews = [
         title: "Absolute garbage",
         username: "lowy",
         date: "July 10, 1993",
-        rating: -0,
+        rating: 0,
         upvotes: -100,
         text: "No BGM, confusing story, the ghosts move weirdly."
+    },
+    {
+        game: "EarthBound",
+        title: "Home-stuck",
+        username: "pow",
+        date: "January 8, 2001",
+        rating: 4,
+        upvotes: 3,
+        text: "Guys I forgot to return the book to the librarian how cooked am I"
+    },
+    {
+        game: "Pokémon: Red Version",
+        title: "Are you red-y to go catch Mew?",
+        username: "Roymer",
+        date: "January 8, 2021",
+        rating: 5,
+        upvotes: 3,
+        text: "I caught Mew under the truck. To do this, you need to undergo a really easy process! However because the review page is too small the proof cannot fit.",
+        developer_response: "Mew was coded in as- Oh, that would spoil the fun."
     }
 ]

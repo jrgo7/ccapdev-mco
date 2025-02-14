@@ -73,16 +73,15 @@ app.use(express.static('public'));
 // mongoose.connect("mongodb://127.0.0.1:27017/reviewapp");
 
 app.get('/', async (req, res) => {
-    res.render("index", { "title": "Main Page", "games": games });
+    res.render("index", { "title": "Main Page", "games": games.sort((game1, game2) => game2.rating - game1.rating) });
 })
 
 app.get('/reviews', async (req, res) => {
     let title = req.query.game;
-
     res.render("reviews", {
         "title": title,
         "game": games.find(game => game.title === title),
-        "reviews": reviews.filter(review => review.game === title),
+        "reviews": reviews.filter(review => review.game === title).sort((review1, review2) => review2.upvotes - review1.upvotes)
     });
 })
 
@@ -102,18 +101,18 @@ app.get('/profile', async (req, res) => {
         "title": username,
         "username": username,
         "user": user,
-        "reviews": reviews.filter(review => review.username === username)
+        "reviews": reviews.filter(review => review.username === username).sort((review1, review2) => review2.upvotes - review1.upvotes)
     });
 })
 
 app.get('/register', async (req, res) => {
-
     res.render("register");
 })
 
 app.get('/users', async (req, res) => {
-
-    res.render("users", { "title": "Users", "users": users })
+    res.render("users", {
+        "title": "Users", "users": users.sort((user1, user2) => user1.username.localeCompare(user2.username))
+    })
 })
 
 

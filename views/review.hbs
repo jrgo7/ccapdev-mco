@@ -4,7 +4,6 @@
 {{log review.text}}
 <div class="container pt-5 col-8">
     <div class="mt-2 bg-dark shadow px-4 py-4">
-        <p><a id="return-game" href="reviews?game={{review.game}}">View {{review.game}}</a></p>
         <div id="star-rating" class="star-rating pt-2">
             {{{generateStarRating review.rating true}}}
             <div class="votes">
@@ -24,7 +23,6 @@
             Toggle attachment
         </button>
         <div id="attachment-container" class="collapse">
-            {{!-- ? Multiple attachments via an array? --}}
             {{#if (equals review.attachment.type "image")}}
             <img id="attachment" class="attachment attachment-img my-4"
                 src="img/review-attachment/{{review.attachment.filename}}" alt="{{review.attachment}}">
