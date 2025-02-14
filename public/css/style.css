@@ -77,12 +77,16 @@ a:hover {
     text-decoration: underline;
 }
 
+.fade-in {
+    animation: fadeIn 0.6s ease-out;
+
+}
+
 /* Index */
 
 .logo {
     max-width: 512px;
     height: auto;
-    animation: fadeIn 0.6s ease-out;
     filter: drop-shadow(5px 5px 5px #222);
 }
 
@@ -96,7 +100,6 @@ a:hover {
     margin: 16px;
     width: 100%;
     background-color: var(--secondary);
-    animation: fadeIn 0.6s ease-out;
 }
 
 .index-game-cover-container {
@@ -190,7 +193,12 @@ a:hover {
 }
 
 .review-date {
-    color: var(--secondary);
+    color: var(--white);
+}
+
+.attachment {
+    height: auto;
+    max-width: 100%;
 }
 
 /* Member List */
@@ -218,10 +226,6 @@ a:hover {
 }
 
 /* Registration */
-
-.register-box {
-    animation: fadeIn 0.6s ease-out;
-}
 
 .register-input {
     width: 100%;

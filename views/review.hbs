@@ -15,18 +15,26 @@
             {{review.text}}
         </p>
 
-        {{!-- TODO: Use the below link to toggle attachment content --}}
-        {{!-- https://getbootstrap.com/docs/5.0/components/collapse/ --}}
-        {{!-- ? Multiple attachments via an array? --}}
         {{#if review.attachment}}
-        {{#if (equals review.attachment.type "image")}}
-        <img class="my-4" src="img/review-attachment/{{review.attachment.filename}}" alt="{{review.attachment}}">
-        {{/if}}
-        {{#if (equals review.attachment.type "video")}}
-        <video width="480" controls>
-            <source src="img/review-attachment/{{review.attachment.filename}}">
-        </video>
-        {{/if}}
+        <button class="btn btn-primary mb-2" data-bs-toggle="collapse" data-bs-target="#attachment-container">
+            Toggle attachment
+        </button>
+        <div id="attachment-container" class="collapse">
+            {{!-- ? Multiple attachments via an array? --}}
+            {{#if (equals review.attachment.type "image")}}
+            <img id="attachment" class="attachment attachment-img my-4"
+                src="img/review-attachment/{{review.attachment.filename}}" alt="{{review.attachment}}">
+            {{/if}}
+            {{#if (equals review.attachment.type "video")}}
+            <video id="attachment" class="attachment attachment-video my-4" controls>
+                <source src="img/review-attachment/{{review.attachment.filename}}">
+            </video>
+            {{/if}}
+        </div>
+        {{else}}
+        <p class="mb-2">
+            (No attachment.)
+        </p>
         {{/if}}
 
         {{> review-author-data review=review user=user}}
