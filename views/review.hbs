@@ -14,10 +14,10 @@
             </div>
         </div>
 
-        <h1 id="title" class="allow-editing fw-bold fs-2 mb-2">{{review.title}}</h1>
-        <p id="text" class="allow-editing">
+        <h1 id="title" class="allow-editing w-100 h-75 fw-bold fs-2 mb-2">{{review.title}}</h1>
+        <div id="text" class="allow-editing w-100 h-75 mb-2">
             {{review.text}}
-        </p>
+        </div>
 
         {{#if review.attachment}}
         <button class="btn btn-primary mb-2" data-bs-toggle="collapse" data-bs-target="#attachment-container">
@@ -58,6 +58,9 @@
     <div class="mt-2 py-2">
         <button id="edit-button" class="btn btn-primary" onclick="toggleEdit()">
             Edit
+        </button>
+        <button id="change-boxart-button" class="btn btn-primary" onclick="uploadFile()">
+            Change attachment
         </button>
         <button id="delete-button" class="btn btn-danger" disabled>
             Delete

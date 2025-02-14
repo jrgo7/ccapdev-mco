@@ -34,7 +34,7 @@
             {{log "| -------------------- | -------------------------------- | -------------------- |" }}
             {{#each users}}
             {{log "|" (pad username 20) "|" (pad lastSeen 32) "|" (pad accountAge 20) "|"}}
-            {{#if isOnline}}
+            {{#if (equals lastSeen "Online")}}
             <tr class="table-success" onclick="window.location.href='profile?user={{username}}'">
                 {{else}}
             <tr onclick="window.location.href='profile?user={{username}}'">

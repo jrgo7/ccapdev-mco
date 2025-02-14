@@ -12,8 +12,14 @@
             <div id="star-rating" class="star-rating">
                 {{{generateStarRating game.rating false}}}
             </div>
-            <p id="game-description-text" class="allow-editing">
+            <div id="game-description-text" class="allow-editing w-100">
                 {{game.description}}
+            </div>
+            <p class="fst-italic">
+                Source:
+                <a class="block-link allow-editing" href="{{game.source.link}}">
+                    {{game.source.name}}
+                </a>
             </p>
             <div class="leave-rating">
                 <h2 class="fw-bold fs-2">Have you played this game before?</h2>

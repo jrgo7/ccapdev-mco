@@ -2,7 +2,7 @@ exports.users = [
     {
         username: "mainFrog",
         subtitle: "FrogCritic site owner and admin",
-        avatar: "24.png",
+        avatar: "mainFrog.png",
         description: "greninja",
         lastSeen: "1 years, 2 months ago",
         accountAge: "3 years",
@@ -11,7 +11,7 @@ exports.users = [
     {
         username: "lowy",
         subtitle: "Gacha addict",
-        avatar: "18.png",
+        avatar: "lowy.png",
         description: "Gacha addict・Draws sometimes・Inaantok pero ayaw matulog・飛ぶにゃん♪・学マス/Blue Archive(Asia)/プリコネ/ヘブバン/FGO(NA)",
         lastSeen: "Online",
         accountAge: "2 years",
@@ -19,8 +19,8 @@ exports.users = [
     },
     {
         username: "wafl",
-        subtitle: "Zenshoku zenshin, Yousoro!",
-        avatar: "5.png",
+        subtitle: "Faito da-yousoro!",
+        avatar: "wafl.png",
         description: "Together, we can show the world what we can do!",
         lastSeen: "Online",
         accountAge: "1 years",
@@ -29,7 +29,7 @@ exports.users = [
     {
         username: "Roymer",
         subtitle: ":mew:",
-        avatar: "29.png",
+        avatar: "roymer.png",
         description: "I'm Roemer I check my inbox pretty frequently, so feel free to send something! Good morning. Order for Roemer? No, not Robert, swap the B with an M. Also, there is no T. No it's not Romer, it's like Ro-E-mer. No, it's not Roymer. There is an E. Yeah it's before the M. No, replace the Y with an E. No, that's still not it... Yeah.... Here, let me just show you my ID...",
         lastSeen: "4 years, 5 months ago",
         accountAge: "6 years",
@@ -38,7 +38,7 @@ exports.users = [
     {
         username: "pow",
         subtitle: "•_•",
-        avatar: "13.png",
+        avatar: "pow.png",
         description: "",
         lastSeen: "Online",
         accountAge: "10 years",
@@ -47,7 +47,7 @@ exports.users = [
     {
         username: "cgkghj",
         subtitle: "average elation enjoyer",
-        avatar: "1.png",
+        avatar: "cgkghj.png",
         description: "Yes, I picked this username on purpose",
         lastSeen: "1 week ago",
         accountAge: "3 months",

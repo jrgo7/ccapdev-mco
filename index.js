@@ -78,7 +78,7 @@ app.get('/', async (req, res) => {
 
 app.get('/reviews', async (req, res) => {
     let title = req.query.game;
-    
+
     res.render("reviews", {
         "title": title,
         "game": games.find(game => game.title === title),
@@ -95,10 +95,9 @@ app.get('/review', async (req, res) => {
 })
 
 app.get('/profile', async (req, res) => {
-    
+
     let username = req.query.user;
     let user = users.find(user => user.username === username);
-    console.log("Searching for " + username + " and found " + user);
     res.render("profile", {
         "title": username,
         "username": username,
@@ -108,23 +107,18 @@ app.get('/profile', async (req, res) => {
 })
 
 app.get('/register', async (req, res) => {
-    
+
     res.render("register");
 })
 
 app.get('/users', async (req, res) => {
-    
-    const updatedUsers = users.map(user => ({
-        ...user,
-        "isOnline": user.lastSeen.toLowerCase() === "online"
-    }));
 
-    res.render("users", { "title": "Users", "users": updatedUsers })
+    res.render("users", { "title": "Users", "users": users })
 })
 
 
 const PORT = 3000;
 app.listen(PORT, () => {
-    
+
     console.log("Handlebars app is running on http://localhost:3000")
 })
