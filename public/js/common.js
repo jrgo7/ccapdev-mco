@@ -9,7 +9,7 @@ function toggleEdit() {
         if (star.classList.contains("unclickable")) {
             star.classList.remove("unclickable");
             star.style.textDecoration = 'underline';
-        } else {
+        } else if (!star.classList.contains("allow-editing-always")) { // allow-editing-always is for leaving a review
             star.classList.add("unclickable");
             star.style.textDecoration = 'none';
         }
