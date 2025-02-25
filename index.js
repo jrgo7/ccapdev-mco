@@ -5,11 +5,36 @@ const path = require('path');
 
 const { users, games } = require("./data.js");
 
-console.clear();
-
 const app = express();
 const Review = require("./database/models/reviewModel");
+const Game = require("./database/models/gameModel");
 
+console.clear();
+
+/**
+ *  Retrieve game data from `data.js`
+ */
+async function resetGames() {
+    await Game.deleteMany({});
+    games.forEach(game => {
+        Game.create(
+            {
+                title: game.title,
+                developer: game.developer,
+                release_date: Date(game.date),
+                description: game.description,
+                back: `img/back/boxart/${game.file}.png`,
+                cover: `img/cover/boxart/${game.file}.png`,
+                source: {
+                    name: game.source.name,
+                    link: game.source.link
+                }
+            }
+        )
+    })
+  }
+
+resetGames();
 
 const hbs = create({
     helpers: {
@@ -147,7 +172,7 @@ app.get('/profile', async (req, res) => {
         "title": username,
         "username": username,
         "user": user,
-        "reviews": (await Review.find({username: username}).lean()).sort(reviewByUpvotes)
+        "reviews": (await Review.find({ username: username }).lean()).sort(reviewByUpvotes)
     });
 })
 
