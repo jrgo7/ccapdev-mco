@@ -68,26 +68,41 @@
             </div>
             <div class="modal-body">
                 <form id="leave-review-form" action="/submit-review" method="post">
+
                     <div class="form-group mb-3">
                         <label for="leave-review-rating">Rating</label>
                         <div id="leave-review-rating" class="star-rating-allow-editing">
                             {{{generateStarRating -1 true}}}
                         </div>
+                        <input id="leave-review-star-rating" name="rating" class="form-control"
+                            placeholder="Star Rating (WILL BE HIDDEN IN PROD)" type="hidden">
                     </div>
 
                     <div class="form-group mb-3">
                         <label for="leave-review-title">Title</label>
-                        <input name="title" class="form-control" type="text" id="leave-review-title" placeholder="Title">
+                        <input name="title" class="form-control" type="text" id="leave-review-title"
+                            placeholder="Title">
                     </div>
 
-                    <div class="form-group">
+                    <div class="form-group mb-3">
                         <label class="form-label" for="leave-review-description">Description</label>
                         <textarea name="text" class="form-control" id="leave-review-description" rows="8" cols="120"
                             placeholder="Description"></textarea>
                     </div>
 
-                <input type="hidden" name="game" id="leave-review-game" value="{{game.title}}">
+                    <div class="form-group mb-3">
+                        <label for="leave-review-attachment" name="attachment">Attachment (Doesn't work yet)</label>
+                        <input type="file" class="form-control">
+                    </div>
 
+                    <div class="form-group">
+                        <label for="leave-review-title">Username</label>
+                        <input name="username" class="form-control" type="text" id="leave-review-username"
+                            placeholder="Username (WILL BE DYNAMIC IN MCO3)">
+                    </div>
+
+                    <input type="hidden" name="game" id="leave-review-game" value="{{game.title}}">
+                    
                 </form>
             </div>
             <div class="modal-footer">

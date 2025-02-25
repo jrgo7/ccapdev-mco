@@ -45,13 +45,24 @@
 
     <div class="mt-4 bg-dark shadow px-4 py-4">
         <h2 class="fw-bold fs-2">Developer Response</h2>
-        <p id="developer-response" class="allow-editing">
-            {{#if review.developer_response}}
-            {{review.developer_response}}
+        <div id="developer-response" class="allow-editing">
+            {{#if review.developer_response.text}}
+            <p>
+                {{review.developer_response.text}}
+            </p>
+            <p>
+                Replied {{formatDate review.developer_response.post_date}}
+                {{#if (equals review.developer_response.post_date review.developer_response.edit_date)}}
+                {{!-- nothing --}}
+                {{else}}
+                (edited {{formatDate review.developer_response.edit_date}})
+                {{/if}}
+            </p>
             {{else}}
             (No response.)
             {{/if}}
-        </p>
+        </div>
+
     </div>
     <div class="mt-2 py-2">
         <button id="edit-button" class="btn btn-primary" onclick="toggleEdit()">

@@ -13,6 +13,13 @@
             </a>
 
         </p>
-        <p class="fst-italic review-date">{{review.date}}</p>
+        <p class="fst-italic review-date">
+            {{formatDate review.post_date}}
+            {{#if (dateEquals review.post_date review.edit_date)}}
+            {{!-- Nothing --}}
+            {{else}}
+            (edited {{formatDate review.edit_date}})
+            {{/if}}
+        </p>
     </div>
 </div>

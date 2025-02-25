@@ -20,13 +20,14 @@ function toggleEdit() {
 }
 
 function setStarRating(rating) {
-    for (i = 1; i <= 5; i++) {
+    document.getElementById("leave-review-star-rating").value = rating;
+    for (i = 1; i <= rating; i++) {
         let star = document.getElementById(`star-${i}`);
-        if (i <= rating) {
-            star.style.color = "var(--gold)";
-        } else {
-            star.style.color = "var(--white)";
-        }
+        star.style.color = "var(--gold)";
+    }
+    for (i = rating + 1; i <= 5; i++) {
+        let star = document.getElementById(`star-${i}`);
+        star.style.color = "var(--white)";
     }
 }
 
