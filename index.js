@@ -8,6 +8,8 @@ const { users, games, reviews } = require("./data.js");
 console.clear();
 
 const app = express();
+const Review = require("./database/models/reviewModel");
+
 
 const hbs = create({
     helpers: {
@@ -71,9 +73,11 @@ const hbs = create({
 
 app.engine('hbs', hbs.engine);
 app.set("view engine", "hbs");
+app.use(express.json());
 app.use(express.static('public'));
+app.use(express.urlencoded( {extended: true}));
 
-// mongoose.connect("mongodb://127.0.0.1:27017/reviewapp");
+mongoose.connect("mongodb://127.0.0.1:27017/reviewapp");
 
 app.get('/', async (req, res) => {
     res.render("index", { "title": "Main Page", "games": games.sort((game1, game2) => game2.rating - game1.rating) });
@@ -91,9 +95,16 @@ app.get('/reviews', async (req, res) => {
 app.get('/review', async (req, res) => {
     let username = req.query.user;
     let gameTitle = req.query.game;
-    let review = reviews.find(review => review.username === username && review.game === gameTitle);
     let user = users.find(user => user.username === username);
-    res.render("review", { "title": review.title, "review": review, "user": user });
+
+    /*Mongodb Approach */
+    const review2 = await Review.findOne({game: gameTitle}, {}, {username: username}, {}).lean();
+    res.render("review", { "title": review2.title, "review": review2, "user": user });
+
+    /*Non Mongodb approach */
+    // let review = reviews.find(review => review.username === username && review.game === gameTitle);
+    // res.render("review", { "title": review.title, "review": review, "user": user });
+
 })
 
 app.get('/profile', async (req, res) => {
@@ -118,9 +129,34 @@ app.get('/users', async (req, res) => {
     })
 })
 
+app.post('/submit-review', async (req, res) => {
+    /* Tentative before we include Login */
+    const username = "416"
+
+    Review.create({
+        game: req.body.game,
+        title: req.body.title,
+        username: username,
+        date: Date.now(),
+        rating: 0,
+        upvotes: 0,
+        text: req.body.text,
+        developer_response: "",
+    });
+
+    const review = await Review.findOne({game: req.body.game}, {}, {username: username}, {}).lean();
+
+    if (!review) {
+        return res.status(404).send("Review not found.");
+    }
+
+    console.log("Review found:", review);
+    
+    res.redirect(`/review?user=${username}&game=${req.body.game}`);
+});
+
 
 const PORT = 3000;
 app.listen(PORT, () => {
-
     console.log("Handlebars app is running on http://localhost:3000")
 })

@@ -1,5 +1,14 @@
 exports.users = [
     {
+        username: "416",
+        subtitle: "",
+        avatar: "416.png",
+        description: "",
+        lastSeen: "2 months ago",
+        accountAge: "1 year",
+        favoriteGame: "Girls' Frontline"
+    },
+    {
         username: "mainFrog",
         subtitle: "FrogCritic site owner and admin",
         avatar: "mainFrog.png",

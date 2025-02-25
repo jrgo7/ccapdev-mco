@@ -35,3 +35,9 @@ function uploadFile() {
     input.type = "file";
     input.click();
 }
+
+//Add listeners to buttons
+document.getElementById("submit-review").addEventListener("click", function() {
+    document.getElementById("leave-review-form").submit();
+});
+
