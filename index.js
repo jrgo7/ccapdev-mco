@@ -1,5 +1,7 @@
 const express = require('express')
 const mongoose = require('mongoose')
+const session = require("express-session");
+const cookieParser = require("cookie-parser");
 const { create } = require('express-handlebars')
 const path = require('path');
 
@@ -7,6 +9,7 @@ const { users, games } = require("./data.js");
 
 const app = express();
 const Review = require("./database/models/reviewModel");
+const User = require("./database/models/userModel");
 const Game = require("./database/models/gameModel");
 
 console.clear();
@@ -32,7 +35,7 @@ async function resetGames() {
             }
         )
     })
-  }
+}
 
 resetGames();
 
@@ -129,6 +132,15 @@ app.set("view engine", "hbs");
 app.use(express.json());
 app.use(express.static('public'));
 app.use(express.urlencoded({ extended: true }));
+app.use(
+    session(
+        {
+            secret: "secret-key",
+            resave: false,
+            saveUninitialized: false,
+        }
+    )
+);
 
 mongoose.connect("mongodb://127.0.0.1:27017/reviewapp");
 
@@ -243,6 +255,66 @@ app.post('/submit-review', async (req, res) => {
     res.redirect(`/review?user=${username}&game=${game}`);
 });
 
+app.post("/login", async (req,res) => {
+    const email = req.body.email;
+    const password = req.body.password;
+
+    try {
+        const user = await User.findOne({ email: email }).lean();
+
+        if (!user) {
+            return res.status(401).send("Invalid email.");
+        }
+
+        if (user.password !== password) {
+            return res.status(401).send("Invalid email or password.");
+        }
+
+        req.session.user = user; 
+
+        res.redirect("/"); 
+    } catch (error) {
+        console.error("Login error:", error);
+        res.status(500).send("An error occurred. Please try again.");
+    }
+})
+
+app.post("/register", async (req,res) => {
+    const username = req.body.username;
+    const email = req.body.email;
+    const password = req.body.password;
+    const conf_password = req.body.conf_password;
+
+    try {
+        const user = await User.findOne({ email: email }).lean();
+
+        if (user) {
+            return res.status(401).send("Email is in use");
+        } else if (password !== conf_password) {
+            return res.send("Passwords dont match");
+        }
+
+        await User.create({
+            email: email,    
+            password: password,
+            username: username,
+            subtitle: "",
+            avatar: "",
+            description: "",
+            lastSeen: Date.now(),
+            accountCreateDate: Date.now(),
+            favoriteGame: ""
+        })
+
+        req.session.user = await User.findOne({ email: email }).lean();
+        res.cookie("sessionID", req.sessionID);
+
+        res.redirect("/"); 
+    } catch (error) {
+        console.error("Register error:", error);
+        res.status(500).send("An error occurred. Please try again.");
+    }
+})
 
 const PORT = 3000;
 app.listen(PORT, () => {
