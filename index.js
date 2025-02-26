@@ -288,9 +288,9 @@ app.get("/logout", (req, res) => {
 
 // POST routes
 
-app.post('/submit-review', async (req, res) => {
+app.post('/submit-review', isAuthenticated, async (req, res) => {
     console.log(req.body);
-    const username = req.body.username;
+    const username = req.session.user.username;
     const game = req.body.game;
 
     // If updating an exisitng record, update the edit date
@@ -300,7 +300,7 @@ app.post('/submit-review', async (req, res) => {
     await Review.updateOne(
         {
             // "WHERE"
-            username: username, // ! WILL BE DYNAMIC IN MCO3
+            username: username,
             game: game
         },
         {
@@ -314,7 +314,7 @@ app.post('/submit-review', async (req, res) => {
     await Review.updateOne(
         {
             // "WHERE"
-            username: username, // ! WILL BE DYNAMIC IN MCO3
+            username: username,
             game: game
         },
         {
