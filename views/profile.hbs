@@ -34,17 +34,20 @@
         </div>
     </div>
 
-    <div class="my-2">
-        <button id="edit-button" class="btn btn-primary" onclick="toggleEdit()">
-            Edit
-        </button>
-        <button id="change-boxart-button" class="btn btn-primary" onclick="uploadFile()">
-            Change profile picture
-        </button>
-        <button id="delete-button" class="btn btn-danger" disabled>
-            Delete
-        </button>
-    </div>
+    {{#if (equals loggedUser.email user.email)}}
+        <div class="my-2">
+            <button id="edit-button" class="btn btn-primary" onclick="toggleEdit()">
+                Edit
+            </button>
+            <button id="change-boxart-button" class="btn btn-primary" onclick="uploadFile()">
+                Change profile picture
+            </button>
+            <button id="delete-button" class="btn btn-danger" disabled>
+                Delete
+            </button>
+        </div>
+    {{else}}
+    {{/if}}
 </div>
 
 <div class="container">
