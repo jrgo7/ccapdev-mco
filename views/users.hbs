@@ -38,7 +38,7 @@
                 {{else}}
             <tr onclick="window.location.href='profile?user={{username}}'">
                 {{/if}}
-                <td><img src="/img/avatar/{{avatar}}" alt="Avatar" class="avatar"></td>
+                <td><img src="{{defaultAvatar avatar}}" alt="Avatar" class="avatar"></td>
                 <td>{{username}}</td>
                 {{#if (isNow lastSeen)}}
                     <td>Online</td>

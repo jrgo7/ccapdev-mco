@@ -3,7 +3,7 @@
 {{log}}
 <div class="container my-5 py-5 px-5">
     <div id="hero" class="bg-dark shadow d-flex flex-wrap px-4 py-4">
-        <img id="avatar" class="avatar avatar-big me-4" src="/img/avatar/{{user.avatar}}">
+        <img id="avatar" class="avatar avatar-big me-4" src="{{defaultAvatar user.avatar}}">
         <div class="profile-hero">
             <h1 id="username" class="fw-bold">{{user.username}}</h1>
             <div id="subtitle" class="fst-italic fs-2 allow-editing">{{user.subtitle}}</div>

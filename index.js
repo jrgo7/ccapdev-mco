@@ -272,8 +272,10 @@ app.get('/register', async (req, res) => {
 })
 
 app.get('/users', async (req, res) => {
+    const allUsers = await User.find({}).lean();
+    console.log(allUsers);
     res.render("users", {
-        "title": "Users", "users": users.sort(userByName)
+        "title": "Users", "users": allUsers
     })
 })
 
