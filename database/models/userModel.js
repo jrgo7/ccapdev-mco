@@ -5,6 +5,7 @@ const userSchema = mongoose.Schema({
         type: String, 
         required: true
     },    
+    // TODO - Password is still in plain text, better stored hashed
     password: {
         type: String, 
         required: true

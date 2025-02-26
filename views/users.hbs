@@ -26,24 +26,28 @@
             </tr>
         </thead>
         <tbody id="users-table" class="table-group-divider clickable-table-rows">
-            {{log}}
+            {{!-- {{log}}
             {{log "## Users"}}
             {{log}}
             {{log "|" (pad "Username" 20) "|" (pad "Last Seen" 32) "|" (pad "Account Age" 20) "|"}}
-            {{log "| -------------------- | -------------------------------- | -------------------- |" }}
+            {{log "| -------------------- | -------------------------------- | -------------------- |" }} --}}
             {{#each users}}
-            {{log "|" (pad username 20) "|" (pad lastSeen 32) "|" (pad accountAge 20) "|"}}
-            {{#if (equals lastSeen "Online")}}
+            {{!-- {{log "|" (pad username 20) "|" (pad lastSeen 32) "|" (pad accountAge 20) "|"}} --}}
+            {{#if (isNow lastSeen)}}
             <tr class="table-success" onclick="window.location.href='profile?user={{username}}'">
                 {{else}}
             <tr onclick="window.location.href='profile?user={{username}}'">
                 {{/if}}
                 <td><img src="/img/avatar/{{avatar}}" alt="Avatar" class="avatar"></td>
                 <td>{{username}}</td>
-                <td>{{lastSeen}}</td>
-                <td>{{accountAge}}</td>
+                {{#if (isNow lastSeen)}}
+                    <td>Online</td>
+                {{else}}
+                    <td>{{formatDate lastSeen}}</td>
+                {{/if}}
+                <td>{{accountAge accountCreateDate}}</td>
             </tr>
-            {{/each }}
+            {{/each}}
         </tbody>
     </table>
 </div>

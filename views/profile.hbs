@@ -8,10 +8,10 @@
             <h1 id="username" class="fw-bold">{{user.username}}</h1>
             <div id="subtitle" class="fst-italic fs-2 allow-editing">{{user.subtitle}}</div>
             <div id="last-seen" class="fw-bold">
-                {{#if (equals user.lastSeen "Online")}}
-                {{user.lastSeen}}
+                {{#if (isNow user.lastSeen)}}
+                    Online
                 {{else}}
-                Last seen {{user.lastSeen}}
+                Last seen {{formatDate user.lastSeen}}
                 {{/if}}
             </div>
         </div>
@@ -29,7 +29,7 @@
             </hgroup>
             <hgroup class="bg-dark shadow px-4 py-4 mx-2 my-2">
                 <h2 class="profile-header">Account age</h2>
-                <span id="account-age">{{user.accountAge}}</span>
+                <span id="account-age">{{accountAge user.accountCreateDate}}</span>
             </hgroup>
         </div>
     </div>

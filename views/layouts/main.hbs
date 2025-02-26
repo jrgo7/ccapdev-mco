@@ -1,3 +1,5 @@
+{{log loggedUser}}
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -12,7 +14,7 @@
 </head>
 <body>
     <!-- Login Modal -->
-    <div class="modal fade" id="login" tabindex="-1" role="dialog" aria-labelledby="loginLabel" aria-hidden="true">
+    <div class="modal fade fade-in" id="login" tabindex="-1" role="dialog" aria-labelledby="loginLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content bg-dark">
                 <div class="modal-header">
@@ -61,15 +63,16 @@
             <div class="ms-auto dropdown mx-4 ">
                 <button class="btn btn-default dropdown-toggle" type="button" data-bs-toggle="dropdown"
                     aria-haspopup="true" aria-expanded="false">
-                    <img class="avatar" src="img/avatar/lowy.png" alt="Avatar">
+                    <img class="avatar" src="{{defaultAvatar loggedUser.avatar}}" alt="Avatar">
                     <span class="caret"></span>
                 </button>
                 <div class="dropdown-menu">
-                    <a class="dropdown-item" href="profile?user=lowy">Account</a>
+                    <a class="dropdown-item" href="selfprofile" >Account</a>
 
                     <div class="dropdown-divider"></div>
                     <a class="dropdown-item" href="#login" data-bs-toggle="modal" data-target="#login">Log In</a>
                     <a class="dropdown-item" href="register" >Register</a>
+                    <a class="dropdown-item" href="logout" >Logout</a>
                 </div>
             </div>
         </div>

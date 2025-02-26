@@ -37,17 +37,88 @@ async function resetGames() {
     })
 }
 
+async function resetExistingUsers() {
+    const emailsToDelete = [
+        "416@hk.com",
+        "main@frog.com",
+        "lowest@low.com",
+        "wafl@rain.com",
+        "roymer@roemer.com",
+        "pow@cc.com",
+        "cgk@ghj.com"
+    ];
+
+    await User.deleteMany({ email: { $in: emailsToDelete } });
+    
+    users.forEach(user => {
+        User.create(
+            {
+                email: user.email,    
+                password: user.password,
+                username: user.username,
+                subtitle: user.subtitle,
+                avatar: user.avatar,
+                description: user.description,
+                lastSeen: user.lastSeen,
+                accountCreateDate: user.accountCreateDate,
+                favoriteGame: user.favoriteGame
+            }
+        )
+    })
+}
+
 resetGames();
+resetExistingUsers();
 
 const hbs = create({
     helpers: {
+
+        defaultAvatar: function (avatar) {
+            return avatar ? `img/avatar/${avatar}` : "img/avatar/guest.png";
+        },
+
         equals(x, y) {
             return x === y;
+        },
+
+        /**
+         * @param {Date} date 
+         */
+        formatDate(date) {
+            return date.toLocaleDateString('en-us', {
+                year: "numeric",
+                month: "short",
+                day: "numeric"
+            })
         },
 
         // Using normal `equals()` would compare the references instead of the actual values
         dateEquals(d1, d2) {
             return d1.getTime() === d2.getTime();
+        },
+
+        isNow(date){
+            const now = new Date();
+            return date.toDateString() === now.toDateString();
+        },
+        
+        accountAge(date) {
+            const now = new Date();
+            const diffTime = now - date;
+        
+            const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24)); // Convert to days
+            const diffMonths = Math.floor(diffDays / 30); // Approximate months
+            const diffYears = Math.floor(diffDays / 365); // Approximate years
+        
+            if (diffYears > 0) {
+                return `${diffYears} year${diffYears === 1 ? "" : "s"}`;
+            } else if (diffMonths > 0) {
+                return `${diffMonths} month${diffMonths === 1 ? "" : "s"}`;
+            } else if (diffDays > 0) {
+                return `${diffDays} day${diffDays === 1 ? "" : "s"}`;
+            } else {
+                return "Less than a day";
+            }
         },
 
         findUser(username) {
@@ -109,18 +180,6 @@ const hbs = create({
                 splitText += "...";
             }
             return splitText;
-        },
-
-        /**
-         * 
-         * @param {Date} date 
-         */
-        formatDate(date) {
-            return date.toLocaleDateString('en-us', {
-                year: "numeric",
-                month: "short",
-                day: "numeric"
-            })
         }
     },
     extname: ".hbs",
@@ -150,10 +209,27 @@ const gameByRating = (game1, game2) => game2.rating - game1.rating;
 const reviewByUpvotes = (review1, review2) => review2.upvotes - review1.upvotes;
 const userByName = (user1, user2) => user1.username.localeCompare(user2.username);
 
+
+//Checks if a user is logged in
+const isAuthenticated = (req,res,next) => {
+    if (req.session.user){
+        next();
+    }
+    else{
+        res.redirect("/register");
+    }
+}
+
+//Middleware to pass user automatically
+app.use((req, res, next) => {
+    res.locals.loggedUser = req.session.user;
+    next();
+});
+
 // GET routes
 
 app.get('/', async (req, res) => {
-    res.render("index", { "title": "Main Page", "games": games.sort(gameByRating) });
+    res.render("index", { "title": "Main Page", "games": games.sort(gameByRating)} );
 })
 
 app.get('/reviews', async (req, res) => {
@@ -176,10 +252,13 @@ app.get('/review', async (req, res) => {
 
 })
 
-app.get('/profile', async (req, res) => {
+app.get('/selfprofile', isAuthenticated, async (req, res) => {
+    res.redirect(`/profile?user=${req.session.user.username}`)
+});
 
+app.get('/profile', async (req, res) => {
     let username = req.query.user;
-    let user = users.find(user => user.username === username);
+    const user = await User.findOne({ username: username}).lean();
     res.render("profile", {
         "title": username,
         "username": username,
@@ -195,6 +274,13 @@ app.get('/register', async (req, res) => {
 app.get('/users', async (req, res) => {
     res.render("users", {
         "title": "Users", "users": users.sort(userByName)
+    })
+})
+
+app.get("/logout", (req, res) => {
+    req.session.destroy(() => {
+        res.clearCookie("sessionID");
+        res.redirect("/")
     })
 })
 
@@ -271,7 +357,8 @@ app.post("/login", async (req,res) => {
         }
 
         req.session.user = user; 
-
+        res.cookie("sessionID", req.sessionID);
+        
         res.redirect("/"); 
     } catch (error) {
         console.error("Login error:", error);
