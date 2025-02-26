@@ -1,68 +1,82 @@
 exports.users = [
     {
+        email: "416@hk.com",
+        password: "1234",
         username: "416",
-        subtitle: "",
+        subtitle: "Shikikan <3",
         avatar: "416.png",
-        description: "",
-        lastSeen: "2 months ago",
-        accountAge: "1 year",
+        description: "HK416, originally my name was HKM4 when first unveiled, then it was taken away... Why? (Heh) I'll leave that to your imagination. After that, I gained a new name and underwent severe modifications, which caused a lot of controversy during that time. Commander, I will make you forget about all of those people-- Only me, all you need is me.",
+        lastSeen: new Date(Date.now() - 2 * 30 * 24 * 60 * 60 * 1000), // 2 months ago
+        accountCreateDate: new Date(Date.now() - 1 * 365 * 24 * 60 * 60 * 1000), // 1 year ago
         favoriteGame: "Girls' Frontline"
     },
     {
+        email: "main@frog.com",
+        password: "mf24",
         username: "mainFrog",
         subtitle: "FrogCritic site owner and admin",
         avatar: "mainFrog.png",
         description: "greninja",
-        lastSeen: "1 years, 2 months ago",
-        accountAge: "3 years",
+        lastSeen: new Date(Date.now() - (1 * 365 + 2 * 30) * 24 * 60 * 60 * 1000), // 1 year, 2 months ago
+        accountCreateDate: new Date(Date.now() - 3 * 365 * 24 * 60 * 60 * 1000), // 3 years ago
         favoriteGame: "Girls' Frontline"
     },
     {
+        email: "lowest@low.com",
+        password: "low15",
         username: "lowy",
         subtitle: "Gacha addict",
         avatar: "lowy.png",
         description: "Gacha addict・Draws sometimes・Inaantok pero ayaw matulog・飛ぶにゃん♪・学マス/Blue Archive(Asia)/プリコネ/ヘブバン/FGO(NA)",
-        lastSeen: "1 day ago",
-        accountAge: "2 years",
+        lastSeen: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000), // 1 day ago
+        accountCreateDate: new Date(Date.now() - 2 * 365 * 24 * 60 * 60 * 1000), // 2 years ago
         favoriteGame: "Gakuen Idolmaster"
     },
     {
+        email: "wafl@rain.com",
+        password: "rain12",
         username: "wafl",
         subtitle: "Faito da-yousoro!",
         avatar: "wafl.png",
         description: "Together, we can show the world what we can do!",
-        lastSeen: "Online",
-        accountAge: "1 years",
+        lastSeen: new Date(), // Online (current date/time)
+        accountCreateDate: new Date(Date.now() - 1 * 365 * 24 * 60 * 60 * 1000), // 1 year ago
         favoriteGame: "Super Mario World"
     },
     {
+        email: "roymer@roemer.com",
+        password: "password",
         username: "Roymer",
         subtitle: ":mew:",
         avatar: "roymer.png",
         description: "I'm Roemer I check my inbox pretty frequently, so feel free to send something! Good morning. Order for Roemer? No, not Robert, swap the B with an M. Also, there is no T. No it's not Romer, it's like Ro-E-mer. No, it's not Roymer. There is an E. Yeah it's before the M. No, replace the Y with an E. No, that's still not it... Yeah.... Here, let me just show you my ID...",
-        lastSeen: "4 years, 5 months ago",
-        accountAge: "6 years",
+        lastSeen: new Date(Date.now() - (4 * 365 + 5 * 30) * 24 * 60 * 60 * 1000), // 4 years, 5 months ago
+        accountCreateDate: new Date(Date.now() - 6 * 365 * 24 * 60 * 60 * 1000), // 6 years ago
         favoriteGame: "Robotek"
     },
     {
+        email: "pow@cc.com",
+        password: "123pow",
         username: "pow",
         subtitle: "•_•",
         avatar: "pow.png",
         description: "",
-        lastSeen: "Online",
-        accountAge: "10 years",
+        lastSeen: new Date(), // Online (current date/time)
+        accountCreateDate: new Date(Date.now() - 10 * 365 * 24 * 60 * 60 * 1000), // 10 years ago
         favoriteGame: "FL Studio"
     },
     {
+        email: "cgk@ghj.com",
+        password: "faunbest",
         username: "cgkghj",
         subtitle: "average elation enjoyer",
         avatar: "cgkghj.png",
         description: "Yes, I picked this username on purpose",
-        lastSeen: "Online",
-        accountAge: "3 months",
+        lastSeen: new Date(), // Online (current date/time)
+        accountCreateDate: new Date(Date.now() - 3 * 30 * 24 * 60 * 60 * 1000), // 3 months ago
         favoriteGame: "Minecraft"
     }
-]
+];
 
 exports.games = [
     {
