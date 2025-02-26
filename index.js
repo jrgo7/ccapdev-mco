@@ -360,6 +360,17 @@ app.post("/login", async (req,res) => {
 
         req.session.user = user; 
         res.cookie("sessionID", req.sessionID);
+
+        await User.updateOne(
+            {
+                email: email
+            },
+            {
+                $set: {
+                    lastSeen: Date.now()
+                }
+            }
+        );
         
         res.redirect("/"); 
     } catch (error) {
