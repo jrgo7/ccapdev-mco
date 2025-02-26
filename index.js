@@ -247,8 +247,9 @@ app.get('/review', async (req, res) => {
     let gameTitle = req.query.game;
     let user = users.find(user => user.username === username);
 
+    const game = await Game.findOne({title: gameTitle}).lean();
     const review = await Review.findOne({ game: gameTitle, username: username }, {}).lean();
-    res.render("review", { "title": review.title, "review": review, "user": user });
+    res.render("review", { "title": review.title, "review": review, "user": user , "game": game});
 
 })
 
