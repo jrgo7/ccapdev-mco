@@ -61,10 +61,18 @@
                 </li>
             </ul>
             <div class="ms-auto dropdown mx-4 ">
+                <span class="navbar-username" data-bs-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="false">
+                    {{#if loggedUser}}
+                        {{loggedUser.username}}
+                    {{else}}
+                        Guest
+                    {{/if}}
+                </span>
                 <button class="btn btn-default dropdown-toggle" type="button" data-bs-toggle="dropdown"
-                    aria-haspopup="true" aria-expanded="false">
-                    <img class="avatar" src="{{defaultAvatar loggedUser.avatar}}" alt="Avatar">
-                    <span class="caret"></span>
+                aria-haspopup="true" aria-expanded="false">
+                <img class="avatar" src="{{defaultAvatar loggedUser.avatar}}" alt="Avatar">
+                <span class="caret"></span>
                 </button>
                 <div class="dropdown-menu">
                     <a class="dropdown-item" href="selfprofile" >Account</a>

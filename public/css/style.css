@@ -53,6 +53,11 @@ nav {
     color: var(--white);
 }
 
+.navbar-username{
+    font-weight: 700;
+    font-size: larger;
+}
+
 
 body {
     background-image: url("/img/background.png");
