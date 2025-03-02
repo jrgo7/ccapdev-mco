@@ -110,10 +110,6 @@ document.getElementById('image-input').addEventListener('change', function(event
         reader.onload = function(e) {
             const imgElement = document.createElement('img');
             imgElement.src = e.target.result;
-            imgElement.style.maxWidth = '100%';
-            imgElement.style.height = 'auto';
-            imgElement.style.borderRadius = '5px';
-            imgElement.style.boxShadow = '0 0 5px rgba(0,0,0,0.2)';
             previewDiv.appendChild(imgElement);
         }
         reader.readAsDataURL(file);
