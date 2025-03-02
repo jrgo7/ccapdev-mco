@@ -1,13 +1,15 @@
 <div id="game-info-container" class="bg-game" style="background-image: linear-gradient(rgba(0, 0, 0, 0.5),
-    rgb(31, 25, 38)), url('/img/back/{{game.file}}.png');">
+    rgb(31, 25, 38)), url('/img/back/{{game.back}}');">
 
     <div class="container d-flex flex-wrap flex-lg-nowrap pt-5 pb-5">
-        <img id="game-cover" class="individual-game-cover" src="img/cover/{{game.file}}.png" alt="{{game.title}}">
+        <img id="game-cover" class="individual-game-cover" src="img/cover/{{game.cover}}" alt="{{game.title}}">
         <div class="game-description col-lg-6">
-            <h1 id="game-title" class="fw-bold allow-editing">{{game.title}}</h1>
+                                    {{!-- allow-editing --}}
+                                        {{!-- V --}}
+            <h1 id="game-title" class="fw-bold ">{{game.title}}</h1>
             <p id="game-developer-date" class="fst-italic">
                 <span id="game-developer" class="allow-editing">{{game.developer}}</span>,
-                <span id="game-release-date" class="allow-editing">{{game.release_date}}</span>
+                <span id="game-release-date" class="allow-editing">{{formatDate game.release_date}}</span>
             </p>
             <div id="star-rating" class="star-rating">
                 {{{generateStarRating game.rating false}}}
@@ -17,7 +19,7 @@
             </div>
             <p class="fst-italic">
                 Source:
-                <a class="block-link allow-editing" href="{{game.source.link}}">
+                <a id="game-source" class="block-link allow-editing" href="{{game.source.link}}">
                     {{game.source.name}}
                 </a>
             </p>
@@ -27,7 +29,7 @@
                     review</button>
             </div>
             <div class="my-2">
-                <button id="edit-button" class="btn btn-primary" onclick="toggleEdit()">
+                <button id="edit-button" class="btn btn-primary" onclick="editContent()">
                     Edit
                 </button>
                 <button id="change-boxart-button" class="btn btn-primary" onclick="uploadFile()">

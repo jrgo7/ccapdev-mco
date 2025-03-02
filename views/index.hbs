@@ -26,7 +26,7 @@
         {{log "*" title}}
         <div class="index-game-entry col shadow">
             <a class="index-game-cover-container shadow" href="reviews?game={{title}}">
-                <img class="index-game-cover d-block mx-auto my-auto" src="img/cover/{{file}}.png">
+                <img class="index-game-cover d-block mx-auto my-auto" src="img/cover/{{cover}}">
             </a>
             <div class="mx-4 my-4">
                 <h2 class="fs-4 fw-bold"><a class="block-link" href="reviews?game={{title}}">
@@ -36,7 +36,7 @@
                     {{{generateStarRating rating false}}}
                 </div>
                 <p class="fst-italic">
-                    {{developer}}, {{release_date}}
+                    {{developer}}, {{formatDate release_date}}
                 </p>
                 <p>
                     {{{truncateWords description 20}}}

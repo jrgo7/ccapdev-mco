@@ -26,8 +26,8 @@ async function resetGames() {
                 developer: game.developer,
                 release_date: Date(game.date),
                 description: game.description,
-                back: `img/back/boxart/${game.file}.png`,
-                cover: `img/cover/boxart/${game.file}.png`,
+                back: `${game.file}.png`,
+                cover: `${game.file}.png`,
                 source: {
                     name: game.source.name,
                     link: game.source.link
@@ -229,15 +229,18 @@ app.use((req, res, next) => {
 // GET routes
 
 app.get('/', async (req, res) => {
-    res.render("index", { "title": "Main Page", "games": games.sort(gameByRating)} );
+    const games = await Game.find({ }).lean();
+    res.render("index", { "title": "Main Page", "games": games } );
 })
 
 app.get('/reviews', async (req, res) => {
     let title = req.query.game;
+    
+    const game = await Game.findOne({title: title}).lean();
 
     res.render("reviews", {
         "title": title,
-        "game": games.find(game => game.title === title),
+        "game": game,
         "reviews": (await Review.find({ game: title }).lean()).sort(reviewByUpvotes)
     });
 })
@@ -416,6 +419,41 @@ app.post("/register", async (req,res) => {
         res.status(500).send("An error occurred. Please try again.");
     }
 })
+
+app.post('/save-game', async (req, res) => {
+    const { title, developer, releaseDate, description } = req.body;
+
+    const result = await Game.updateOne(
+        { title: title },
+        {
+            $set: {
+                developer: developer,
+                release_date: releaseDate,
+                description: description,
+            }
+        }
+    );
+
+    res.json({ success: true, message: "Game updated successfully" });
+});
+
+app.post('/save-profile', async (req, res) => {
+    const { username, subtitle, description, favorite } = req.body;
+
+    const result = await User.updateOne(
+        { email: req.session.user.email },
+        {
+            $set: {
+                username: username,
+                subtitle: subtitle,
+                favoriteGame: favorite,
+                description: description,
+            }
+        }
+    );
+
+    res.json({ success: true, message: "Profile updated successfully" });
+});
 
 const PORT = 3000;
 app.listen(PORT, () => {

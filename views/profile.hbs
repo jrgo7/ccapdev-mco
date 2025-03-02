@@ -5,7 +5,7 @@
     <div id="hero" class="bg-dark shadow d-flex flex-wrap px-4 py-4">
         <img id="avatar" class="avatar avatar-big me-4" src="{{defaultAvatar user.avatar}}">
         <div class="profile-hero">
-            <h1 id="username" class="fw-bold">{{user.username}}</h1>
+            <h1 id="username" class="fw-bold allow-editing">{{user.username}}</h1>
             <div id="subtitle" class="fst-italic fs-2 allow-editing">{{user.subtitle}}</div>
             <div id="last-seen" class="fw-bold">
                 {{#if (isNow user.lastSeen)}}
@@ -36,7 +36,7 @@
 
     {{#if (equals loggedUser.email user.email)}}
         <div class="my-2">
-            <button id="edit-button" class="btn btn-primary" onclick="toggleEdit()">
+            <button id="edit-button" class="btn btn-primary" onclick="editContent()">
                 Edit
             </button>
             <button id="change-boxart-button" class="btn btn-primary" onclick="uploadFile()">
