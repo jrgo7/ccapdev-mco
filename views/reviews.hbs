@@ -28,20 +28,25 @@
                 <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#leave-review">Leave a
                     review</button>
             </div>
-            <div class="my-2">
-                <button id="edit-button" class="btn btn-primary" onclick="editContent()">
-                    Edit
-                </button>
-                <button id="change-boxart-button" class="btn btn-primary" onclick="uploadFile()">
-                    Change boxart
-                </button>
-                <button id="change-wallpaper-button" class="btn btn-primary" onclick="uploadFile()">
-                    Change wallpaper
-                </button>
-                <button id="delete-button" class="btn btn-danger" disabled>
-                    Delete
-                </button>
-            </div>
+            {{log game.dev_email }}
+            {{log loggedUser.email }}
+            {{#if (equals game.dev_email loggedUser.email)}}
+                <div class="my-2">
+                    <button id="edit-button" class="btn btn-primary" onclick="editContent()">
+                        Edit
+                    </button>
+                    <button id="change-boxart-button" class="btn btn-primary" onclick="uploadFile()">
+                        Change boxart
+                    </button>
+                    <button id="change-wallpaper-button" class="btn btn-primary" onclick="uploadFile()">
+                        Change wallpaper
+                    </button>
+                    <button id="delete-button" class="btn btn-danger" disabled>
+                        Delete
+                    </button>
+                </div>
+            {{/if}}
+
         </div>
     </div>
 </div>

@@ -22,6 +22,7 @@ async function resetGames() {
     games.forEach(game => {
         Game.create(
             {
+                dev_email: game.dev_email,
                 title: game.title,
                 developer: game.developer,
                 release_date: Date(game.date),

@@ -75,11 +75,23 @@ exports.users = [
         lastSeen: new Date(), // Online (current date/time)
         accountCreateDate: new Date(Date.now() - 3 * 30 * 24 * 60 * 60 * 1000), // 3 months ago
         favoriteGame: "Minecraft"
+    },
+    {
+        email: "mario@mail.com",
+        password: "mario",
+        username: "mario_dev",
+        subtitle: "Makers of hit game super mario bros",
+        avatar: "",
+        description: "Hi! We respond to reviews normally :>",
+        lastSeen: new Date(), 
+        accountCreateDate: new Date(),
+        favoriteGame: "Super Mario Bros."
     }
 ];
 
 exports.games = [
     {
+        dev_email: "mario@mail.com",
         title: "Super Mario Bros.",
         developer: "Nintendo",
         release_date: "1989",
@@ -91,6 +103,7 @@ exports.games = [
         }
     },
     {
+        dev_email: "pacman@mail.com",
         title: "Pac-Man",
         developer: "Namco",
         release_date: "1993",
@@ -102,6 +115,7 @@ exports.games = [
         },
     },
     {
+        dev_email: "pkmn@mail.com",
         title: "Pokémon: Red Version",
         developer: "GameFreak",
         release_date: "1998",
@@ -113,6 +127,7 @@ exports.games = [
         }
     },
     {
+        dev_email: "ebound@mail.com",
         title: "EarthBound",
         developer: "ConcernedApe",
         release_date: "1994",
@@ -124,6 +139,7 @@ exports.games = [
         }
     },
     {
+        dev_email: "femblem@mail.com",
         title: "Fire Emblem: Seisen no Keifu",
         developer: "Intelligent Systems",
         release_date: "1996",

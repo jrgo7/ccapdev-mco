@@ -1,6 +1,10 @@
 const mongoose = require('mongoose')
 
 const gameSchema = mongoose.Schema({
+    dev_email:{
+        type: String,
+        require: true
+    },
     title: {
         type: String,
         require: true
