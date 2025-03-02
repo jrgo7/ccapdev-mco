@@ -95,3 +95,27 @@ document.getElementById("submit-review").addEventListener("click", function() {
     document.getElementById("leave-review-form").submit();
 });
 
+document.getElementById("submit-image").addEventListener("click", function() {
+    document.getElementById("upload-image-form").submit();
+});
+
+document.getElementById('image-input').addEventListener('change', function(event) {
+    const file = event.target.files[0];
+    const previewDiv = document.getElementById('image-preview');
+    
+    previewDiv.innerHTML = '';
+
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            const imgElement = document.createElement('img');
+            imgElement.src = e.target.result;
+            imgElement.style.maxWidth = '100%';
+            imgElement.style.height = 'auto';
+            imgElement.style.borderRadius = '5px';
+            imgElement.style.boxShadow = '0 0 5px rgba(0,0,0,0.2)';
+            previewDiv.appendChild(imgElement);
+        }
+        reader.readAsDataURL(file);
+    }
+});

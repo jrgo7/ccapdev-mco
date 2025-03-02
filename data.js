@@ -91,7 +91,7 @@ exports.users = [
 
 exports.games = [
     {
-        dev_email: "mario@mail.com",
+        dev_email: "416@hk.com",
         title: "Super Mario Bros.",
         developer: "Nintendo",
         release_date: "1989",

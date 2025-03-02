@@ -53,6 +53,20 @@ nav {
     color: var(--white);
 }
 
+.image-preview{
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    border: var(--white);
+}
+
+.image-preview > img{
+    max-width: 100%;
+    height: auto;
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0,0,0,0.2);
+}
+
 .navbar-username{
     font-weight: 700;
     font-size: larger;

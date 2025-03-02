@@ -46,7 +46,7 @@
     </div>
 
     {{!--Leave Review Modal--}}
-    <div class="modal modal-lg fade" id="leave-review">
+    <div class="modal modal-lg fade fade-in" id="leave-review">
         <div class="modal-dialog">
             <div class="modal-content bg-dark shadow">
                 <div class="modal-header">
@@ -91,6 +91,31 @@
         </div>
     </div>
 
+    {{!--Upload Image Modal--}}
+    <div class="modal modal-lg fade fade-in" id="upload-image">
+        <div class="modal-dialog">
+            <div class="modal-content bg-dark shadow">
+                <div class="modal-header">
+                    <h5>Upload Image</h5>
+                </div>
+                <div class="modal-body">
+                    <form id="upload-image-form" action="/submit-image" method="post">
+                        <input type="file" name="image" id="image-input" accept="image/*"/>
+                    </form>
+                    <div class="image-preview" id="image-preview" style="margin-top:10px;">
+                        <!-- Image preview will be inserted here -->
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button id="submit-image" class="btn btn-primary" data-bs-dismiss="modal">Upload</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {{!--Nav bar--}}
     <nav class="navbar navbar-expand-md navbar-dark sticky-top">
         <a class="navbar-brand px-3" href="/"><img class="logo-sm" src="/img/FrogCritic-white.png"></a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"

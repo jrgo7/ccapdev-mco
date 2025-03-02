@@ -3,6 +3,7 @@ const mongoose = require('mongoose')
 const session = require("express-session");
 const cookieParser = require("cookie-parser");
 const { create } = require('express-handlebars')
+const fileUpload = require('express-fileupload')
 const path = require('path');
 
 const { users, games } = require("./data.js");
@@ -46,7 +47,8 @@ async function resetExistingUsers() {
         "wafl@rain.com",
         "roymer@roemer.com",
         "pow@cc.com",
-        "cgk@ghj.com"
+        "cgk@ghj.com",
+        "mario@mail.com"
     ];
 
     await User.deleteMany({ email: { $in: emailsToDelete } });
@@ -189,6 +191,7 @@ const hbs = create({
 
 app.engine('hbs', hbs.engine);
 app.set("view engine", "hbs");
+app.use(fileUpload());
 app.use(express.json());
 app.use(express.static('public'));
 app.use(express.urlencoded({ extended: true }));
