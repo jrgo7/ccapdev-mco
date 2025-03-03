@@ -1,3 +1,6 @@
+{{> upload-image image-type="boxart"}}
+{{> upload-image image-type="wallpaper"}}
+
 <div id="game-info-container" class="bg-game" style="background-image: linear-gradient(rgba(0, 0, 0, 0.5),
     rgb(31, 25, 38)), url('/img/back/{{game.back}}');">
 
@@ -43,10 +46,12 @@
                     <button id="edit-button" class="btn btn-primary" onclick="editContent()">
                         Edit
                     </button>
-                    <button id="change-boxart-button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#upload-image">
+                    <button id="change-boxart-button" class="btn btn-primary img-upld-btn" data-image-type="boxart"
+                    data-bs-toggle="modal" data-bs-target="#boxart-modal" style="display: none;">
                         Change boxart
                     </button>
-                    <button id="change-wallpaper-button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#upload-image">
+                    <button id="change-wallpaper-button" class="btn btn-primary img-upld-btn" data-image-type="wallpaper"
+                    data-bs-toggle="modal" data-bs-target="#wallpaper-modal" style="display: none;">
                         Change wallpaper
                     </button>
                     <button id="delete-button" class="btn btn-danger" disabled>

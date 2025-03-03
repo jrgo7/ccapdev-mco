@@ -1,0 +1,22 @@
+{{!--Upload Image Modal--}}
+<div class="modal modal-lg fade fade-in" id="{{image-type}}-modal">
+    <div class="modal-dialog">
+        <div class="modal-content bg-dark shadow">
+            <div class="modal-header">
+                <h5>Upload {{image-type}}</h5>
+            </div>
+            <div class="modal-body">
+                <form id="upload-{{image-type}}-form">
+                    <input type="file" name="image" id="{{image-type}}-input" accept="image/*"/>
+                </form>
+                <div class="image-preview" id="{{image-type}}-preview">
+                    <!-- Image preview will be inserted here -->
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button class="btn btn-primary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>

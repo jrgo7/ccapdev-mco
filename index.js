@@ -426,20 +426,42 @@ app.post("/register", async (req,res) => {
 
 app.post('/save-game', async (req, res) => {
     const { title, developer, releaseDate, description } = req.body;
+    const { boxart, wallpaper } = req.files ?? {};
 
-    const result = await Game.updateOne(
+    const game = await Game.findOne({ title: title });
+
+    let imgPaths = { boxart: game.cover, wallpaper: game.back };
+
+    if (boxart) {
+        const boxartPath = path.resolve(__dirname, 'public/img/cover/', boxart.name);
+        await boxart.mv(boxartPath);
+        //TODO DELETE PREVIOUS FILE
+        imgPaths.boxart = boxart.name;
+    }
+
+    if (wallpaper) {
+        const wallpaperPath = path.resolve(__dirname, 'public/img/back/', wallpaper.name);
+        await wallpaper.mv(wallpaperPath);
+        //TODO DELETE PREVIOUS FILE
+        imgPaths.wallpaper = wallpaper.name;
+    }
+
+    await Game.updateOne(
         { title: title },
         {
             $set: {
                 developer: developer,
                 release_date: releaseDate,
                 description: description,
-            }
+                cover: imgPaths.boxart, 
+                back: imgPaths.wallpaper,
+            },
         }
     );
 
     res.json({ success: true, message: "Game updated successfully" });
 });
+
 
 app.post('/save-profile', async (req, res) => {
     const { username, subtitle, description, favorite } = req.body;

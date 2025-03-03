@@ -1,5 +1,7 @@
-function toggleEdit() {
+let tempImages = {}; 
+let currentImageType = null;
 
+function toggleEdit() {
     document.querySelectorAll(".allow-editing").forEach(element => {
         if (element.hasAttribute("contenteditable")) {
             element.removeAttribute("contenteditable");
@@ -23,6 +25,11 @@ function toggleEdit() {
 
     let editButton = document.querySelector("#edit-button");
     editButton.textContent = (editButton.textContent === "Save changes") ? "Edit" : "Save changes";
+
+    document.querySelectorAll(".img-upld-btn").forEach(button => {
+        button.style.display = button.style.display === "none" ? "inline-block" : "none";
+
+    });
 }
 
 function editContent() {
@@ -42,12 +49,26 @@ async function saveGame() {
     const description = document.getElementById("game-description-text").innerText;
     const source = document.getElementById("game-source").innerText;
 
+    let formData = new FormData();
+    formData.append("title", title);
+    formData.append("developer", developer);
+    formData.append("releaseDate", releaseDate);
+    formData.append("description", description);
+    formData.append("source", source);
+
+    if (tempImages.boxart) {
+        formData.append("boxart", tempImages.boxart);
+    }
+    if (tempImages.wallpaper) {
+        formData.append("wallpaper", tempImages.wallpaper);
+    }
+
     const response = await fetch("/save-game", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ title, developer, releaseDate, description, source }),
+        body: formData,
     });
 
+    tempImages = {};
     toggleEdit(); 
     let editButton = document.querySelector("#edit-button");
     editButton.textContent = "Edit";
@@ -72,6 +93,7 @@ async function saveProfile() {
     editButton.onclick = editContent;
 }
 
+
 function setStarRating(rating) {
     document.getElementById("leave-review-star-rating").value = rating;
     for (i = 1; i <= rating; i++) {
@@ -95,23 +117,31 @@ document.getElementById("submit-review").addEventListener("click", function() {
     document.getElementById("leave-review-form").submit();
 });
 
-document.getElementById("submit-image").addEventListener("click", function() {
-    document.getElementById("upload-image-form").submit();
+document.querySelectorAll(".img-upld-btn").forEach(button => {
+    button.addEventListener("click", function() {
+        currentImageType = this.getAttribute("data-image-type");
+    });
 });
 
-document.getElementById('image-input').addEventListener('change', function(event) {
-    const file = event.target.files[0];
-    const previewDiv = document.getElementById('image-preview');
-    
-    previewDiv.innerHTML = '';
+const imageTypes = ["boxart", "wallpaper", "profile"];
 
-    if (file) {
-        const reader = new FileReader();
-        reader.onload = function(e) {
-            const imgElement = document.createElement('img');
-            imgElement.src = e.target.result;
-            previewDiv.appendChild(imgElement);
-        }
-        reader.readAsDataURL(file);
+imageTypes.forEach(imageType => {
+    const inputElement = document.getElementById(imageType + "-input");
+
+    if (inputElement) { // Ensure the input exists before adding event listener
+        inputElement.addEventListener("change", function(event) {
+            const file = event.target.files[0];
+
+            if (file && currentImageType) {
+                tempImages[currentImageType] = file; 
+
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById(currentImageType + "-preview").innerHTML = `<img src="${e.target.result}" class="img-fluid " alt="Preview">`;
+                };
+                reader.readAsDataURL(file);
+            }
+        });
     }
 });
+
