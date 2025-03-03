@@ -296,7 +296,7 @@ app.get("/logout", (req, res) => {
 
 // POST routes
 
-app.post('/submit-review', isAuthenticated, async (req, res) => {
+app.post('/submit-review', async (req, res) => {
     console.log(req.body);
     const username = req.session.user.username;
     const game = req.body.game;

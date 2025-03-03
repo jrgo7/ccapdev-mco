@@ -23,11 +23,19 @@
                     {{game.source.name}}
                 </a>
             </p>
-            <div class="leave-rating">
-                <h2 class="fw-bold fs-2">Have you played this game before?</h2>
-                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#leave-review">Leave a
-                    review</button>
-            </div>
+            {{#if loggedUser}}
+                <div class="leave-rating">
+                    <h2 class="fw-bold fs-2">Have you played this game before?</h2>
+                    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#leave-review">Leave a
+                        review</button>
+                </div>
+            {{else}}
+                <div class="leave-rating">
+                    <h2 class="fw-bold fs-2">Have you played this game before?</h2>
+                    <button class="btn btn-primary" onclick="window.location.href='/register'">Leave a
+                        review</button>
+                </div>
+            {{/if}}
             {{log game.dev_email }}
             {{log loggedUser.email }}
             {{#if (equals game.dev_email loggedUser.email)}}
