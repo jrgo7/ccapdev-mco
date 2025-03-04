@@ -124,8 +124,8 @@ const hbs = create({
             }
         },
 
-        findUser(username) {
-            let user = users.find(user => user.username === username);
+        async findUser(email) {
+            const user = await User.findOne({ email: email }).lean(); 
             return user;
         },
 
@@ -250,13 +250,12 @@ app.get('/reviews', async (req, res) => {
 })
 
 app.get('/review', async (req, res) => {
-    let username = req.query.user;
-    let gameTitle = req.query.game;
-    let user = users.find(user => user.username === username);
+    let id = req.query.id;
 
-    const game = await Game.findOne({title: gameTitle}).lean();
-    const review = await Review.findOne({ game: gameTitle, username: username }, {}).lean();
-    res.render("review", { "title": review.title, "review": review, "user": user , "game": game});
+    const review = await Review.findOne({ _id: id }).lean();
+    const user = await User.findOne({email: review.email }).lean();
+
+    res.render("review", { "title": review.title, "review": review, "user": user});
 
 })
 
@@ -298,7 +297,7 @@ app.get("/logout", (req, res) => {
 
 app.post('/submit-review', async (req, res) => {
     console.log(req.body);
-    const username = req.session.user.username;
+    const email = req.session.user.email;
     const game = req.body.game;
 
     // If updating an exisitng record, update the edit date
@@ -308,7 +307,7 @@ app.post('/submit-review', async (req, res) => {
     await Review.updateOne(
         {
             // "WHERE"
-            username: username,
+            email: email,
             game: game
         },
         {
@@ -322,7 +321,7 @@ app.post('/submit-review', async (req, res) => {
     await Review.updateOne(
         {
             // "WHERE"
-            username: username,
+            email: email,
             game: game
         },
         {
@@ -340,7 +339,7 @@ app.post('/submit-review', async (req, res) => {
         }
     )
 
-    const review = await Review.findOne({ game: game, username: username }).lean();
+    const review = await Review.findOne({ game: game, email: email }).lean();
 
     if (!review) {
         return res.status(404).send("Review not found.");
@@ -348,7 +347,7 @@ app.post('/submit-review', async (req, res) => {
 
     console.log("Review found:", review);
 
-    res.redirect(`/review?user=${username}&game=${game}`);
+    res.redirect(`/review?id=${review._id}`);
 });
 
 app.post("/login", async (req,res) => {

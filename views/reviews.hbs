@@ -39,8 +39,6 @@
                         review</button>
                 </div>
             {{/if}}
-            {{log game.dev_email }}
-            {{log loggedUser.email }}
             {{#if (equals game.dev_email loggedUser.email)}}
                 <div class="my-2">
                     <button id="edit-button" class="btn btn-primary" onclick="editContent()">
@@ -71,11 +69,11 @@
         {{log "##" game.title}}
         {{log}}
         {{#if reviews}}
-        {{#each reviews}}
-        {{> review-entry review=this user=(findUser username)}}
-        {{/each}}
+            {{#each reviews}}
+                {{> review-entry review=this user=(findUser email)}}
+            {{/each}}
         {{else}}
-        <p class="bg-dark shadow py-4 px-4">There are no reviews for this game!</p>
+            <p class="bg-dark shadow py-4 px-4">There are no reviews for this game!</p>
         {{/if}}
     </div>
 </div>

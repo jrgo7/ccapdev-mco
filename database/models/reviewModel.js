@@ -9,7 +9,7 @@ const reviewSchema = mongoose.Schema({
         type: String,
         require: true
     },
-    username: {
+    email: {
         type: String,
         require: true
     },
