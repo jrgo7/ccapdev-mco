@@ -1,3 +1,5 @@
+{{> upload-image image-type="profile"}}
+
 {{log}}
 {{log "##" user.username "-" user.subtitle}}
 {{log}}
@@ -40,7 +42,7 @@
                 Edit
             </button>
             <button id="change-profile-button" class="btn btn-primary img-upld-btn" data-bs-toggle="modal" data-image-type="profile"
-            data-bs-target="profile-modal" style="display: none;">
+            data-bs-target="#profile-modal" style="display: none;">
                 Change profile picture
             </button>
             <button id="delete-button" class="btn btn-danger" disabled>

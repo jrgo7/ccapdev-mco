@@ -429,7 +429,7 @@ app.post('/save-game', async (req, res) => {
     const { boxart, wallpaper } = req.files ?? {};
 
     const game = await Game.findOne({ title: title });
-
+    //Store previous file names
     let imgPaths = { boxart: game.cover, wallpaper: game.back };
 
     if (boxart) {
@@ -465,6 +465,16 @@ app.post('/save-game', async (req, res) => {
 
 app.post('/save-profile', async (req, res) => {
     const { username, subtitle, description, favorite } = req.body;
+    const { profile } = req.files ?? {};
+
+    let updatedProfile = req.session.user.avatar;
+
+    if (profile) {
+        const profilePath = path.resolve(__dirname, 'public/img/avatar/', profile.name);
+        await profile.mv(profilePath);
+        //TODO DELETE PREVIOUS FILE
+        updatedProfile = profile.name;
+    }
 
     const result = await User.updateOne(
         { email: req.session.user.email },
@@ -474,10 +484,10 @@ app.post('/save-profile', async (req, res) => {
                 subtitle: subtitle,
                 favoriteGame: favorite,
                 description: description,
+                avatar: updatedProfile,
             }
         }
     );
-
     res.json({ success: true, message: "Profile updated successfully" });
 });
 

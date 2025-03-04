@@ -26,9 +26,9 @@ function toggleEdit() {
     let editButton = document.querySelector("#edit-button");
     editButton.textContent = (editButton.textContent === "Save changes") ? "Edit" : "Save changes";
 
+
     document.querySelectorAll(".img-upld-btn").forEach(button => {
         button.style.display = button.style.display === "none" ? "inline-block" : "none";
-
     });
 }
 
@@ -43,18 +43,13 @@ function editContent() {
 }
 
 async function saveGame() {
-    const title = document.getElementById("game-title").innerText;
-    const developer = document.getElementById("game-developer").innerText;
-    const releaseDate = document.getElementById("game-release-date").innerText;
-    const description = document.getElementById("game-description-text").innerText;
-    const source = document.getElementById("game-source").innerText;
-
     let formData = new FormData();
-    formData.append("title", title);
-    formData.append("developer", developer);
-    formData.append("releaseDate", releaseDate);
-    formData.append("description", description);
-    formData.append("source", source);
+
+    formData.append("title", document.getElementById("game-title").innerText);
+    formData.append("developer", document.getElementById("game-developer").innerText);
+    formData.append("releaseDate", document.getElementById("game-release-date").innerText);
+    formData.append("description", document.getElementById("game-description-text").innerText);
+    formData.append("source", document.getElementById("game-source").innerText);
 
     if (tempImages.boxart) {
         formData.append("boxart", tempImages.boxart);
@@ -70,26 +65,32 @@ async function saveGame() {
 
     tempImages = {};
     toggleEdit(); 
+    //Can be placed in ToggleEdit
     let editButton = document.querySelector("#edit-button");
-    editButton.textContent = "Edit";
     editButton.onclick = editContent;
 }
 
 async function saveProfile() {
-    const username = document.getElementById("username").innerText;
-    const subtitle = document.getElementById("subtitle").innerText;
-    const description = document.getElementById("description").innerText;
-    const favorite = document.getElementById("favorite-game").innerText;
+    let formData = new FormData();
+
+    formData.append("username", document.getElementById("username").innerText);
+    formData.append("subtitle", document.getElementById("subtitle").innerText);
+    formData.append("description", document.getElementById("description").innerText);
+    formData.append("favorite", document.getElementById("favorite-game").innerText);
+
+    if (tempImages.profile) {
+        formData.append("profile", tempImages.profile);
+    }
 
     const response = await fetch("/save-profile", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ username, subtitle, description, favorite }),
+        body: formData,
     });
 
+    tempImages = {};
     toggleEdit();
+    //Can be placed in ToggleEdit
     let editButton = document.querySelector("#edit-button");
-    editButton.textContent = "Edit";
     editButton.onclick = editContent;
 }
 
