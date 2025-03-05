@@ -60,7 +60,7 @@
         {{log}}
         {{#if reviews}}
         {{#each reviews}}
-        {{> review-entry review=this user=(findUser username)}}
+        {{> review-entry review=this user=../user}}
         {{/each}}
         {{else}}
         <p class="bg-dark shadow py-4 px-4">No reviews yet!</p>

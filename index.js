@@ -240,12 +240,21 @@ app.get('/', async (req, res) => {
 app.get('/reviews', async (req, res) => {
     let title = req.query.game;
     
+    const reviews = await await Review.find({ game: title }).lean();
     const game = await Game.findOne({title: title}).lean();
+    const users = await User.find({}).lean();
+
+    const userLookup = users.reduce((acc, user) => {
+        acc[user.email] = user;
+        return acc;
+    }, {});
+
 
     res.render("reviews", {
         "title": title,
         "game": game,
-        "reviews": (await Review.find({ game: title }).lean()).sort(reviewByUpvotes)
+        "reviews": (reviews).sort(reviewByUpvotes),
+        "users" : userLookup
     });
 })
 
@@ -254,23 +263,24 @@ app.get('/review', async (req, res) => {
 
     const review = await Review.findOne({ _id: id }).lean();
     const user = await User.findOne({email: review.email }).lean();
+    const game = await Game.findOne({ title : review.game}).lean();
 
-    res.render("review", { "title": review.title, "review": review, "user": user});
+    res.render("review", { "title": review.title, "review": review, "user": user, "game": game});
 
 })
 
 app.get('/selfprofile', isAuthenticated, async (req, res) => {
-    res.redirect(`/profile?user=${req.session.user.username}`)
+    res.redirect(`/profile?user=${req.session.user._id}`)
 });
 
 app.get('/profile', async (req, res) => {
-    let username = req.query.user;
-    const user = await User.findOne({ username: username}).lean();
+    let id = req.query.user;
+    const user = await User.findOne({ _id: id}).lean();
     res.render("profile", {
-        "title": username,
-        "username": username,
+        "title": user.username,
+        "username": user.username,
         "user": user,
-        "reviews": (await Review.find({ username: username }).lean()).sort(reviewByUpvotes)
+        "reviews": (await Review.find({ email: user.email }).lean()).sort(reviewByUpvotes)
     });
 })
 
@@ -458,7 +468,7 @@ app.post('/save-game', async (req, res) => {
         }
     );
 
-    res.json({ success: true, message: "Game updated successfully" });
+    res.json({ success: true, refresh: true, message: "Game updated successfully" });
 });
 
 
@@ -475,7 +485,7 @@ app.post('/save-profile', async (req, res) => {
         updatedProfile = profile.name;
     }
 
-    const result = await User.updateOne(
+    req.session.user = await User.findOneAndUpdate(
         { email: req.session.user.email },
         {
             $set: {
@@ -485,9 +495,11 @@ app.post('/save-profile', async (req, res) => {
                 description: description,
                 avatar: updatedProfile,
             }
-        }
+        },
+        {new: true}
     );
-    res.json({ success: true, message: "Profile updated successfully" });
+
+    res.json({ success: true, refresh: true, message: "Profile updated successfully" });
 });
 
 const PORT = 3000;

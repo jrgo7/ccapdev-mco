@@ -61,8 +61,12 @@ async function saveGame() {
     const response = await fetch("/save-game", {
         method: "POST",
         body: formData,
+    }).then(res => res.json()).then(data => {
+        if (data.refresh) {
+            window.location.reload();
+        }
     });
-
+    
     tempImages = {};
     toggleEdit(); 
     //Can be placed in ToggleEdit
@@ -85,6 +89,11 @@ async function saveProfile() {
     const response = await fetch("/save-profile", {
         method: "POST",
         body: formData,
+    })
+    .then(res => res.json()).then(data => {
+        if (data.refresh) {
+            window.location.reload();
+        }
     });
 
     tempImages = {};

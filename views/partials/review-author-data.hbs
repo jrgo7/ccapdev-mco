@@ -1,10 +1,10 @@
 <div id="reviews" class="d-flex flex-wrap">
-    <a href="profile?user={{user.username}}">
+    <a href="profile?user={{user._id}}">
         <img class="avatar me-2" src="/img/avatar/{{user.avatar}}" alt="{{user.username}}">
     </a>
     <div class="author-date">
         <p class="fw-bold reviewer-name">
-            <a class="block-link" href="profile?user={{user.username}}">
+            <a class="block-link" href="profile?user={{user._id}}">
                 {{user.username}}
             </a>
             &mdash;

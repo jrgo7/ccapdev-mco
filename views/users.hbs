@@ -34,9 +34,9 @@
             {{#each users}}
             {{!-- {{log "|" (pad username 20) "|" (pad lastSeen 32) "|" (pad accountAge 20) "|"}} --}}
             {{#if (isNow lastSeen)}}
-            <tr class="table-success" onclick="window.location.href='profile?user={{username}}'">
+            <tr class="table-success" onclick="window.location.href='profile?user={{_id}}'">
                 {{else}}
-            <tr onclick="window.location.href='profile?user={{username}}'">
+            <tr onclick="window.location.href='profile?user={{_id}}'">
                 {{/if}}
                 <td><img src="{{defaultAvatar avatar}}" alt="Avatar" class="avatar"></td>
                 <td>{{username}}</td>

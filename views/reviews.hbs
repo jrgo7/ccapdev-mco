@@ -70,7 +70,7 @@
         {{log}}
         {{#if reviews}}
             {{#each reviews}}
-                {{> review-entry review=this user=(findUser email)}}
+                {{> review-entry review=this review=this user=(lookup ../users this.email)}}
             {{/each}}
         {{else}}
             <p class="bg-dark shadow py-4 px-4">There are no reviews for this game!</p>
