@@ -212,5 +212,23 @@ function sortGames() {
     })
 }
 
-// Attempt to sort games as soon as the page finishes loading
+function filterGames() {
+    let searchText = document.querySelector("#search-text").value;
+    let filterRatingAtLeast = Number(document.querySelector("#filter-select").value);
+    let gameEntries = document.querySelectorAll(".index-game-entry");
+    
+    let key = searchText.toLowerCase();
+    gameEntries.forEach(entry => {
+        let title = entry.dataset.title.toLowerCase();
+        let rating = Number(entry.dataset.rating);
+        if (title.includes(key) && rating >= filterRatingAtLeast) {
+            entry.toggleAttribute("hidden", false)
+        } else {
+            entry.toggleAttribute("hidden", true)
+        }
+    })
+}
+
+// Attempt to sort and filter as soon as the page finishes loading
 sortGames();
+filterGames();

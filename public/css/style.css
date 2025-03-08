@@ -116,7 +116,7 @@ a:hover {
 }
 
 .search-box {
-    max-width: 728px;
+    max-width: 1024px;
     margin: auto;
 }
 
@@ -129,6 +129,8 @@ a:hover {
 
 .index-game-cover-container {
     height: 24rem;
+    width: 22rem;
+    margin: auto;
     display: flex;
     background-color: var(--bs-dark);
 }
