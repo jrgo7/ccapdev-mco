@@ -52,11 +52,11 @@ async function resetExistingUsers() {
     ];
 
     await User.deleteMany({ email: { $in: emailsToDelete } });
-    
+
     users.forEach(user => {
         User.create(
             {
-                email: user.email,    
+                email: user.email,
                 password: user.password,
                 username: user.username,
                 subtitle: user.subtitle,
@@ -100,19 +100,19 @@ const hbs = create({
             return d1.getTime() === d2.getTime();
         },
 
-        isNow(date){
+        isNow(date) {
             const now = new Date();
             return date.toDateString() === now.toDateString();
         },
-        
+
         accountAge(date) {
             const now = new Date();
             const diffTime = now - date;
-        
+
             const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24)); // Convert to days
             const diffMonths = Math.floor(diffDays / 30); // Approximate months
             const diffYears = Math.floor(diffDays / 365); // Approximate years
-        
+
             if (diffYears > 0) {
                 return `${diffYears} year${diffYears === 1 ? "" : "s"}`;
             } else if (diffMonths > 0) {
@@ -125,7 +125,7 @@ const hbs = create({
         },
 
         async findUser(email) {
-            const user = await User.findOne({ email: email }).lean(); 
+            const user = await User.findOne({ email: email }).lean();
             return user;
         },
 
@@ -152,6 +152,9 @@ const hbs = create({
                     unclickable = "unclickable";
                     if (rating === -1) { // for leaving a review, you can always "edit" the star rating
                         unclickable = "allow-editing-always";
+                        if (i === 1) {
+                            checked = "checked"
+                        }
                     }
                 }
                 if (i <= rating) {
@@ -215,11 +218,11 @@ const userByName = (user1, user2) => user1.username.localeCompare(user2.username
 
 
 //Checks if a user is logged in
-const isAuthenticated = (req,res,next) => {
-    if (req.session.user){
+const isAuthenticated = (req, res, next) => {
+    if (req.session.user) {
         next();
     }
-    else{
+    else {
         res.redirect("/register");
     }
 }
@@ -233,15 +236,15 @@ app.use((req, res, next) => {
 // GET routes
 
 app.get('/', async (req, res) => {
-    const games = await Game.find({ }).lean();
-    res.render("index", { "title": "Main Page", "games": games } );
+    const games = await Game.find({}).lean();
+    res.render("index", { "title": "Main Page", "games": games });
 })
 
 app.get('/reviews', async (req, res) => {
     let title = req.query.game;
-    
+
     const reviews = await await Review.find({ game: title }).lean();
-    const game = await Game.findOne({title: title}).lean();
+    const game = await Game.findOne({ title: title }).lean();
     const users = await User.find({}).lean();
 
     const userLookup = users.reduce((acc, user) => {
@@ -254,7 +257,7 @@ app.get('/reviews', async (req, res) => {
         "title": title,
         "game": game,
         "reviews": (reviews).sort(reviewByUpvotes),
-        "users" : userLookup
+        "users": userLookup
     });
 })
 
@@ -262,10 +265,10 @@ app.get('/review', async (req, res) => {
     let id = req.query.id;
 
     const review = await Review.findOne({ _id: id }).lean();
-    const user = await User.findOne({email: review.email }).lean();
-    const game = await Game.findOne({ title : review.game}).lean();
+    const user = await User.findOne({ email: review.email }).lean();
+    const game = await Game.findOne({ title: review.game }).lean();
 
-    res.render("review", { "title": review.title, "review": review, "user": user, "game": game});
+    res.render("review", { "title": review.title, "review": review, "user": user, "game": game });
 
 })
 
@@ -275,7 +278,7 @@ app.get('/selfprofile', isAuthenticated, async (req, res) => {
 
 app.get('/profile', async (req, res) => {
     let id = req.query.user;
-    const user = await User.findOne({ _id: id}).lean();
+    const user = await User.findOne({ _id: id }).lean();
     res.render("profile", {
         "title": user.username,
         "username": user.username,
@@ -285,7 +288,9 @@ app.get('/profile', async (req, res) => {
 })
 
 app.get('/register', async (req, res) => {
-    res.render("register");
+    res.render("register", {
+        "title": "Register"
+    });
 })
 
 app.get('/users', async (req, res) => {
@@ -360,22 +365,19 @@ app.post('/submit-review', async (req, res) => {
     res.redirect(`/review?id=${review._id}`);
 });
 
-app.post("/login", async (req,res) => {
+app.post("/login", async (req, res) => {
     const email = req.body.email;
     const password = req.body.password;
 
     try {
         const user = await User.findOne({ email: email }).lean();
 
-        if (!user) {
-            return res.status(401).send("Invalid email.");
+        if (!user || user.password !== password) {
+            const games = await Game.find({}).lean();
+            return res.status(401).render("index", {"title": "Main Page", "games": games, "error": "Invalid login credentials."});
         }
 
-        if (user.password !== password) {
-            return res.status(401).send("Invalid email or password.");
-        }
-
-        req.session.user = user; 
+        req.session.user = user;
         res.cookie("sessionID", req.sessionID);
 
         await User.updateOne(
@@ -388,15 +390,17 @@ app.post("/login", async (req,res) => {
                 }
             }
         );
-        
-        res.redirect("/"); 
+
+        res.redirect("/");
     } catch (error) {
         console.error("Login error:", error);
-        res.status(500).send("An error occurred. Please try again.");
+        const games = await Game.find({}).lean();
+        res.status(500).render("index", {"title": "Main Page", "games": games, "error": error}
+        );
     }
 })
 
-app.post("/register", async (req,res) => {
+app.post("/register", async (req, res) => {
     const username = req.body.username;
     const email = req.body.email;
     const password = req.body.password;
@@ -408,11 +412,14 @@ app.post("/register", async (req,res) => {
         if (user) {
             return res.status(401).send("Email is in use");
         } else if (password !== conf_password) {
-            return res.send("Passwords dont match");
+            return res.render("register", {
+                title: "Register",
+                error: "Passwords don't match"
+            });
         }
 
         await User.create({
-            email: email,    
+            email: email,
             password: password,
             username: username,
             subtitle: "",
@@ -426,10 +433,13 @@ app.post("/register", async (req,res) => {
         req.session.user = await User.findOne({ email: email }).lean();
         res.cookie("sessionID", req.sessionID);
 
-        res.redirect("/"); 
+        res.redirect("/");
     } catch (error) {
         console.error("Register error:", error);
-        res.status(500).send("An error occurred. Please try again.");
+        res.status(500).render("register", {
+            title: "Register",
+            error: "An error occurred. Please try again."
+        });
     }
 })
 
@@ -462,7 +472,7 @@ app.post('/save-game', async (req, res) => {
                 developer: developer,
                 release_date: releaseDate,
                 description: description,
-                cover: imgPaths.boxart, 
+                cover: imgPaths.boxart,
                 back: imgPaths.wallpaper,
             },
         }
@@ -496,7 +506,7 @@ app.post('/save-profile', async (req, res) => {
                 avatar: updatedProfile,
             }
         },
-        {new: true}
+        { new: true }
     );
 
     res.json({ success: true, refresh: true, message: "Profile updated successfully" });

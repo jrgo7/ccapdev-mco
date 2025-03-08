@@ -123,10 +123,6 @@ function uploadFile() {
 }
 
 //Add listeners to buttons
-document.getElementById("submit-review").addEventListener("click", function() {
-    document.getElementById("leave-review-form").submit();
-});
-
 document.querySelectorAll(".img-upld-btn").forEach(button => {
     button.addEventListener("click", function() {
         currentImageType = this.getAttribute("data-image-type");
