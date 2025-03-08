@@ -1,6 +1,6 @@
 {{log "*" review.title "-" user.username}}
 
-<div class="col-6 bg-dark shadow review">
+<div class="col-6 bg-dark shadow review" data-text="{{review.text}}">
     <div class="star-rating">
         {{{generateStarRating review.rating false}}}
         <div class="votes">
@@ -10,7 +10,7 @@
         </div>
     </div>
     <h3 class="fw-bold fs-4">
-        <a class="block-link" href="review?id={{review._id}}">
+        <a class="block-link review-title" href="review?id={{review._id}}">
             {{review.title}}
         </a>
     </h3>

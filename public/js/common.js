@@ -216,7 +216,7 @@ function filterGames() {
     let searchText = document.querySelector("#search-text").value;
     let filterRatingAtLeast = Number(document.querySelector("#filter-select").value);
     let gameEntries = document.querySelectorAll(".index-game-entry");
-    
+
     let key = searchText.toLowerCase();
     gameEntries.forEach(entry => {
         let title = entry.dataset.title.toLowerCase();
@@ -229,6 +229,27 @@ function filterGames() {
     })
 }
 
+function filterReviews() {
+    let searchText = document.querySelector("#search-text").value;
+    let key = searchText.toLowerCase();
+    let reviewEntries = document.querySelectorAll(".review");
+    reviewEntries.forEach(entry => {
+        let title = entry.querySelector(".review-title").textContent.toLowerCase();
+        let text = entry.dataset.text.toLowerCase();
+        if (title.includes(key)) {
+            entry.toggleAttribute("hidden", false)
+            entry.title = ""
+        } else if (text.includes(key)) {
+            entry.toggleAttribute("hidden", false)
+            entry.title = "Search query found in body"
+        } else {
+            entry.toggleAttribute("hidden", true)
+            entry.title = ""
+        }
+    })
+}
+
 // Attempt to sort and filter as soon as the page finishes loading
 sortGames();
 filterGames();
+filterReviews();

@@ -1,11 +1,11 @@
 {{log loggedUser.email}}
 <div class="container">
     <img class="logo center py-5" src=img/FrogCritic.png alt="FrogCritic">
-    <div class="input-group search-box mb-3">
+    <div class="search-box input-group mb-3">
         <div class="input-group-prepend">
             <span class="input-group-text">🔎</span>
         </div>
-        <input id="search-text" type="text" class="form-control" placeholder="Super Mario Bros." oninput="filterGames()">
+        <input id="search-text" type="text" class="form-control" placeholder="Super Mario Bros." oninput="filterGames()" autocomplete="off">
         <div class="input-group-append">
             <div class="input-group">
                 <span class="input-group-text">where Average Rating ≥</span>

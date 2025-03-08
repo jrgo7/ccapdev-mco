@@ -55,6 +55,7 @@
 
 <div class="container">
     <h2 class="fw-bold">{{user.username}}'s reviews</h2>
+    {{> search-review}}
     <div id="reviews" class="d-flex flex-wrap">
         {{log "### Reviews by" user.username}}
         {{log}}
