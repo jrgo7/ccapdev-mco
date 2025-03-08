@@ -12,7 +12,7 @@
             <h1 id="game-title" class="fw-bold ">{{game.title}}</h1>
             <p id="game-developer-date" class="fst-italic">
                 <span id="game-developer" class="allow-editing">{{game.developer}}</span>,
-                <span id="game-release-date" class="allow-editing">{{formatDate game.release_date}}</span>
+                <span id="game-release-date" class="allow-editing">{{formatDateYear game.release_date}}</span>
             </p>
             <div id="star-rating" class="star-rating" title="Average Rating {{getAverageStarRating title}}">
                 {{{generateStarRating (getRoundedAverageStarRating title)}}}

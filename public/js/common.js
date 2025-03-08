@@ -1,4 +1,4 @@
-let tempImages = {}; 
+let tempImages = {};
 let currentImageType = null;
 
 function toggleEdit() {
@@ -37,7 +37,7 @@ function editContent() {
 
     if (window.location.pathname.includes("/reviews")) {
         document.querySelector("#edit-button").onclick = saveGame;
-    } else if (window.location.pathname.includes("/profile")){
+    } else if (window.location.pathname.includes("/profile")) {
         document.querySelector("#edit-button").onclick = saveProfile;
     }
 }
@@ -66,9 +66,9 @@ async function saveGame() {
             window.location.reload();
         }
     });
-    
+
     tempImages = {};
-    toggleEdit(); 
+    toggleEdit();
     //Can be placed in ToggleEdit
     let editButton = document.querySelector("#edit-button");
     editButton.onclick = editContent;
@@ -90,11 +90,11 @@ async function saveProfile() {
         method: "POST",
         body: formData,
     })
-    .then(res => res.json()).then(data => {
-        if (data.refresh) {
-            window.location.reload();
-        }
-    });
+        .then(res => res.json()).then(data => {
+            if (data.refresh) {
+                window.location.reload();
+            }
+        });
 
     tempImages = {};
     toggleEdit();
@@ -124,7 +124,7 @@ function uploadFile() {
 
 //Add listeners to buttons
 document.querySelectorAll(".img-upld-btn").forEach(button => {
-    button.addEventListener("click", function() {
+    button.addEventListener("click", function () {
         currentImageType = this.getAttribute("data-image-type");
     });
 });
@@ -135,14 +135,15 @@ imageTypes.forEach(imageType => {
     const inputElement = document.getElementById(imageType + "-input");
 
     if (inputElement) { // Ensure the input exists before adding event listener
-        inputElement.addEventListener("change", function(event) {
+        inputElement.addEventListener("change", function (event) {
             const file = event.target.files[0];
 
             if (file && currentImageType) {
-                tempImages[currentImageType] = file; 
+                tempImages[currentImageType] = file;
+
 
                 const reader = new FileReader();
-                reader.onload = function(e) {
+                reader.onload = function (e) {
                     document.getElementById(currentImageType + "-preview").innerHTML = `<img src="${e.target.result}" class="img-fluid " alt="Preview">`;
                 };
                 reader.readAsDataURL(file);
@@ -151,3 +152,65 @@ imageTypes.forEach(imageType => {
     }
 });
 
+// Search, sort, filter functions
+
+function sortGames() {
+    const SortImplementations = Object.freeze([
+        {
+            key: "none",
+            comparator: (a, b) => 0
+        },
+        {
+            key: "rating",
+            comparator: (a, b) => Number(b.key) - Number(a.key)
+        },
+        {
+            key: "title",
+            comparator: (a, b) => String(b.key).localeCompare(String(a.key))
+        },
+        {
+            key: "developer",
+            comparator: (a, b) => String(b.key).localeCompare(String(a.key))
+        },
+        {
+            key: "releaseDate",
+            comparator: (a, b) => Number(b.key) - Number(a.key)
+        },
+        {
+            key: "reviewCount",
+            comparator: (a, b) => Number(b.key) - Number(a.key)
+        }
+    ])
+    let sortType = Number(document.querySelector("#order-type-select").value);
+    let sortOrder = Number(document.querySelector("#order-arrangement-select").value);
+
+    let gameEntries = document.querySelectorAll(".index-game-entry");
+    let key = SortImplementations[sortType].key;
+    console.log(`Sorting by ${key}`)
+
+    let sortArr = []; // [{node, key}]
+    gameEntries.forEach(
+        entry => {
+            sortArr.push({
+                node: entry,
+                key: entry.dataset[key]
+            })
+        }
+    )
+
+    console.log("Before sorting:")
+    console.log(sortArr);
+    sortArr.sort((a, b) => SortImplementations[sortType].comparator(a, b));
+    if (sortOrder == 1) {
+        sortArr.reverse();
+    }
+    console.log("After sorting:")
+    console.log(sortArr);
+
+    sortArr.forEach((entry, i) => {
+        entry.node.style.order = i;
+    })
+}
+
+// Attempt to sort games as soon as the page finishes loading
+sortGames();

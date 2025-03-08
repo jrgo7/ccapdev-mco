@@ -5,13 +5,17 @@ const cookieParser = require("cookie-parser");
 const { create } = require('express-handlebars')
 const fileUpload = require('express-fileupload')
 const path = require('path');
+const favicon = require('serve-favicon');
 
 const { users, games } = require("./database/data.js");
 
 const app = express();
+app.use(favicon(path.resolve(__dirname, 'public/img/favicon.ico')))
+
 const Review = require("./database/models/reviewModel");
 const User = require("./database/models/userModel");
 const Game = require("./database/models/gameModel");
+
 
 console.clear();
 
@@ -26,7 +30,7 @@ async function resetGames() {
                 dev_email: game.dev_email,
                 title: game.title,
                 developer: game.developer,
-                release_date: Date(game.date),
+                release_date: game.release_date,
                 description: game.description,
                 back: `${game.file}.png`,
                 cover: `${game.file}.png`,
@@ -75,7 +79,7 @@ async function resetExistingUsers() {
  * @note This is an async function, so use the `.then(result => ... )` pattern
  */
 async function getAverageStarRatings() {
-    // SELECT title AS _id, AVG(rating) AS averageRating FROM games
+    // SELECT game AS _id, AVG(rating) AS averageRating FROM reviews GROUP BY game
     let out = {};
     await Review.aggregate(
         [
@@ -99,13 +103,27 @@ async function getAverageStarRatings() {
     return out
 }
 
+async function getReviewCounts() {
+    // SELECT game AS _id, COUNT(*) AS reviewCount FROM reviews GROUP BY game
+    let out = {};
+    await Review.aggregate().sortByCount("game").then(result => {
+        result.forEach(entry => {
+            out[entry._id] = entry.count;
+        })
+    });
+    return out
+}
+
 resetGames();
 resetExistingUsers();
 
 let averageStarRatings = {};
-getAverageStarRatings().then(result => {
-    averageStarRatings = result;
-})
+getAverageStarRatings().then(result => averageStarRatings = result);
+
+let reviewCounts = {};
+getReviewCounts().then(result => reviewCounts = result)
+
+const pluralS = amount => amount === 1 ? "" : "s";
 
 const hbs = create({
     helpers: {
@@ -129,6 +147,16 @@ const hbs = create({
             })
         },
 
+        formatDateYear(date) {
+            return date.toLocaleDateString('en-us', {
+                year: "numeric"
+            })
+        },
+
+        getTime(date) {
+            return date.getTime();
+        },
+
         // Using normal `equals()` would compare the references instead of the actual values
         dateEquals(d1, d2) {
             return d1.getTime() === d2.getTime();
@@ -146,8 +174,6 @@ const hbs = create({
             const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24)); // Convert to days
             const diffMonths = Math.floor(diffDays / 30); // Approximate months
             const diffYears = Math.floor(diffDays / 365); // Approximate years
-
-            const pluralS = amount => amount === 1 ? "" : "s";
 
             if (diffYears > 0) {
                 return `${diffYears} year${pluralS(diffYears)}`;
@@ -202,11 +228,20 @@ const hbs = create({
         },
 
         getAverageStarRating(gameTitle) {
-            return averageStarRatings[gameTitle];
+            return averageStarRatings[gameTitle] || 0;
         },
 
         getRoundedAverageStarRating(gameTitle) {
-            return Math.round(averageStarRatings[gameTitle]);
+            return Math.round(averageStarRatings[gameTitle]) || 0;
+        },
+
+        getReviewCount(gameTitle) {
+            return reviewCounts[gameTitle] || 0;
+        },
+
+        getReviewCountFormatted(gameTitle) {
+            let count = reviewCounts[gameTitle] || 0
+            return `${count} review${pluralS(count)}`
         },
 
         /**
@@ -251,6 +286,7 @@ app.use(
         }
     )
 );
+
 
 mongoose.connect("mongodb://127.0.0.1:27017/reviewapp");
 
@@ -409,10 +445,8 @@ app.post('/submit-review', async (req, res) => {
     console.log("Review found:", review);
 
     // Update average star ratings
-    getAverageStarRatings().then(result => {
-        averageStarRatings = result;
-        console.log(averageStarRatings);
-    })
+    getAverageStarRatings().then(result => averageStarRatings = result)
+    getReviewCounts().then(result => reviewCounts = result)
 
     res.redirect(`/review?id=${review._id}`);
 });

@@ -5,15 +5,24 @@
         <div class="input-group-prepend">
             <span class="input-group-text">🔎</span>
         </div>
-        <input type="text" class="form-control" placeholder="Search for a game">
+        <input id="search-text" type="text" class="form-control" placeholder="Search for a game">
         <div class="input-group-append">
             <div class="input-group">
                 <span class="input-group-text">Order by</span>
-                <select class="form-select">
+                <select id="order-type-select" class="form-select" onchange="sortGames()">
                     <option selected value="1">Rating</option>
                     <option value="2">Title</option>
                     <option value="3">Developer</option>
-                    <option value="4">Review Count</option>
+                    <option value="4">Release Date</option>
+                    <option value="5">Review Count</option>
+                </select>
+            </div>
+        </div>
+        <div class="input-group-append">
+            <div class="input-group">
+                <select id="order-arrangement-select" class="form-select" onchange="sortGames()">
+                    <option selected value="1">Ascending</option>
+                    <option value="2">Descending</option>
                 </select>
             </div>
         </div>
@@ -24,7 +33,10 @@
         {{log}}
         {{#each games}}
         {{log "*" title}}
-        <div class="index-game-entry col shadow">
+        <div class="index-game-entry col shadow" data-title="{{title}}" data-rating="{{getAverageStarRating title}}"
+            data-developer="{{developer}}" data-release-date="{{getTime release_date}}"
+            data-review-count="{{getReviewCount title}}">
+
             <a class="index-game-cover-container shadow" href="reviews?game={{title}}">
                 <img class="index-game-cover d-block mx-auto my-auto" src="img/cover/{{cover}}">
             </a>
@@ -34,9 +46,10 @@
                     </a></h2>
                 <div class="star-rating" title="Average Rating {{getAverageStarRating title}}">
                     {{{generateStarRating (getRoundedAverageStarRating title)}}}
+                    ({{getReviewCountFormatted title}})
                 </div>
                 <p class="fst-italic">
-                    {{developer}}, {{formatDate release_date}}
+                    {{developer}}, {{formatDateYear release_date}}
                 </p>
                 <p>
                     {{{truncateWords description 20}}}
