@@ -7,15 +7,15 @@
     <div class="container d-flex flex-wrap flex-lg-nowrap pt-5 pb-5">
         <img id="game-cover" class="individual-game-cover" src="img/cover/{{game.cover}}" alt="{{game.title}}">
         <div class="game-description col-lg-6">
-                                    {{!-- allow-editing --}}
-                                        {{!-- V --}}
+            {{!-- allow-editing --}}
+            {{!-- V --}}
             <h1 id="game-title" class="fw-bold ">{{game.title}}</h1>
             <p id="game-developer-date" class="fst-italic">
                 <span id="game-developer" class="allow-editing">{{game.developer}}</span>,
                 <span id="game-release-date" class="allow-editing">{{formatDate game.release_date}}</span>
             </p>
-            <div id="star-rating" class="star-rating">
-                {{{generateStarRating game.rating false}}}
+            <div id="star-rating" class="star-rating" title="Average Rating {{getAverageStarRating title}}">
+                {{{generateStarRating (getRoundedAverageStarRating title)}}}
             </div>
             <div id="game-description-text" class="allow-editing w-100">
                 {{game.description}}
@@ -27,35 +27,35 @@
                 </a>
             </p>
             {{#if loggedUser}}
-                <div class="leave-rating">
-                    <h2 class="fw-bold fs-2">Have you played this game before?</h2>
-                    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#leave-review">Leave a
-                        review</button>
-                </div>
+            <div class="leave-rating">
+                <h2 class="fw-bold fs-2">Have you played this game before?</h2>
+                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#leave-review">Leave a
+                    review</button>
+            </div>
             {{else}}
-                <div class="leave-rating">
-                    <h2 class="fw-bold fs-2">Have you played this game before?</h2>
-                    <button class="btn btn-primary" onclick="window.location.href='/register'">Leave a
-                        review</button>
-                </div>
+            <div class="leave-rating">
+                <h2 class="fw-bold fs-2">Have you played this game before?</h2>
+                <button class="btn btn-primary" onclick="window.location.href='/register'">Leave a
+                    review</button>
+            </div>
             {{/if}}
             {{#if (equals game.dev_email loggedUser.email)}}
-                <div class="my-2">
-                    <button id="edit-button" class="btn btn-primary" onclick="editContent()">
-                        Edit
-                    </button>
-                    <button id="change-boxart-button" class="btn btn-primary img-upld-btn" data-image-type="boxart"
+            <div class="my-2">
+                <button id="edit-button" class="btn btn-primary" onclick="editContent()">
+                    Edit
+                </button>
+                <button id="change-boxart-button" class="btn btn-primary img-upld-btn" data-image-type="boxart"
                     data-bs-toggle="modal" data-bs-target="#boxart-modal" style="display: none;">
-                        Change boxart
-                    </button>
-                    <button id="change-wallpaper-button" class="btn btn-primary img-upld-btn" data-image-type="wallpaper"
+                    Change boxart
+                </button>
+                <button id="change-wallpaper-button" class="btn btn-primary img-upld-btn" data-image-type="wallpaper"
                     data-bs-toggle="modal" data-bs-target="#wallpaper-modal" style="display: none;">
-                        Change wallpaper
-                    </button>
-                    <button id="delete-button" class="btn btn-danger" disabled>
-                        Delete
-                    </button>
-                </div>
+                    Change wallpaper
+                </button>
+                <button id="delete-button" class="btn btn-danger" disabled>
+                    Delete
+                </button>
+            </div>
             {{/if}}
 
         </div>
@@ -69,11 +69,11 @@
         {{log "##" game.title}}
         {{log}}
         {{#if reviews}}
-            {{#each reviews}}
-                {{> review-entry review=this review=this user=(lookup ../users this.email)}}
-            {{/each}}
+        {{#each reviews}}
+        {{> review-entry review=this review=this user=(lookup ../users this.email)}}
+        {{/each}}
         {{else}}
-            <p class="bg-dark shadow py-4 px-4">There are no reviews for this game!</p>
+        <p class="bg-dark shadow py-4 px-4">There are no reviews for this game!</p>
         {{/if}}
     </div>
 </div>

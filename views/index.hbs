@@ -32,8 +32,8 @@
                 <h2 class="fs-4 fw-bold"><a class="block-link" href="reviews?game={{title}}">
                         {{title}}
                     </a></h2>
-                <div class="star-rating">
-                    {{{generateStarRating rating false}}}
+                <div class="star-rating" title="Average Rating {{getAverageStarRating title}}">
+                    {{{generateStarRating (getRoundedAverageStarRating title)}}}
                 </div>
                 <p class="fst-italic">
                     {{developer}}, {{formatDate release_date}}

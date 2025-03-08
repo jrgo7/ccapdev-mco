@@ -6,7 +6,7 @@ const { create } = require('express-handlebars')
 const fileUpload = require('express-fileupload')
 const path = require('path');
 
-const { users, games } = require("./data.js");
+const { users, games } = require("./database/data.js");
 
 const app = express();
 const Review = require("./database/models/reviewModel");
@@ -70,8 +70,42 @@ async function resetExistingUsers() {
     })
 }
 
+/**
+ * @returns JSON in the format of { game1Title: averageRating }
+ * @note This is an async function, so use the `.then(result => ... )` pattern
+ */
+async function getAverageStarRatings() {
+    // SELECT title AS _id, AVG(rating) AS averageRating FROM games
+    let out = {};
+    await Review.aggregate(
+        [
+            {
+                $group: {
+                    _id: "$game",
+                    averageRating: { $avg: "$rating" }
+                }
+            },
+            {
+                $sort: {
+                    averageRating: -1
+                }
+            }
+        ]
+    ).then(result => {
+        result.forEach(entry => {
+            out[entry._id] = entry.averageRating;
+        })
+    });
+    return out
+}
+
 resetGames();
 resetExistingUsers();
+
+let averageStarRatings = {};
+getAverageStarRatings().then(result => {
+    averageStarRatings = result;
+})
 
 const hbs = create({
     helpers: {
@@ -113,12 +147,14 @@ const hbs = create({
             const diffMonths = Math.floor(diffDays / 30); // Approximate months
             const diffYears = Math.floor(diffDays / 365); // Approximate years
 
+            const pluralS = amount => amount === 1 ? "" : "s";
+
             if (diffYears > 0) {
-                return `${diffYears} year${diffYears === 1 ? "" : "s"}`;
+                return `${diffYears} year${pluralS(diffYears)}`;
             } else if (diffMonths > 0) {
-                return `${diffMonths} month${diffMonths === 1 ? "" : "s"}`;
+                return `${diffMonths} month${pluralS(diffMonths)}`;
             } else if (diffDays > 0) {
-                return `${diffDays} day${diffDays === 1 ? "" : "s"}`;
+                return `${diffDays} day${pluralS(diffDays)}`;
             } else {
                 return "Less than a day";
             }
@@ -160,9 +196,17 @@ const hbs = create({
                 if (i <= rating) {
                     checked = "checked";
                 }
-                out += `<span ${id} ${onclick} class="fa fa-star ${unclickable} ${checked}"></span>`;
+                out += `<span ${id} ${onclick} class="fa fa-star fa-xl ${unclickable} ${checked}"></span>`;
             }
             return out;
+        },
+
+        getAverageStarRating(gameTitle) {
+            return averageStarRatings[gameTitle];
+        },
+
+        getRoundedAverageStarRating(gameTitle) {
+            return Math.round(averageStarRatings[gameTitle]);
         },
 
         /**
@@ -212,7 +256,7 @@ mongoose.connect("mongodb://127.0.0.1:27017/reviewapp");
 
 // Sorting helpers
 
-const gameByRating = (game1, game2) => game2.rating - game1.rating;
+const gameByRating = (game1, game2) => averageStarRatings[game2.title] - averageStarRatings[game1.title];
 const reviewByUpvotes = (review1, review2) => review2.upvotes - review1.upvotes;
 const userByName = (user1, user2) => user1.username.localeCompare(user2.username);
 
@@ -236,7 +280,9 @@ app.use((req, res, next) => {
 // GET routes
 
 app.get('/', async (req, res) => {
-    const games = await Game.find({}).lean();
+    // TODO Sorting here doesn't seem to work -- but it should be fine
+    // TODO once we implement client-side sorting
+    const games = (await Game.find({}).lean()).sort(gameByRating);
     res.render("index", { "title": "Main Page", "games": games });
 })
 
@@ -362,6 +408,12 @@ app.post('/submit-review', async (req, res) => {
 
     console.log("Review found:", review);
 
+    // Update average star ratings
+    getAverageStarRatings().then(result => {
+        averageStarRatings = result;
+        console.log(averageStarRatings);
+    })
+
     res.redirect(`/review?id=${review._id}`);
 });
 
@@ -374,7 +426,7 @@ app.post("/login", async (req, res) => {
 
         if (!user || user.password !== password) {
             const games = await Game.find({}).lean();
-            return res.status(401).render("index", {"title": "Main Page", "games": games, "error": "Invalid login credentials."});
+            return res.status(401).render("index", { "title": "Main Page", "games": games, "error": "Invalid login credentials." });
         }
 
         req.session.user = user;
@@ -395,7 +447,7 @@ app.post("/login", async (req, res) => {
     } catch (error) {
         console.error("Login error:", error);
         const games = await Game.find({}).lean();
-        res.status(500).render("index", {"title": "Main Page", "games": games, "error": error}
+        res.status(500).render("index", { "title": "Main Page", "games": games, "error": error }
         );
     }
 })
