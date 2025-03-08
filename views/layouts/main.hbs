@@ -18,70 +18,7 @@
 
     {{> modal-leave-review}}
 
-    {{!-- Upload Image Modal
-    <div class="modal modal-lg fade fade-in" id="upload-image">
-        <div class="modal-dialog">
-            <div class="modal-content bg-dark shadow">
-                <div class="modal-header">
-                    <h5>Upload Image</h5>
-                </div>
-                <div class="modal-body">
-                    <form id="upload-image-form" action="/submit-image" method="post">
-                        <input type="file" name="image" id="image-input" accept="image/*" />
-                    </form>
-                    <div class="image-preview" id="image-preview" style="margin-top:10px;">
-                        <!-- Image preview will be inserted here -->
-                    </div>
-                </div>
-
-                <div class="modal-footer">
-                    <button class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                    <button id="submit-image" class="btn btn-primary" data-bs-dismiss="modal">Upload</button>
-                </div>
-            </div>
-        </div>
-    </div> --}}
-
-    {{!--Nav bar--}}
-    <nav class="navbar navbar-expand-md navbar-dark sticky-top">
-        <a class="navbar-brand px-3" href="/"><img class="logo-sm" src="/img/FrogCritic-white.png"></a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
-            aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item mx-3">
-                    <a class="nav-link" aria-current="page" href="/">Games</a>
-                </li>
-                <li class="nav-item mx-3">
-                    <a class="nav-link" aria-current="page" href="users">Users</a>
-                </li>
-            </ul>
-            <div class="ms-auto dropdown mx-4 ">
-                <span class="navbar-username" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    {{#if loggedUser}}
-                    {{loggedUser.username}}
-                    {{else}}
-                    Guest
-                    {{/if}}
-                </span>
-                <button class="btn btn-default dropdown-toggle" type="button" data-bs-toggle="dropdown"
-                    aria-haspopup="true" aria-expanded="false">
-                    <img class="avatar" src="{{defaultAvatar loggedUser.avatar}}" alt="Avatar">
-                    <span class="caret"></span>
-                </button>
-                <div class="dropdown-menu">
-                    <a class="dropdown-item" href="selfprofile">Account</a>
-
-                    <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="#login" data-bs-toggle="modal" data-target="#login">Log In</a>
-                    <a class="dropdown-item" href="register">Register</a>
-                    <a class="dropdown-item" href="logout">Logout</a>
-                </div>
-            </div>
-        </div>
-    </nav>
+    {{> nav-bar}}
     
     {{#if error}}
     <div class="alert alert-danger">
