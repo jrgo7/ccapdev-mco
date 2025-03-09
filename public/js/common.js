@@ -1,3 +1,5 @@
+// * Client-side JavaScript
+
 let tempImages = {};
 let currentImageType = null;
 

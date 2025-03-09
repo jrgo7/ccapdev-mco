@@ -458,6 +458,13 @@ app.post('/submit-review', async (req, res) => {
     res.redirect(`/review?id=${review._id}`);
 });
 
+app.post('/delete-review', async (req, res) => {
+    let deletedReview = await Review.findOneAndDelete({_id: req.body.reviewId});
+    let deletedReviewGame = deletedReview.game;
+    console.log(`>>>Redirecting to /reviews?game=${deletedReviewGame}...`)
+    res.redirect(`/reviews?game=${deletedReviewGame}`);
+})
+
 app.post("/login", async (req, res) => {
     const email = req.body.email;
     const password = req.body.password;

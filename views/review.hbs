@@ -65,14 +65,18 @@
 
     </div>
     {{#if (equals loggedUser.email user.email)}}
-        <div class="mt-2 py-2">
+    <div class="mt-2 py-2">
+
+        <form method="post" action="/delete-review">
             <button id="edit-button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#leave-review">
                 Edit
             </button>
-            <button id="delete-button" class="btn btn-danger" disabled>
+            <input name="reviewId" id="reviewId" value="{{review._id}}" hidden>
+            <button id="delete-button" type="submit" class="btn btn-danger">
                 Delete
             </button>
-        </div>
+        </form>
+    </div>
     {{else}}
     {{/if}}
 </div>
