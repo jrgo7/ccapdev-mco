@@ -28,7 +28,7 @@ const reviewSchema = mongoose.Schema({
         require: true
     },
     upvotes: {
-        type: Number,
+        type: String,
         require: true,
         default: 0
     },
@@ -62,7 +62,7 @@ const reviewSchema = mongoose.Schema({
             require: true,
             default: Date.now()
         }
-    }
+    },
 })
 /*
 game: "Super Mario Bros.",

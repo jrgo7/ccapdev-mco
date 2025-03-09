@@ -15,7 +15,7 @@ app.use(favicon(path.resolve(__dirname, 'public/img/favicon.ico')))
 const Review = require("./database/models/reviewModel");
 const User = require("./database/models/userModel");
 const Game = require("./database/models/gameModel");
-
+const Vote = require("./database/models/voteModel");
 
 console.clear();
 
@@ -103,6 +103,19 @@ async function getAverageStarRatings() {
     return out
 }
 
+async function countVotes(reviewId) {
+    try {
+        const upvoteCount = await Vote.countDocuments({ reviewId: reviewId, vote: 1 });
+        const downvoteCount = await Vote.countDocuments({ reviewId: reviewId, vote: 0 });
+
+        return upvoteCount - downvoteCount;
+    } catch (error) {
+        console.error("Error in Vote Count", error);
+        return -1;
+    }
+    
+}
+
 async function getReviewCounts() {
     // SELECT game AS _id, COUNT(*) AS reviewCount FROM reviews GROUP BY game
     let out = {};
@@ -156,7 +169,6 @@ const hbs = create({
         getTime(date) {
             return date.getTime();
         },
-
         // Using normal `equals()` would compare the references instead of the actual values
         dateEquals(d1, d2) {
             return d1.getTime() === d2.getTime();
@@ -356,9 +368,17 @@ app.get('/review', async (req, res) => {
     const review = await Review.findOne({ _id: id }).lean();
     const user = await User.findOne({ email: review.email }).lean();
     const game = await Game.findOne({ title: review.game }).lean();
+    const voteCount = await countVotes(id);
+    
+    let upvote = false;
+    let downvote = false;
 
-    res.render("review", { "title": review.title, "review": review, "user": user, "game": game });
+    if(req.session.user){
+        upvote = await Vote.findOne({userId: req.session.user._id, vote: 1});
+        downvote = await Vote.findOne({userId: req.session.user._id, vote: 0});
+    }
 
+    res.render("review", { "title": review.title, "review": review, "user": user, "game": game, "voteCount": voteCount, "upvote": upvote, "downvote": downvote});
 })
 
 app.get('/selfprofile', isAuthenticated, async (req, res) => {
@@ -502,6 +522,47 @@ app.post("/login", async (req, res) => {
         const games = await Game.find({}).lean();
         res.status(500).render("index", { "title": "Main Page", "games": games, "error": error }
         );
+    }
+})
+
+app.post('/upvote', async (req, res) => {
+
+    const upvote = await Vote.findOne({ 'userId': req.session.user._id, 'reviewId': req.body.reviewId }).lean();
+    
+    if (upvote) {
+        await Vote.findOneAndDelete({ 'userId': req.session.user._id, 'reviewId': req.body.reviewId });
+
+        res.json({ success: true, refresh: true, message: "Upvote deleted successfully" });
+    } else {
+        await Vote.findOneAndDelete({ 'userId': req.session.user._id, 'reviewId': req.body.reviewId });
+
+        await Vote.create({
+            userId: req.session.user._id,
+            reviewId: req.body.reviewId,
+            vote: 1
+        })
+
+        res.json({ success: true, refresh: true, message: "Upvote updated successfully" });
+    }
+})
+
+app.post('/downvote', async (req, res) => {
+    console.log(req.body);
+
+    const downvote = await Vote.findOne({ 'userId': req.session.user._id, 'reviewId': req.body.reviewId }).lean();
+
+    if (downvote) {
+        await Vote.findOneAndDelete({ 'userId': req.session.user._id, 'reviewId': req.body.reviewId });
+
+        res.json({ success: true, refresh: true, message: "Downvote deleted successfully" });
+    } else {
+        await Vote.create({
+            userId: req.session.user._id,
+            reviewId: req.body.reviewId,
+            vote: 0
+        })
+
+        res.json({ success: true, refresh: true, message: "Downvote updated successfully" });
     }
 })
 

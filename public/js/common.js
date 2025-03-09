@@ -76,6 +76,33 @@ async function saveGame() {
     editButton.onclick = editContent;
 }
 
+async function upvote(reviewId){
+    let formData = new FormData();
+
+    formData.append("reviewId", reviewId);
+
+    const response = await fetch("/upvote", {
+        method: "POST",
+        body: formData,
+    }).then(res => res.json()).then(data => {
+        if (data.refresh) { window.location.reload(); }
+    });
+}
+
+async function downvote(reviewId){
+    let formData = new FormData();
+
+    formData.append("reviewId", reviewId);
+
+    const response = await fetch("/downvote", {
+        method: "POST",
+        body: formData,
+    }).then(res => res.json()).then(data => {
+        if (data.refresh) { window.location.reload(); }
+    });
+}
+
+
 async function saveProfile() {
     let formData = new FormData();
 
