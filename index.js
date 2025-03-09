@@ -451,7 +451,7 @@ app.post('/submit-review', async (req, res) => {
 
     console.log("Review found:", review);
 
-    // Update average star ratings
+    // Update average star ratings and review counts
     getAverageStarRatings().then(result => averageStarRatings = result)
     getReviewCounts().then(result => reviewCounts = result)
 
@@ -459,9 +459,14 @@ app.post('/submit-review', async (req, res) => {
 });
 
 app.post('/delete-review', async (req, res) => {
-    let deletedReview = await Review.findOneAndDelete({_id: req.body.reviewId});
+    let deletedReview = await Review.findOneAndDelete({ _id: req.body.reviewId });
     let deletedReviewGame = deletedReview.game;
     console.log(`>>>Redirecting to /reviews?game=${deletedReviewGame}...`)
+
+    // Update average star ratings and review counts
+    getAverageStarRatings().then(result => averageStarRatings = result)
+    getReviewCounts().then(result => reviewCounts = result)
+  
     res.redirect(`/reviews?game=${deletedReviewGame}`);
 })
 
