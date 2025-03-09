@@ -316,8 +316,6 @@ app.use((req, res, next) => {
 // GET routes
 
 app.get('/', async (req, res) => {
-    // TODO Sorting here doesn't seem to work -- but it should be fine
-    // TODO once we implement client-side sorting
     const games = (await Game.find({}).lean()).sort(gameByRating);
     res.render("index", { "title": "Main Page", "games": games });
 })
@@ -325,7 +323,7 @@ app.get('/', async (req, res) => {
 app.get('/reviews', async (req, res) => {
     let title = req.query.game;
 
-    const reviews = await await Review.find({ game: title }).lean();
+    const reviews = await Review.find({ game: title }).lean();
     const game = await Game.findOne({ title: title }).lean();
     const users = await User.find({}).lean();
 
@@ -334,12 +332,21 @@ app.get('/reviews', async (req, res) => {
         return acc;
     }, {});
 
+    let existingReviewId;
+    if (req.session.user) {
+        let existingReview = await Review.findOne({ game: title, email: req.session.user.email }).lean();
+        if (existingReview != null) {
+            existingReviewId = existingReview._id;
+        }
+        console.log(`Existing review id is ${existingReviewId}`)
+    }
 
     res.render("reviews", {
         "title": title,
         "game": game,
         "reviews": (reviews).sort(reviewByUpvotes),
-        "users": userLookup
+        "users": userLookup,
+        "existingReviewId": existingReviewId || false
     });
 })
 
