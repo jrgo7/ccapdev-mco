@@ -423,7 +423,8 @@ app.post('/submit-review', async (req, res) => {
     console.log(req.body);
     const email = req.session.user.email;
     const game = req.body.game;
-    const media = req.files ?? {};
+    const {media} = req.files;
+
     
     const findParams = {
         email: email,
@@ -436,42 +437,24 @@ app.post('/submit-review', async (req, res) => {
         text: req.body.text,
     }; 
 
+    if(media){
+        await media.mv(path.resolve(__dirname, 'public/img/review-attachment/', media.name));
+        mediaType = media.mimetype.startsWith('image/') ? "image" : "video";
+        setParams.attachment = {"type" : mediaType, "filename": media.name};
+    }
+
     // ! We didn't use upsert (which would update or insert in one statement) because
     // ! it caused issues wherein new posts would have an edit_date timestamp different from
     // ! the post_date timestamp by a few milliseconds!
     let foundReview = await Review.findOne(findParams)
 
     if (foundReview) {
-
-        if(media){
-            let mediaPath = path.resolve(__dirname, 'public/img/review-attachment/', media.name);
-            await media.mv(mediaPath);
-
-            mediaPath = media.name;
-
-            setParams.attachment = mediaPath;
-        }
-        
-        await Review.updateOne(
-            findParams,
-            {
-                $set: {
-                    ...setParams,
-                    edit_date: Date.now() // update edit date
-                }
-            })
-
+        await Review.updateOne( findParams, { $set: {
+                ...setParams,
+                edit_date: Date.now() // update edit date
+            }
+        })
     } else {
-
-        if(media){
-            let mediaPath = path.resolve(__dirname, 'public/img/review-attachment/', media.name);
-            await media.mv(mediaPath);
-
-            mediaPath = media.name;
-
-            setParams.attachment = mediaPath;
-        }
-
         await Review.create({
             ...findParams, // add email and game as attributes
             ...setParams,

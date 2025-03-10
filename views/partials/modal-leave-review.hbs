@@ -4,7 +4,7 @@
             <div class="modal-header">
                 <h5>Leave a Review</h5>
             </div>
-            <form id="leave-review-form" action="/submit-review" method="post">
+            <form id="leave-review-form" action="/submit-review" method="post" enctype="multipart/form-data">
                 <div class="modal-body">
 
                     <div class="form-group mb-3">
@@ -30,7 +30,7 @@
 
                     <div class="form-group mb-3">
                         <label for="leave-review-attachment" name="attachment">Attachment</label>
-                        <input type="file" autocomplete="off" class="form-control" accept="image/*">
+                        <input type="file" autocomplete="off" class="form-control" name="media" accept="image/*,video/*">
                     </div>
 
                     <input type="hidden" name="game" id="leave-review-game" value="{{game.title}}" required>
