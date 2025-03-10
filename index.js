@@ -542,7 +542,7 @@ app.post("/login", async (req, res) => {
     }
 })
 
-app.post('/upvote', async (req, res) => {
+app.post('/upvote', isAuthenticated, async (req, res) => {
 
     const upvote = await Vote.findOne({ 'userId': req.session.user._id, 'reviewId': req.body.reviewId }).lean();
 
@@ -563,7 +563,7 @@ app.post('/upvote', async (req, res) => {
     }
 })
 
-app.post('/downvote', async (req, res) => {
+app.post('/downvote', isAuthenticated, async (req, res) => {
     console.log(req.body);
 
     const downvote = await Vote.findOne({ 'userId': req.session.user._id, 'reviewId': req.body.reviewId }).lean();
