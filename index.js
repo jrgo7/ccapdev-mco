@@ -423,22 +423,35 @@ app.post('/submit-review', async (req, res) => {
     console.log(req.body);
     const email = req.session.user.email;
     const game = req.body.game;
-
+    const media = req.files ?? {};
+    
     const findParams = {
         email: email,
         game: game
     };
+
     const setParams = {
         title: req.body.title,
         rating: Number(req.body.rating),
         text: req.body.text,
-    };
+    }; 
 
     // ! We didn't use upsert (which would update or insert in one statement) because
     // ! it caused issues wherein new posts would have an edit_date timestamp different from
     // ! the post_date timestamp by a few milliseconds!
     let foundReview = await Review.findOne(findParams)
+
     if (foundReview) {
+
+        if(media){
+            let mediaPath = path.resolve(__dirname, 'public/img/review-attachment/', media.name);
+            await media.mv(mediaPath);
+
+            mediaPath = media.name;
+
+            setParams.attachment = mediaPath;
+        }
+        
         await Review.updateOne(
             findParams,
             {
@@ -447,13 +460,24 @@ app.post('/submit-review', async (req, res) => {
                     edit_date: Date.now() // update edit date
                 }
             })
+
     } else {
+
+        if(media){
+            let mediaPath = path.resolve(__dirname, 'public/img/review-attachment/', media.name);
+            await media.mv(mediaPath);
+
+            mediaPath = media.name;
+
+            setParams.attachment = mediaPath;
+        }
+
         await Review.create({
             ...findParams, // add email and game as attributes
             ...setParams,
         })
     }
-
+    
     let review = await Review.findOne(findParams).lean();
 
     if (!review) {
@@ -473,6 +497,8 @@ app.post('/delete-review', async (req, res) => {
     let deletedReview = await Review.findOneAndDelete({ _id: req.body.reviewId });
     let deletedReviewGame = deletedReview.game;
     console.log(`>>>Redirecting to /reviews?game=${deletedReviewGame}...`)
+
+    // TODO DELETE PREVIOUS ATTACHMENTS
 
     // Update average star ratings and review counts
     getAverageStarRatings().then(result => averageStarRatings = result)
@@ -523,7 +549,7 @@ app.post('/upvote', async (req, res) => {
     if (upvote) {
         await Vote.findOneAndDelete({ 'userId': req.session.user._id, 'reviewId': req.body.reviewId });
 
-        res.json({ success: true, refresh: true, message: "Upvote deleted successfully" });
+        res.json({refresh: true});
     } else {
         await Vote.findOneAndDelete({ 'userId': req.session.user._id, 'reviewId': req.body.reviewId });
 
@@ -533,7 +559,7 @@ app.post('/upvote', async (req, res) => {
             vote: 1
         })
 
-        res.json({ success: true, refresh: true, message: "Upvote updated successfully" });
+        res.json({refresh: true});
     }
 })
 
@@ -545,7 +571,7 @@ app.post('/downvote', async (req, res) => {
     if (downvote) {
         await Vote.findOneAndDelete({ 'userId': req.session.user._id, 'reviewId': req.body.reviewId });
 
-        res.json({ success: true, refresh: true, message: "Downvote deleted successfully" });
+        res.json({refresh: true});
     } else {
         await Vote.create({
             userId: req.session.user._id,
@@ -553,7 +579,7 @@ app.post('/downvote', async (req, res) => {
             vote: 0
         })
 
-        res.json({ success: true, refresh: true, message: "Downvote updated successfully" });
+        res.json({refresh: true});
     }
 })
 
@@ -574,7 +600,7 @@ app.post("/register", async (req, res) => {
                 error: "Passwords don't match"
             });
         }
-
+        
         await User.create({
             email: email,
             password: password,
