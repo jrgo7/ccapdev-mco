@@ -304,3 +304,7 @@ a:hover {
 .voted{
     color: plum;
 }
+
+.clickable{
+    cursor: pointer;
+}
