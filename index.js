@@ -148,7 +148,6 @@ const hbs = create({
         equals(x, y) {
             return x === y;
         },
-
         /**
          * @param {Date} date 
          */
@@ -351,6 +350,10 @@ app.get('/reviews', async (req, res) => {
             existingReviewId = existingReview._id;
         }
         console.log(`Existing review id is ${existingReviewId}`)
+    }
+    
+    for (let i = 0; i < reviews.length; i++) {
+        reviews[i].votes = await countVotes(reviews[i]._id)
     }
 
     res.render("reviews", {
