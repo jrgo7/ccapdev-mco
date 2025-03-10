@@ -1,0 +1,28 @@
+<div class="modal modal-lg fade fade-in" id="leave-response">
+    <div class="modal-dialog">
+        <div class="modal-content bg-dark shadow">
+            <div class="modal-header">
+                <h5>Leave a Response!</h5>
+            </div>
+
+            <form id="leave-review-form" action="/submit-response" method="post">
+                <div class="modal-body">
+
+                    <div class="form-group mb-3">
+                        <label class="form-label" for="leave-review-description">Description</label>
+                        <textarea name="text" class="form-control" id="leave-review-description" rows="8" cols="120"
+                            placeholder="Description" autocomplete="off" required></textarea>
+                    </div>
+
+                    <input type="hidden" name="game" id="leave-review-game" value="{{game.title}}" required>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="submit" id="submit-review" class="btn btn-primary">Post</button>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>
+

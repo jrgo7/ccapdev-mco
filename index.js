@@ -479,6 +479,13 @@ app.post('/submit-review', async (req, res) => {
     res.redirect(`/review?id=${review._id}`);
 });
 
+app.post('/submit-review', async (req, res) => {
+    /*
+
+    */
+});
+
+
 app.post('/delete-review', async (req, res) => {
     let deletedReview = await Review.findOneAndDelete({ _id: req.body.reviewId });
     let deletedReviewGame = deletedReview.game;
