@@ -45,11 +45,11 @@
         </div>
     </div>
     <div id="game-entries" class="container mx-auto d-flex flex-wrap">
-        {{log}}
+        {{!-- {{log}}
         {{log "# Games"}}
-        {{log}}
+        {{log}} --}}
         {{#each games}}
-        {{log "*" title}}
+        {{!-- {{log "*" title}} --}}
         <div class="index-game-entry col shadow" data-title="{{title}}" data-rating="{{getAverageStarRating title}}"
             data-developer="{{developer}}" data-release-date="{{getTime release_date}}"
             data-review-count="{{getReviewCount title}}">
