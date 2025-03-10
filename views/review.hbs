@@ -7,10 +7,10 @@
         <div id="star-rating" class="star-rating pt-2">
             {{{generateStarRating review.rating true}}}
             <div class="votes">
-                <span class=" {{#if upvote}}voted{{/if}} fa fa-xl fa-thumbs-up"
+                <span class=" {{#if upvote}}voted{{/if}} fa fa-xl fa-thumbs-up clickable"
                     onclick="upvote('{{review._id}}')"></span>
                 <span id="upvotes">{{voteCount}}</span>
-                <span class=" {{#if downvote}}voted{{/if}} fa fa-xl fa-thumbs-down"
+                <span class=" {{#if downvote}}voted{{/if}} fa fa-xl fa-thumbs-down clickable"
                     onclick="downvote('{{review._id}}')"></span>
             </div>
         </div>
