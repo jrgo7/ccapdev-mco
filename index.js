@@ -113,7 +113,7 @@ async function countVotes(reviewId) {
         console.error("Error in Vote Count", error);
         return -1;
     }
-    
+
 }
 
 async function getReviewCounts() {
@@ -369,16 +369,16 @@ app.get('/review', async (req, res) => {
     const user = await User.findOne({ email: review.email }).lean();
     const game = await Game.findOne({ title: review.game }).lean();
     const voteCount = await countVotes(id);
-    
+
     let upvote = false;
     let downvote = false;
 
-    if(req.session.user){
-        upvote = await Vote.findOne({userId: req.session.user._id, vote: 1});
-        downvote = await Vote.findOne({userId: req.session.user._id, vote: 0});
+    if (req.session.user) {
+        upvote = await Vote.findOne({ userId: req.session.user._id, vote: 1 });
+        downvote = await Vote.findOne({ userId: req.session.user._id, vote: 0 });
     }
 
-    res.render("review", { "title": review.title, "review": review, "user": user, "game": game, "voteCount": voteCount, "upvote": upvote, "downvote": downvote});
+    res.render("review", { "title": review.title, "review": review, "user": user, "game": game, "voteCount": voteCount, "upvote": upvote, "downvote": downvote });
 })
 
 app.get('/selfprofile', isAuthenticated, async (req, res) => {
@@ -424,46 +424,37 @@ app.post('/submit-review', async (req, res) => {
     const email = req.session.user.email;
     const game = req.body.game;
 
-    // If updating an exisitng record, update the edit date
-    // ? This is done separately from the second `updateOne` statement below
-    // ? because in the case where we insert a new record,
-    // ? the edit_date would be milliseconds later than the default post_date.
-    await Review.updateOne(
-        {
-            // "WHERE"
-            email: email,
-            game: game
-        },
-        {
-            // "SET"
-            $set: {
-                edit_date: Date.now()
-            }
-        }
-    )
+    const findParams = {
+        email: email,
+        game: game
+    };
+    const setParams = {
+        title: req.body.title,
+        rating: Number(req.body.rating),
+        text: req.body.text,
+    };
 
-    await Review.updateOne(
-        {
-            // "WHERE"
-            email: email,
-            game: game
-        },
-        {
-            // "SET"
-            $set: {
-                title: req.body.title,
-                rating: Number(req.body.rating),
-                text: req.body.text,
-            }
-        },
-        {
-            // If no matching review found, create it (also setting the username and game)
-            // "update or insert"
-            upsert: true
-        }
-    )
+    // ! We didn't use upsert (which would update or insert in one statement) because
+    // ! it caused issues wherein new posts would have an edit_date timestamp different from
+    // ! the post_date timestamp by a few milliseconds!
+    let foundReview = await Review.findOne(findParams)
+    if (foundReview) {
+        await Review.updateOne(
+            findParams,
+            {
+                $set: {
+                    ...setParams,
+                    edit_date: Date.now() // update edit date
+                }
+            })
+    } else {
+        await Review.create({
+            ...findParams, // add email and game as attributes
+            ...setParams,
+        })
+    }
 
-    const review = await Review.findOne({ game: game, email: email }).lean();
+    let review = await Review.findOne(findParams).lean();
 
     if (!review) {
         return res.status(404).send("Review not found.");
@@ -486,7 +477,7 @@ app.post('/delete-review', async (req, res) => {
     // Update average star ratings and review counts
     getAverageStarRatings().then(result => averageStarRatings = result)
     getReviewCounts().then(result => reviewCounts = result)
-  
+
     res.redirect(`/reviews?game=${deletedReviewGame}`);
 })
 
@@ -528,7 +519,7 @@ app.post("/login", async (req, res) => {
 app.post('/upvote', async (req, res) => {
 
     const upvote = await Vote.findOne({ 'userId': req.session.user._id, 'reviewId': req.body.reviewId }).lean();
-    
+
     if (upvote) {
         await Vote.findOneAndDelete({ 'userId': req.session.user._id, 'reviewId': req.body.reviewId });
 

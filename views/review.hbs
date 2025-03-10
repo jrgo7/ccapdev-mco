@@ -7,9 +7,11 @@
         <div id="star-rating" class="star-rating pt-2">
             {{{generateStarRating review.rating true}}}
             <div class="votes">
-                <span class=" {{#if upvote}}voted{{/if}} fa fa-xl fa-thumbs-up" onclick="upvote('{{review._id}}')"></span>
+                <span class=" {{#if upvote}}voted{{/if}} fa fa-xl fa-thumbs-up"
+                    onclick="upvote('{{review._id}}')"></span>
                 <span id="upvotes">{{voteCount}}</span>
-                <span class=" {{#if downvote}}voted{{/if}} fa fa-xl fa-thumbs-down" onclick="downvote('{{review._id}}')"></span>
+                <span class=" {{#if downvote}}voted{{/if}} fa fa-xl fa-thumbs-down"
+                    onclick="downvote('{{review._id}}')"></span>
             </div>
         </div>
 
@@ -66,11 +68,11 @@
     </div>
     {{#if (equals loggedUser.email user.email)}}
     <div class="mt-2 py-2">
-
+        <button id="edit-button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#leave-review">
+            Edit
+        </button>
+        {{!-- ! Placing the button inside the form would trigger the /delete-review POST request --}}
         <form method="post" action="/delete-review">
-            <button id="edit-button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#leave-review">
-                Edit
-            </button>
             <input name="reviewId" id="reviewId" value="{{review._id}}" hidden>
             <button id="delete-button" type="submit" class="btn btn-danger">
                 Delete
