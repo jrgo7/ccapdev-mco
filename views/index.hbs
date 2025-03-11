@@ -1,11 +1,11 @@
-{{log loggedUser.email}}
 <div class="container">
     <img class="logo center py-5" src=img/FrogCritic.png alt="FrogCritic">
     <div class="search-box input-group mb-3">
         <div class="input-group-prepend">
             <span class="input-group-text">🔎</span>
         </div>
-        <input id="search-text" type="text" class="form-control" placeholder="Super Mario Bros." oninput="filterGames()" autocomplete="off">
+        <input id="search-text" type="text" class="form-control" placeholder="Super Mario Bros." oninput="filterGames()"
+            autocomplete="off">
         <div class="input-group-append">
             <div class="input-group">
                 <span class="input-group-text">where Average Rating ≥</span>
@@ -39,17 +39,15 @@
                 </select>
             </div>
         </div>
-        <div class="px-2 py-2 input-group-append">
-            Recommend A Game!
-            <span class="fa-solid fa-gamepad clickable" onclick="window.open('https://forms.gle/Dkj8X19CBv2FWL7r5')"></span>
-        </div>
+    </div>
+    <div class="px-2 py-2 input-group-append w-100 text-center">
+        <a href="https://forms.gle/Dkj8X19CBv2FWL7r5" target="new" class="block-link">
+            ...or recommend a game!
+            <span class="fa-solid fa-gamepad fa-xl clickable"></span>
+        </a>
     </div>
     <div id="game-entries" class="container mx-auto d-flex flex-wrap">
-        {{!-- {{log}}
-        {{log "# Games"}}
-        {{log}} --}}
         {{#each games}}
-        {{!-- {{log "*" title}} --}}
         <div class="index-game-entry col shadow" data-title="{{title}}" data-rating="{{getAverageStarRating title}}"
             data-developer="{{developer}}" data-release-date="{{getTime release_date}}"
             data-review-count="{{getReviewCount title}}">
@@ -62,7 +60,8 @@
                         {{title}}
                     </a></h2>
                 <div class="star-rating" title="Average Rating {{getAverageStarRating title}}">
-                    {{{generateStarRating (getRoundedAverageStarRating title)}}} ({{getAverageStarRating title}}/5, {{getReviewCountFormatted title}})
+                    {{{generateStarRating (getRoundedAverageStarRating title)}}} ({{getAverageStarRating title}}/5,
+                    {{getReviewCountFormatted title}})
                 </div>
                 <p class="fst-italic">
                     {{developer}}, {{formatDateYear release_date}}

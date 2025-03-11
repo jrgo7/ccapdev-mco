@@ -168,6 +168,7 @@ const hbs = create({
         getTime(date) {
             return date.getTime();
         },
+        
         // Using normal `equals()` would compare the references instead of the actual values
         dateEquals(d1, d2) {
             return d1.getTime() === d2.getTime();
@@ -308,7 +309,7 @@ const reviewByUpvotes = (review1, review2) => review2.upvotes - review1.upvotes;
 const userByName = (user1, user2) => user1.username.localeCompare(user2.username);
 
 
-//Checks if a user is logged in
+// Checks if a user is logged in
 const isAuthenticated = (req, res, next) => {
     if (req.session.user) {
         next();
@@ -318,13 +319,13 @@ const isAuthenticated = (req, res, next) => {
     }
 }
 
-//Middleware to pass user automatically
+// Middleware to pass user automatically
 app.use((req, res, next) => {
     res.locals.loggedUser = req.session.user;
     next();
 });
 
-// GET routes
+// * GET routes
 
 app.get('/', async (req, res) => {
     const games = (await Game.find({}).lean()).sort(gameByRating);
@@ -351,7 +352,7 @@ app.get('/reviews', async (req, res) => {
         }
         console.log(`Existing review id is ${existingReviewId}`)
     }
-    
+
     for (let i = 0; i < reviews.length; i++) {
         reviews[i].votes = await countVotes(reviews[i]._id)
     }
@@ -420,15 +421,13 @@ app.get("/logout", (req, res) => {
     })
 })
 
-// POST routes
+// * POST routes
 
-app.post('/submit-review', async (req, res) => {
+app.post('/submit-review', isAuthenticated, async (req, res) => {
     console.log(req.body);
     const email = req.session.user.email;
     const game = req.body.game;
-    const {media} = req.files;
 
-    
     const findParams = {
         email: email,
         game: game
@@ -438,55 +437,52 @@ app.post('/submit-review', async (req, res) => {
         title: req.body.title,
         rating: Number(req.body.rating),
         text: req.body.text,
-    }; 
+    };
 
-    if(media){
+    if (req.files) {
+        let { media } = req.files;
         await media.mv(path.resolve(__dirname, 'public/img/review-attachment/', media.name));
         mediaType = media.mimetype.startsWith('image/') ? "image" : "video";
-        setParams.attachment = {"type" : mediaType, "filename": media.name};
+        setParams.attachment = { "type": mediaType, "filename": media.name };
     }
 
-    // ! We didn't use upsert (which would update or insert in one statement) because
-    // ! it caused issues wherein new posts would have an edit_date timestamp different from
-    // ! the post_date timestamp by a few milliseconds!
+    // ! MongoDB upsert caused issues with syncing edit and post timestamps
     let foundReview = await Review.findOne(findParams)
-
     if (foundReview) {
-        await Review.updateOne( findParams, { $set: {
+        await Review.updateOne(findParams, {
+            $set: {
                 ...setParams,
                 edit_date: Date.now() // update edit date
             }
         })
     } else {
-        await Review.create({
+        foundReview = await Review.create({
             ...findParams, // add email and game as attributes
             ...setParams,
-        })
+        });
     }
-    
-    let review = await Review.findOne(findParams).lean();
-
-    if (!review) {
-        return res.status(404).send("Review not found.");
-    }
-
-    console.log("Review found:", review);
 
     // Update average star ratings and review counts
     getAverageStarRatings().then(result => averageStarRatings = result)
     getReviewCounts().then(result => reviewCounts = result)
 
-    res.redirect(`/review?id=${review._id}`);
+    if (!foundReview) {
+        return res.status(404).send(
+            `An existing review was not found for { email: "${email}", game: "${game}" } and a new one could not be made. This should never happen unless the Review model was not initialized correctly.`
+        );
+    }
+
+    res.redirect(`/review?id=${foundReview._id}`);
 });
 
-app.post('/submit-review', async (req, res) => {
-    /*
+// app.post('/submit-review', isAuthenticated, async (req, res) => {
+//     /*
 
-    */
-});
+//     */
+// });
 
 
-app.post('/delete-review', async (req, res) => {
+app.post('/delete-review', isAuthenticated, async (req, res) => {
     let deletedReview = await Review.findOneAndDelete({ _id: req.body.reviewId });
     let deletedReviewGame = deletedReview.game;
     console.log(`>>>Redirecting to /reviews?game=${deletedReviewGame}...`)
@@ -509,7 +505,12 @@ app.post("/login", async (req, res) => {
 
         if (!user || user.password !== password) {
             const games = await Game.find({}).lean();
-            return res.status(401).render("index", { "title": "Main Page", "games": games, "error": "Invalid login credentials." });
+            return res.status(401).render(
+                "index", {
+                "title": "Main Page",
+                "games": games,
+                "error": "Invalid login credentials."
+            });
         }
 
         req.session.user = user;
@@ -542,7 +543,7 @@ app.post('/upvote', isAuthenticated, async (req, res) => {
     if (upvote) {
         await Vote.findOneAndDelete({ 'userId': req.session.user._id, 'reviewId': req.body.reviewId });
 
-        res.json({refresh: true});
+        res.json({ refresh: true });
     } else {
         await Vote.findOneAndDelete({ 'userId': req.session.user._id, 'reviewId': req.body.reviewId });
 
@@ -552,7 +553,7 @@ app.post('/upvote', isAuthenticated, async (req, res) => {
             vote: 1
         })
 
-        res.json({refresh: true});
+        res.json({ refresh: true });
     }
 })
 
@@ -564,7 +565,7 @@ app.post('/downvote', isAuthenticated, async (req, res) => {
     if (downvote) {
         await Vote.findOneAndDelete({ 'userId': req.session.user._id, 'reviewId': req.body.reviewId });
 
-        res.json({refresh: true});
+        res.json({ refresh: true });
     } else {
         await Vote.create({
             userId: req.session.user._id,
@@ -572,7 +573,7 @@ app.post('/downvote', isAuthenticated, async (req, res) => {
             vote: 0
         })
 
-        res.json({refresh: true});
+        res.json({ refresh: true });
     }
 })
 
@@ -593,7 +594,7 @@ app.post("/register", async (req, res) => {
                 error: "Passwords don't match"
             });
         }
-        
+
         await User.create({
             email: email,
             password: password,
@@ -619,7 +620,7 @@ app.post("/register", async (req, res) => {
     }
 })
 
-app.post('/save-game', async (req, res) => {
+app.post('/save-game', isAuthenticated, async (req, res) => {
     const { title, developer, releaseDate, description } = req.body;
     const { boxart, wallpaper } = req.files ?? {};
 
@@ -658,7 +659,7 @@ app.post('/save-game', async (req, res) => {
 });
 
 
-app.post('/save-profile', async (req, res) => {
+app.post('/save-profile', isAuthenticated, async (req, res) => {
     const { username, subtitle, description, favorite } = req.body;
     const { profile } = req.files ?? {};
 

@@ -77,9 +77,6 @@
     <h2 class="fw-bold">Top reviews</h2>
     {{> search-review}}
     <div class="d-flex flex-wrap">
-        {{!-- {{log}}
-        {{log "##" game.title}}
-        {{log}} --}}
         {{#if reviews}}
         {{#each reviews}}
         {{> review-entry review=this review=this user=(lookup ../users this.email)}}

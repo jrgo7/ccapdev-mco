@@ -1,4 +1,12 @@
+{{log "User visited" title}}
+{{log "[LOGGED USER DETAILS START]"}}
+{{#if loggedUser}}
 {{log loggedUser}}
+{{else}}
+{{log "User in this session is not logged in."}}
+{{/if}}
+{{log "[LOGGED USER DETAILS END]"}}
+{{log}}
 
 <!DOCTYPE html>
 <html lang="en" data-bs-theme="dark">

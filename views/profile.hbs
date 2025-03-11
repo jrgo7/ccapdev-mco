@@ -1,8 +1,4 @@
 {{> upload-image image-type="profile"}}
-
-{{!-- {{log}}
-{{log "##" user.username "-" user.subtitle}}
-{{log}} --}}
 <div class="container my-5 py-5 px-5">
     <div id="hero" class="bg-dark shadow d-flex flex-wrap px-4 py-4">
         <img id="avatar" class="avatar avatar-big me-4" src="{{defaultAvatar user.avatar}}">
@@ -57,8 +53,6 @@
     <h2 class="fw-bold">{{user.username}}'s reviews</h2>
     {{> search-review}}
     <div id="reviews" class="d-flex flex-wrap">
-        {{!-- {{log "### Reviews by" user.username}}
-        {{log}} --}}
         {{#if reviews}}
         {{#each reviews}}
         {{> review-entry review=this user=../user}}
