@@ -1,0 +1,95 @@
+[{
+  "_id": {
+    "$oid": "67d42fc5a4fe28b70e455788"
+  },
+  "dev_email": "416@hk.com",
+  "title": "Super Mario Bros.",
+  "developer": "Nintendo",
+  "release_date": {
+    "$date": "1985-01-01T00:00:00.000Z"
+  },
+  "description": "Plumber brothers Mario and Luigi from Brooklyn have just arrived in an outlandish realm called the Mushroom Kingdom. It was ruled by Princess Toadstool and her faithful Mushroom people. But one day, evil cast a shadow over the land and the evil King Bowser Koopa emerged with his army of Goombas, Spinies, Flying Koopas, and other malignant creatures. King Koopa abducted Princess Toadstool and trapped her faithful Mushroom People in seven of his castles. So Mario and Luigi must intrepid deep and hazardous waters, jump from tree to tree (don’t look down!), and visually examine their steps in the dark evil castles filled with fire balls and lava pits and must utilize their magic powers to subjugate the evil King Koopa and rescue the Princess.",
+  "back": "Super Mario Bros. (World).png",
+  "cover": "Super Mario Bros. (World).png",
+  "source": {
+    "name": "IMDb",
+    "link": "https://www.imdb.com/title/tt0177266/"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67d42fc5a4fe28b70e455789"
+  },
+  "dev_email": "pacman@mail.com",
+  "title": "Pac-Man",
+  "developer": "Namco",
+  "release_date": {
+    "$date": "1993-01-01T00:00:00.000Z"
+  },
+  "description": "Players guide a yellow, pie-shaped creature around a single maze, munching dots while avoiding four roaming ghosts. Four energizer dots are on the board, one in each corner. Eating one of these special dots will temporarily empower Pac-Man to turn the tables on the ghosts. Each time all the dots in a maze are eaten, play resumes with a fresh screen.",
+  "back": "Pac-Man (USA) (Namco).png",
+  "cover": "Pac-Man (USA) (Namco).png",
+  "source": {
+    "name": "IMDb",
+    "link": "https://www.imdb.com/title/tt0260264/"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67d42fc5a4fe28b70e45578a"
+  },
+  "dev_email": "pkmn@mail.com",
+  "title": "Pokémon: Red Version",
+  "developer": "GameFreak",
+  "release_date": {
+    "$date": "1998-01-01T00:00:00.000Z"
+  },
+  "description": "Ash is a young trainer traveling around the Pokemon world with his partner Pikachu. He is joined by his friends to help aid him in his journey. His ultimate goal is to become a Pokemon Master, which he will not stop training and working hard to achieve.",
+  "back": "Pokemon - Red Version (USA, Europe) (SGB Enhanced).png",
+  "cover": "Pokemon - Red Version (USA, Europe) (SGB Enhanced).png",
+  "source": {
+    "name": "IMDb",
+    "link": "https://www.imdb.com/title/tt0217733/"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67d42fc5a4fe28b70e45578b"
+  },
+  "dev_email": "ebound@mail.com",
+  "title": "EarthBound",
+  "developer": "ConcernedApe",
+  "release_date": {
+    "$date": "1994-01-01T00:00:00.000Z"
+  },
+  "description": "One night a large meteor crashes to the earth. A young boy named Ness goes out to investigate, and discovers that he and three other kids are destined to save the earth from an alien leader called Giygas, who is going to destroy the world.",
+  "back": "EarthBound (USA).png",
+  "cover": "EarthBound (USA).png",
+  "source": {
+    "name": "IMDb",
+    "link": "https://www.imdb.com/title/tt0208332/"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67d42fc5a4fe28b70e45578c"
+  },
+  "dev_email": "femblem@mail.com",
+  "title": "Fire Emblem: Seisen no Keifu",
+  "developer": "Intelligent Systems",
+  "release_date": {
+    "$date": "1996-01-01T00:00:00.000Z"
+  },
+  "description": "On the continent of Judgral, eight kingdoms launch a war against the other in a power-struggle to control the continent. When Sigurd, the prince of the Duchy of Calphy, and his army becomes involved in the war, their actions will forever change the continent in a game that takes place across two generations as Sigurd's son, Seliph, must set things right when his father meets a violent end and Judgral is left in ruins in what many regard as the Fire Emblem series' darkest installment.",
+  "back": "Fire Emblem - Seisen no Keifu (Japan).png",
+  "cover": "Fire Emblem - Seisen no Keifu (Japan).png",
+  "source": {
+    "name": "IMDb",
+    "link": "https://www.imdb.com/title/tt7468122/"
+  },
+  "__v": 0
+}]

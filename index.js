@@ -22,58 +22,88 @@ console.clear();
 /**
  *  Retrieve game data from `data.js`
  */
-async function resetGames() {
-    await Game.deleteMany({});
-    games.forEach(game => {
-        Game.create(
-            {
-                dev_email: game.dev_email,
-                title: game.title,
-                developer: game.developer,
-                release_date: game.release_date,
-                description: game.description,
-                back: `${game.file}.png`,
-                cover: `${game.file}.png`,
-                source: {
-                    name: game.source.name,
-                    link: game.source.link
-                }
-            }
-        )
-    })
-}
+// async function resetGames() {
+//     await Game.deleteMany({});
+//     games.forEach(game => {
+//         Game.create(
+//             {
+//                 dev_email: game.dev_email,
+//                 title: game.title,
+//                 developer: game.developer,
+//                 release_date: game.release_date,
+//                 description: game.description,
+//                 back: `${game.file}.png`,
+//                 cover: `${game.file}.png`,
+//                 source: {
+//                     name: game.source.name,
+//                     link: game.source.link
+//                 }
+//             }
+//         )
+//     })
+// }
 
-async function resetExistingUsers() {
-    const emailsToDelete = [
-        "416@hk.com",
-        "main@frog.com",
-        "lowest@low.com",
-        "wafl@rain.com",
-        "roymer@roemer.com",
-        "pow@cc.com",
-        "cgk@ghj.com",
-        "mario@mail.com"
-    ];
+// async function resetExistingUsers() {
+//     const emailsToDelete = [
+//         "416@hk.com",
+//         "main@frog.com",
+//         "lowest@low.com",
+//         "wafl@rain.com",
+//         "roymer@roemer.com",
+//         "pow@cc.com",
+//         "cgk@ghj.com",
+//         "mario@mail.com"
+//     ];
 
-    await User.deleteMany({ email: { $in: emailsToDelete } });
+//     await User.deleteMany({ email: { $in: emailsToDelete } });
 
-    users.forEach(user => {
-        User.create(
-            {
-                email: user.email,
-                password: user.password,
-                username: user.username,
-                subtitle: user.subtitle,
-                avatar: user.avatar,
-                description: user.description,
-                lastSeen: user.lastSeen,
-                accountCreateDate: user.accountCreateDate,
-                favoriteGame: user.favoriteGame
-            }
-        )
-    })
-}
+//     users.forEach(user => {
+//         User.create(
+//             {
+//                 email: user.email,
+//                 password: user.password,
+//                 username: user.username,
+//                 subtitle: user.subtitle,
+//                 avatar: user.avatar,
+//                 description: user.description,
+//                 lastSeen: user.lastSeen,
+//                 accountCreateDate: user.accountCreateDate,
+//                 favoriteGame: user.favoriteGame
+//             }
+//         )
+//     })
+// }
 
+// async function resetExistingReviews() {
+//     const emailsToDelete = [
+//         "main@frog.com",
+//         "lowest@low.com",
+//         "wafl@rain.com",
+//         "roymer@roemer.com",
+//         "cgk@ghj.com",
+//     ];
+
+//     await Review.deleteMany({ email: { $in: emailsToDelete } });
+
+//     reviews.forEach(review => {
+//         Review.create(
+//             {
+//                 game: review.game,
+//                 title: review.title,
+//                 email: review.email,
+//                 post_date: new Date(),
+//                 edit_date: new Date(),
+//                 rating: review.rating,
+//                 upvotes: 0,
+//                 text: review.text,
+//             }
+//         )
+//     })
+// }
+
+// resetGames();
+// resetExistingUsers();
+// resetExistingReviews();
 /**
  * @returns JSON in the format of { game1Title: averageRating }
  * @note This is an async function, so use the `.then(result => ... )` pattern
@@ -100,7 +130,7 @@ async function getAverageStarRatings() {
             // Format as 0-2 decimal places (1 -> 1; 1.2 -> 1.2; 1.23 -> 1.23; 1.23456 -> 1.23)
             // by fixing the number of decimal places to 2
             // and then parsing the resulting string as a float
-            out[entry._id] = parseFloat(entry.averageRating.toFixed(2));
+            out[entry._id] = parseFloat((entry.averageRating ?? 0).toFixed(2));
         })
     });
     return out
@@ -130,8 +160,7 @@ async function getReviewCounts() {
     return out
 }
 
-resetGames();
-resetExistingUsers();
+
 
 let averageStarRatings = {};
 getAverageStarRatings().then(result => averageStarRatings = result);
