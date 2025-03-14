@@ -1,0 +1,152 @@
+[{
+  "_id": {
+    "$oid": "67d42fc5a4fe28b70e455778"
+  },
+  "email": "416@hk.com",
+  "password": "1234",
+  "username": "416",
+  "subtitle": "Shikikan <3",
+  "avatar": "416.png",
+  "description": "HK416, originally my name was HKM4 when first unveiled, then it was taken away... Why? (Heh) I'll leave that to your imagination. After that, I gained a new name and underwent severe modifications, which caused a lot of controversy during that time. Commander, I will make you forget about all of those people-- Only me, all you need is me.",
+  "lastSeen": {
+    "$date": "2025-03-14T13:32:04.978Z"
+  },
+  "accountCreateDate": {
+    "$date": "2024-03-14T13:31:48.798Z"
+  },
+  "favoriteGame": "Girls' Frontline",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67d42fc5a4fe28b70e45577a"
+  },
+  "email": "lowest@low.com",
+  "password": "low15",
+  "username": "lowy",
+  "subtitle": "Gacha addict",
+  "avatar": "lowy.png",
+  "description": "Gacha addict・Draws sometimes・Inaantok pero ayaw matulog・飛ぶにゃん♪・学マス/Blue Archive(Asia)/プリコネ/ヘブバン/FGO(NA)",
+  "lastSeen": {
+    "$date": "2025-03-13T13:31:48.798Z"
+  },
+  "accountCreateDate": {
+    "$date": "2023-03-15T13:31:48.798Z"
+  },
+  "favoriteGame": "Gakuen Idolmaster",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67d42fc5a4fe28b70e45577b"
+  },
+  "email": "wafl@rain.com",
+  "password": "rain12",
+  "username": "wafl",
+  "subtitle": "Faito da-yousoro!",
+  "avatar": "wafl.png",
+  "description": "Together, we can show the world what we can do!",
+  "lastSeen": {
+    "$date": "2025-03-14T13:31:48.798Z"
+  },
+  "accountCreateDate": {
+    "$date": "2024-03-14T13:31:48.798Z"
+  },
+  "favoriteGame": "Super Mario World",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67d42fc5a4fe28b70e45577d"
+  },
+  "email": "pow@cc.com",
+  "password": "123pow",
+  "username": "pow",
+  "subtitle": "•_•",
+  "avatar": "pow.png",
+  "description": "",
+  "lastSeen": {
+    "$date": "2025-03-14T13:31:48.798Z"
+  },
+  "accountCreateDate": {
+    "$date": "2015-03-17T13:31:48.798Z"
+  },
+  "favoriteGame": "FL Studio",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67d42fc5a4fe28b70e45577e"
+  },
+  "email": "cgk@ghj.com",
+  "password": "faunbest",
+  "username": "cgkghj",
+  "subtitle": "average elation enjoyer",
+  "avatar": "cgkghj.png",
+  "description": "Yes, I picked this username on purpose",
+  "lastSeen": {
+    "$date": "2025-03-14T13:31:48.798Z"
+  },
+  "accountCreateDate": {
+    "$date": "2024-12-14T13:31:48.798Z"
+  },
+  "favoriteGame": "Minecraft",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67d42fc5a4fe28b70e455779"
+  },
+  "email": "main@frog.com",
+  "password": "mf24",
+  "username": "mainFrog",
+  "subtitle": "FrogCritic site owner and admin",
+  "avatar": "mainFrog.png",
+  "description": "greninja",
+  "lastSeen": {
+    "$date": "2024-01-14T13:31:48.798Z"
+  },
+  "accountCreateDate": {
+    "$date": "2022-03-15T13:31:48.798Z"
+  },
+  "favoriteGame": "Girls' Frontline",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67d42fc5a4fe28b70e45577c"
+  },
+  "email": "roymer@roemer.com",
+  "password": "password",
+  "username": "Roymer",
+  "subtitle": ":mew:",
+  "avatar": "roymer.png",
+  "description": "I'm Roemer I check my inbox pretty frequently, so feel free to send something! Good morning. Order for Roemer? No, not Robert, swap the B with an M. Also, there is no T. No it's not Romer, it's like Ro-E-mer. No, it's not Roymer. There is an E. Yeah it's before the M. No, replace the Y with an E. No, that's still not it... Yeah.... Here, let me just show you my ID...",
+  "lastSeen": {
+    "$date": "2020-10-16T13:31:48.798Z"
+  },
+  "accountCreateDate": {
+    "$date": "2019-03-16T13:31:48.798Z"
+  },
+  "favoriteGame": "Robotek",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67d42fc5a4fe28b70e45577f"
+  },
+  "email": "mario@mail.com",
+  "password": "mario",
+  "username": "mario_dev",
+  "subtitle": "Makers of hit game super mario bros",
+  "avatar": "",
+  "description": "Hi! We respond to reviews normally :>",
+  "lastSeen": {
+    "$date": "2025-03-14T13:31:48.798Z"
+  },
+  "accountCreateDate": {
+    "$date": "2025-03-14T13:31:48.798Z"
+  },
+  "favoriteGame": "Super Mario Bros.",
+  "__v": 0
+}]
