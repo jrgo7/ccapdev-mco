@@ -398,6 +398,7 @@ app.get('/review', async (req, res) => {
     const review = await Review.findOne({ _id: id }).lean();
     const user = await User.findOne({ email: review.email }).lean();
     const game = await Game.findOne({ title: review.game }).lean();
+    const dev = await User.findOne({ email: game.dev_email}).lean();
     const voteCount = await countVotes(id);
 
     let upvote = false;
@@ -408,7 +409,7 @@ app.get('/review', async (req, res) => {
         downvote = await Vote.findOne({ userId: req.session.user._id, vote: 0 });
     }
 
-    res.render("review", { "title": review.title, "review": review, "user": user, "game": game, "voteCount": voteCount, "upvote": upvote, "downvote": downvote });
+    res.render("review", { "title": review.title, "review": review, "user": user, "game": game, "voteCount": voteCount, "upvote": upvote, "downvote": downvote, "dev": dev });
 })
 
 app.get('/selfprofile', isAuthenticated, async (req, res) => {
@@ -510,21 +511,60 @@ app.post('/submit-review', isAuthenticated, async (req, res) => {
     res.redirect(`/review?id=${foundReview._id}`);
 });
 
-// app.post('/submit-review', isAuthenticated, async (req, res) => {
-//     /*
+app.post('/submit-response', isAuthenticated, async(req, res) => {
+    console.log(req.body);
+    const currentuser = req.session.user.email;
+    const dev = req.body.dev;
+    const game = await Game.findOne({dev_email: dev});
+    let review = await Review.findOne({_id: req.body.rev})
+    
+    if (currentuser !== game.dev_email) {
+        return;
+    }
 
-//     */
-// });
+    console.log(review)
 
+    if (review.developer_response.text !== "") {
+        await Review.updateOne( {'_id': req.body.rev }, {
+            $set: {
+                "developer_response.text": req.body.text,
+                "developer_response.edit_date": Date.now()
+            }
+        })
+    } else {
+        await Review.updateOne({'_id': req.body.rev }, {
+            $set: {
+                "developer_response.text": req.body.text,
+                "developer_response.post_date": Date.now()
+            }
+        })
+    }
+    review = await Review.findOne({_id: req.body.rev})
+    console.log(review);
+    res.redirect(`/review?id=${review._id}`);
+})
+
+app.post('/delete-response', isAuthenticated, async (req, res) => {
+    let rev = req.body.response;
+    console.log(rev)
+    await Review.updateOne({'_id': req.body.response }, {
+        $set: {
+            "developer_response.text": "",
+            "developer_response.post_date": null,
+            "developer_response.edit_date": null,
+        }
+    })
+
+    let review = await Review.findOne({_id: req.body.response})
+    console.log(review)
+    res.redirect(`/review?id=${review._id}`);
+})
 
 app.post('/delete-review', isAuthenticated, async (req, res) => {
     let deletedReview = await Review.findOneAndDelete({ _id: req.body.reviewId });
     let deletedReviewGame = deletedReview.game;
     console.log(`>>>Redirecting to /reviews?game=${deletedReviewGame}...`)
 
-    // TODO DELETE PREVIOUS ATTACHMENTS
-
-    // Update average star ratings and review counts
     getAverageStarRatings().then(result => averageStarRatings = result)
     getReviewCounts().then(result => reviewCounts = result)
 
