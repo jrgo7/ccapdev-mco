@@ -405,8 +405,8 @@ app.get('/review', async (req, res) => {
     let downvote = false;
 
     if (req.session.user) {
-        upvote = await Vote.findOne({ userId: req.session.user._id, vote: 1 });
-        downvote = await Vote.findOne({ userId: req.session.user._id, vote: 0 });
+        upvote = await Vote.findOne({ userId: req.session.user._id, vote: 1, reviewId: review._id });
+        downvote = await Vote.findOne({ userId: req.session.user._id, vote: 0, reviewId: review._id });
     }
 
     res.render("review", { "title": review.title, "review": review, "user": user, "game": game, "voteCount": voteCount, "upvote": upvote, "downvote": downvote, "dev": dev });
