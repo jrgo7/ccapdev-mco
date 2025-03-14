@@ -73,7 +73,33 @@
             {{/if}}
         </div>
         {{#if review.developer_response.text}}
-            {{> review-author-data review=review user=dev}}
+
+        <div id="reviews" class="d-flex flex-wrap">
+            <a href="profile?user={{dev._id}}">
+                <img class="avatar me-2" src="{{defaultAvatar dev.avatar}}" alt="{{dev.username}}">
+            </a>
+            <div class="author-date">
+                <p class="fw-bold reviewer-name">
+                    <a class="block-link" href="profile?user={{dev._id}}">
+                        {{dev.username}}
+                    </a>
+                    &mdash;
+                    <a class="block-link" href="reviews?game={{review.game}}">
+                        {{review.game}}
+                    </a>
+
+                </p>
+                <p class="fst-italic review-date">
+                    {{formatDate review.developer_response.post_date}}
+                    {{log review.developer_response.post_date}}
+                    {{log review.developer_response.edit_date}}
+                    {{#unless (dateEquals review.developer_response.post_date review.developer_response.edit_date)}}
+                        | edited {{formatDate review.developer_response.edit_date}}
+                    {{/unless}}
+                </p>
+            </div>
+        </div>
+
         {{/if}}
         
 

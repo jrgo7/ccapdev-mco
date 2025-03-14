@@ -564,7 +564,8 @@ app.post('/submit-response', isAuthenticated, async(req, res) => {
         await Review.updateOne({'_id': req.body.rev }, {
             $set: {
                 "developer_response.text": req.body.text,
-                "developer_response.post_date": Date.now()
+                "developer_response.post_date": Date.now(),
+                "developer_response.edit_date": Date.now()
             }
         })
     }
