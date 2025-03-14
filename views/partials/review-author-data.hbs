@@ -1,10 +1,6 @@
 <div id="reviews" class="d-flex flex-wrap">
     <a href="profile?user={{user._id}}">
-        {{#if user.avatar}}
-        <img class="avatar me-2" src="/img/avatar/{{user.avatar}}" alt="{{user.username}}">
-        {{else}}
-        <img class="avatar me-2" src="/img/avatar/guest.png" alt="{{user.username}}">
-        {{/if}}
+        <img class="avatar me-2" src="{{defaultAvatar user.avatar}}" alt="{{user.username}}">
     </a>
     <div class="author-date">
         <p class="fw-bold reviewer-name">
@@ -19,11 +15,9 @@
         </p>
         <p class="fst-italic review-date">
             {{formatDate review.post_date}}
-            {{#if (dateEquals review.post_date review.edit_date)}}
-            {{!-- Nothing --}}
-            {{else}}
+            {{#unless (dateEquals review.post_date review.edit_date)}}
                 | edited {{formatDate review.edit_date}}
-            {{/if}}
+            {{/unless}}
         </p>
     </div>
 </div>
