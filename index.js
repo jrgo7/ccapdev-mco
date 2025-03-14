@@ -145,6 +145,10 @@ const hbs = create({
             return avatar ? `img/avatar/${avatar}` : "img/avatar/guest.png";
         },
 
+        castNumber(x) {
+            return Number(x);
+        },
+
         equals(x, y) {
             return x === y;
         },
@@ -168,7 +172,7 @@ const hbs = create({
         getTime(date) {
             return date.getTime();
         },
-        
+
         // Using normal `equals()` would compare the references instead of the actual values
         dateEquals(d1, d2) {
             return d1.getTime() === d2.getTime();
@@ -335,7 +339,28 @@ app.get('/', async (req, res) => {
 app.get('/reviews', async (req, res) => {
     let title = req.query.game;
 
-    const reviews = await Review.find({ game: title }).lean();
+    let page = req.query.page ?? 1; // 1-indexed page number
+    const reviewsPerPage = 4;
+
+    // ? Use Review.countDocuments() in getReviewCount helper?
+    const reviewCount = await Review.countDocuments({ game: title });
+
+    const pageCount = Math.ceil(reviewCount / reviewsPerPage);
+
+    const reviews = await Review.aggregate([
+        {
+            "$match": {
+                "game": title
+            }
+        },
+        {
+            "$skip": reviewsPerPage * (page - 1)
+        },
+        {
+            "$limit": reviewsPerPage
+        }
+    ]);
+
     const game = await Game.findOne({ title: title }).lean();
     const users = await User.find({}).lean();
 
@@ -362,7 +387,9 @@ app.get('/reviews', async (req, res) => {
         "game": game,
         "reviews": (reviews).sort(reviewByUpvotes),
         "users": userLookup,
-        "existingReviewId": existingReviewId || false
+        "existingReviewId": existingReviewId || false,
+        "page": page,
+        "pages": new Array(pageCount).keys().map(index => index + 1)
     });
 })
 

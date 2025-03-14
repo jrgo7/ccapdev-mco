@@ -48,7 +48,7 @@
                     review</button>
             </div>
             {{/if}}
-            
+
             {{#if (equals game.dev_email loggedUser.email)}}
             <div class="my-2">
                 <p class="fw-bold fs-3">Developer controls</p>
@@ -74,7 +74,22 @@
 </div>
 
 <div class="container">
-    <h2 class="fw-bold">Top reviews</h2>
+    <h2 class="fw-bold">Reviews</h2>
+    <ul id="pagination-nav" class="pagination">
+        {{#each pages}}
+        <li class="page-item">
+            {{#if (equals this (castNumber ../page))}}
+            <a class="page-link fw-bold disabled" href="/reviews?game={{../title}}&page={{this}}">
+                {{this}}
+            </a>
+            {{else}}
+            <a class="page-link" href="/reviews?game={{../title}}&page={{this}}">
+                {{this}}
+            </a>
+            {{/if}}
+        </li>
+        {{/each}}
+    </ul>
     {{> search-review}}
     <div class="d-flex flex-wrap">
         {{#if reviews}}
