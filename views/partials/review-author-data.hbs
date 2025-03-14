@@ -1,6 +1,10 @@
 <div id="reviews" class="d-flex flex-wrap">
     <a href="profile?user={{user._id}}">
+        {{#if user.avatar}}
         <img class="avatar me-2" src="/img/avatar/{{user.avatar}}" alt="{{user.username}}">
+        {{else}}
+        <img class="avatar me-2" src="/img/avatar/guest.png" alt="{{user.username}}">
+        {{/if}}
     </a>
     <div class="author-date">
         <p class="fw-bold reviewer-name">
