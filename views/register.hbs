@@ -4,17 +4,20 @@
         <form action="register" method="post">
             <div class="form-group">
                 <label for="username" class="register-label">Username</label>
-                <input name="username" type="text" id="username" placeholder="Froggers" class="register-input bg-dark" required>
+                <input name="username" type="text" id="username" placeholder="Froggers" class="register-input bg-dark"
+                    required>
             </div>
 
             <div class="form-group">
                 <label for="email" class="register-label">Email</label>
-                <input name="email" type="email" id="email" placeholder="frog@mail.com" class="register-input bg-dark" required>
+                <input name="email" type="email" id="email" placeholder="frog@mail.com" class="register-input bg-dark"
+                    required>
             </div>
 
             <div class="form-group">
                 <label for="password" class="register-label">Password</label>
-                <input name="password" type="password" id="password" placeholder="Value" class="register-input bg-dark" required>
+                <input name="password" type="password" id="password" placeholder="Value" class="register-input bg-dark"
+                    required>
             </div>
 
             <div class="form-group">
@@ -29,8 +32,12 @@
             </div>
             <a class="terms" href="#terms-conditions" data-bs-toggle="modal" data-bs-target="#terms-conditions">Terms
                 and Conditions</a>
-            <button type="submit" class="register-btn">Register</button>
+            <button type="submit" class="register-btn my-2">Register</button>
         </form>
+        <section>
+            <h2 class="mt-2 fs-5">Already a member?</p>
+            <a class="btn btn-primary" href="#login" data-bs-toggle="modal" data-target="#login">Log in instead</a>
+        </section>
     </div>
 
     <div class="modal fade" id="terms-conditions" tabindex="-1" role="dialog" aria-labelledby="registerLabel"

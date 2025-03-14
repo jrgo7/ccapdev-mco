@@ -44,17 +44,17 @@
 
     <div class="mt-4 bg-dark shadow px-4 py-4">
         <h2 class="fw-bold fs-2">Developer Response</h2>
-         {{#if (equals game.dev_email loggedUser.email)}}
-            <div class="my-2">
+        {{#if (equals game.dev_email loggedUser.email)}}
+        <div class="my-2">
 
-                <button id="dev-review" class="btn btn-primary img-upld-btn" data-image-type="wallpaper"
-                    data-bs-toggle="modal" data-bs-target="#leave-response" >
-                    Leave Developer Response
-                </button>
+            <button id="dev-review" class="btn btn-primary img-upld-btn" data-image-type="wallpaper"
+                data-bs-toggle="modal" data-bs-target="#leave-response">
+                Leave Developer Response
+            </button>
 
-            </div>
+        </div>
         {{/if}}
-        
+
         <div id="developer-response" class="allow-editing">
             {{#if review.developer_response.text}}
             <p>
@@ -76,12 +76,11 @@
     </div>
     {{#if (equals loggedUser.email user.email)}}
     <div class="mt-2 py-2">
-        <button id="edit-button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#leave-review">
-            Edit
-        </button>
-        {{!-- ! Placing the button inside the form would trigger the /delete-review POST request --}}
         <form method="post" action="/delete-review">
             <input name="reviewId" id="reviewId" value="{{review._id}}" hidden>
+            <a id="edit-button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#leave-review">
+                Edit
+            </a>
             <button id="delete-button" type="submit" class="btn btn-danger">
                 Delete
             </button>
