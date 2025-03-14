@@ -618,6 +618,16 @@ app.post("/register", async (req, res) => {
     const password = req.body.password;
     const conf_password = req.body.conf_password;
     const terms = req.body.terms;
+    const description = req.body.description;
+    
+    let profile;
+
+    if (req.files) {
+        const { avatar } = req.files;
+        await avatar.mv(path.resolve(__dirname, 'public/img/avatar/', avatar.name));
+
+        profile = avatar.name;
+    }
 
     try {
         const user = await User.findOne({ email: email }).lean();
@@ -644,8 +654,8 @@ app.post("/register", async (req, res) => {
             password: password,
             username: username,
             subtitle: "",
-            avatar: "",
-            description: "",
+            avatar: profile,
+            description: description,
             lastSeen: Date.now(),
             accountCreateDate: Date.now(),
             favoriteGame: ""

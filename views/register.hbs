@@ -1,13 +1,31 @@
 <div class="container mx-auto">
     <img class="logo center pt-5" src=img/FrogCritic.png alt="FrogCritic">
-    <div class="mt-4 py-4 px-4 col-6 bg-dark shadow mx-auto">
-        <form action="register" method="post">
+    <form action="register" method="post" enctype="multipart/form-data" style="display: flex;">
+        <div class="mt-4 py-4 px-4 col-5 bg-dark shadow mx-auto" style="margin: 20px;">
+            <div class="form-group">
+                <div style="display: flex;">
+                    <img id="register-profile-preview" class="avatar avatar-big me-4" src="img/avatar/guest.png">
+                    <div style="align-self: center;">
+                        <input type="file" autocomplete="off" class="form-control" name="avatar"
+                            id="register-profile-input" accept="image/*">
+                    </div>
+                </div>
+            </div>
+
             <div class="form-group">
                 <label for="username" class="register-label">Username</label>
                 <input name="username" type="text" id="username" placeholder="Froggers" class="register-input bg-dark"
                     required>
             </div>
 
+            <div class="form-group">
+                <label class="register-label" for="register-description">Description</label>
+                <textarea name="description" class="form-control" id="register-description" rows="8" cols="80"
+                    placeholder="Description" autocomplete="off"></textarea>
+            </div>
+        </div>
+
+        <div class="mt-4 py-4 px-4 col-5 bg-dark shadow mx-auto" style="margin: 20px;">
             <div class="form-group">
                 <label for="email" class="register-label">Email</label>
                 <input name="email" type="email" id="email" placeholder="frog@mail.com" class="register-input bg-dark"
@@ -32,69 +50,71 @@
             </div>
             <a class="terms" href="#terms-conditions" data-bs-toggle="modal" data-bs-target="#terms-conditions">Terms
                 and Conditions</a>
-            <button type="submit" class="register-btn my-2">Register</button>
-        </form>
-        <section>
-            <h2 class="mt-2 fs-5">Already a member?</p>
-            <a class="btn btn-primary" href="#login" data-bs-toggle="modal" data-target="#login">Log in instead</a>
-        </section>
-    </div>
+            <button type="submit" class="register-btn">Register</button>
+            <section>
+                <h2 class="mt-4 fs-5">Already a member?</p>
+                    <a class="btn register-btn" href="#login" data-bs-toggle="modal" data-target="#login">Log in
+                        instead</a>
+            </section>
+        </div>
+    </form>
+</div>
 
-    <div class="modal fade" id="terms-conditions" tabindex="-1" role="dialog" aria-labelledby="registerLabel"
-        aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content bg-dark">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="registerLabel">Frog Critic - Terms and Conditions</h5>
-                </div>
-                <div class="modal-body overflow-auto terms-conditions-popup">
-                    <p>Last Updated: February 14, 2025</p>
-                    <p> Welcome to Frog Critic! These Terms and Conditions govern your use of our website, services, and
-                        content. By accessing or using Frog Critic, you agree to comply with these terms. If you do not
-                        agree, please do not use our site.</p>
-                    <ol type="I">
-                        <li>Acceptance of Terms</li>
-                        <p>By accessing or using Frog Critic, you acknowledge that you have read, understood, and agree
-                            to be bound by these Terms and Conditions, as well as our Privacy Policy.</p>
-                        <li>Use of the Website</li>
-                        <p>Frog Critic is a platform for gaming reviews, news, and discussions.
-                            You must be at least 13 years old to use this website. If you are under 18, parental consent
-                            may be required.
-                            You agree not to engage in any activity that may harm, disrupt, or misuse the website or its
-                            content.</p>
-                        <li>User-Generated Content</li>
-                        <p>Users may submit comments, reviews, and ratings on Frog Critic.
-                            By submitting content, you grant Frog Critic a non-exclusive, worldwide, royalty-free
-                            license to use, display, and distribute your content.
-                            You are responsible for ensuring that your content is lawful, respectful, and does not
-                            infringe upon the rights of others.
-                            We reserve the right to remove any content that violates these terms.</p>
-                        <li>Intellectual Property</li>
-                        <p>All content on Frog Critic, including reviews, articles, logos, and graphics, is protected by
-                            copyright and intellectual property laws.
-                            You may not copy, modify, distribute, or use our content without written permission.</p>
-                        <li>Third-Party Links & Advertisements</li>
-                        <p>Frog Critic may contain links to third-party websites. We are not responsible for the content
-                            or policies of these external sites.
-                            Advertisements displayed on Frog Critic do not imply endorsement or responsibility for the
-                            advertised products or services.</p>
-                        <li>Disclaimers & Limitations of Liability</li>
-                        <p>Frog Critic provides game reviews and content for informational and entertainment purposes
-                            only.
-                            We do not guarantee the accuracy, reliability, or availability of any content or services on
-                            the site.
-                            Frog Critic is not responsible for any losses, damages, or issues resulting from reliance on
-                            our reviews or third-party interactions.
-                        </p>
-                        <li>Changes to Terms</li>
-                        <p>We reserve the right to modify these Terms and Conditions at any time. Continued use of Frog
-                            Critic after changes means you accept the updated terms.</p>
-                        <li>Contact Us</li>
-                        <p>If you have any questions or concerns about these Terms and Conditions, please contact us at
-                            [Insert Contact Information].
-                            By using Frog Critic, you agree to these terms and conditions. Happy gaming! 🎮🐸</p>
-                    </ol>
-                </div>
+<div class="modal fade" id="terms-conditions" tabindex="-1" role="dialog" aria-labelledby="registerLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content bg-dark">
+            <div class="modal-header">
+                <h5 class="modal-title" id="registerLabel">Frog Critic - Terms and Conditions</h5>
+            </div>
+            <div class="modal-body overflow-auto terms-conditions-popup">
+                <p>Last Updated: February 14, 2025</p>
+                <p> Welcome to Frog Critic! These Terms and Conditions govern your use of our website, services, and
+                    content. By accessing or using Frog Critic, you agree to comply with these terms. If you do not
+                    agree, please do not use our site.</p>
+                <ol type="I">
+                    <li>Acceptance of Terms</li>
+                    <p>By accessing or using Frog Critic, you acknowledge that you have read, understood, and agree
+                        to be bound by these Terms and Conditions, as well as our Privacy Policy.</p>
+                    <li>Use of the Website</li>
+                    <p>Frog Critic is a platform for gaming reviews, news, and discussions.
+                        You must be at least 13 years old to use this website. If you are under 18, parental consent
+                        may be required.
+                        You agree not to engage in any activity that may harm, disrupt, or misuse the website or its
+                        content.</p>
+                    <li>User-Generated Content</li>
+                    <p>Users may submit comments, reviews, and ratings on Frog Critic.
+                        By submitting content, you grant Frog Critic a non-exclusive, worldwide, royalty-free
+                        license to use, display, and distribute your content.
+                        You are responsible for ensuring that your content is lawful, respectful, and does not
+                        infringe upon the rights of others.
+                        We reserve the right to remove any content that violates these terms.</p>
+                    <li>Intellectual Property</li>
+                    <p>All content on Frog Critic, including reviews, articles, logos, and graphics, is protected by
+                        copyright and intellectual property laws.
+                        You may not copy, modify, distribute, or use our content without written permission.</p>
+                    <li>Third-Party Links & Advertisements</li>
+                    <p>Frog Critic may contain links to third-party websites. We are not responsible for the content
+                        or policies of these external sites.
+                        Advertisements displayed on Frog Critic do not imply endorsement or responsibility for the
+                        advertised products or services.</p>
+                    <li>Disclaimers & Limitations of Liability</li>
+                    <p>Frog Critic provides game reviews and content for informational and entertainment purposes
+                        only.
+                        We do not guarantee the accuracy, reliability, or availability of any content or services on
+                        the site.
+                        Frog Critic is not responsible for any losses, damages, or issues resulting from reliance on
+                        our reviews or third-party interactions.
+                    </p>
+                    <li>Changes to Terms</li>
+                    <p>We reserve the right to modify these Terms and Conditions at any time. Continued use of Frog
+                        Critic after changes means you accept the updated terms.</p>
+                    <li>Contact Us</li>
+                    <p>If you have any questions or concerns about these Terms and Conditions, please contact us at
+                        [Insert Contact Information].
+                        By using Frog Critic, you agree to these terms and conditions. Happy gaming! 🎮🐸</p>
+                </ol>
             </div>
         </div>
     </div>
+</div>
