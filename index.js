@@ -582,16 +582,25 @@ app.post("/register", async (req, res) => {
     const email = req.body.email;
     const password = req.body.password;
     const conf_password = req.body.conf_password;
+    const terms = req.body.terms;
 
     try {
         const user = await User.findOne({ email: email }).lean();
 
         if (user) {
-            return res.status(401).send("Email is in use");
+            return res.render("register", {
+                title: "Register",
+                error: "Email is in use"
+            });
         } else if (password !== conf_password) {
             return res.render("register", {
                 title: "Register",
                 error: "Passwords don't match"
+            });
+        } else if(!terms){
+            return res.render("register", {
+                title: "Register",
+                error: "Please read and accept the terms and conditions"
             });
         }
 

@@ -10,7 +10,7 @@
                     <div class="form-group mb-3">
                         <label for="leave-review-rating">Rating</label>
                         <div id="leave-review-rating" class="star-rating-allow-editing">
-                            {{{generateStarRating -1 true}}}
+                            {{{generateStarRating review.rating true}}}
                         </div>
                         <input id="leave-review-star-rating" name="rating" class="form-control" placeholder="1"
                             type="hidden" value="1" autocomplete="off" required>
@@ -19,13 +19,13 @@
                     <div class="form-group mb-3">
                         <label for="leave-review-title">Title</label>
                         <input name="title" class="form-control" type="text" id="leave-review-title" placeholder="Title"
-                            autocomplete="off" required>
+                            autocomplete="off" required value="{{review.title}}">
                     </div>
 
                     <div class="form-group mb-3">
                         <label class="form-label" for="leave-review-description">Description</label>
                         <textarea name="text" class="form-control" id="leave-review-description" rows="8" cols="120"
-                            placeholder="Description" autocomplete="off" required></textarea>
+                            placeholder="Description" autocomplete="off" required >{{review.text}}</textarea>
                     </div>
 
                     <div class="form-group mb-3">
