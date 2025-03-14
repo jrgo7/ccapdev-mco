@@ -5,16 +5,18 @@
                 <h5>Leave a Response!</h5>
             </div>
 
-            <form id="leave-review-form" action="/submit-response" method="post">
+            <form id="leave-response-form" action="/submit-response" method="post">
                 <div class="modal-body">
 
                     <div class="form-group mb-3">
-                        <label class="form-label" for="leave-review-description">Description</label>
-                        <textarea name="text" class="form-control" id="leave-review-description" rows="8" cols="120"
+                        <label class="form-label" for="leave-response-description">Description</label>
+                        <textarea name="text" class="form-control" id="leave-response-description" rows="8" cols="120"
                             placeholder="Description" autocomplete="off" required></textarea>
                     </div>
 
-                    <input type="hidden" name="game" id="leave-review-game" value="{{game.title}}" required>
+                    <input type="hidden" name="dev" id="leave-response-dev" value="{{dev.email}}" required>
+                    <input type="hidden" name="rev" id="leave-response-rev" value="{{review._id}}" required>
+
                 </div>
 
                 <div class="modal-footer">

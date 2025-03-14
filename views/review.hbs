@@ -45,13 +45,19 @@
     <div class="mt-4 bg-dark shadow px-4 py-4">
         <h2 class="fw-bold fs-2">Developer Response</h2>
         {{#if (equals game.dev_email loggedUser.email)}}
-        <div class="my-2">
+        <div class="my-2 d-inline">
 
-            <button id="dev-review" class="btn btn-primary img-upld-btn" data-image-type="wallpaper"
+            <button id="dev-response" class="btn btn-primary img-upld-btn" data-image-type="wallpaper"
                 data-bs-toggle="modal" data-bs-target="#leave-response">
                 Leave Developer Response
             </button>
 
+            <form method="post" action="/delete-response" class="d-inline-block">
+                <input name="response" id="response" value="{{review._id}}" hidden>
+                <button id="delete-button" type="submit" class="btn btn-danger " {{#unless review.developer_response.text}} disabled {{/unless}}>
+                    Delete
+                </button>
+            </form>
         </div>
         {{/if}}
 
@@ -61,17 +67,15 @@
                 {{review.developer_response.text}}
             </p>
             <p>
-                Replied {{formatDate review.developer_response.post_date}}
-                {{#if (equals review.developer_response.post_date review.developer_response.edit_date)}}
-                {{!-- nothing --}}
-                {{else}}
-                (edited {{formatDate review.developer_response.edit_date}})
-                {{/if}}
             </p>
             {{else}}
             (No response.)
             {{/if}}
         </div>
+        {{#if review.developer_response.text}}
+            {{> review-author-data review=review user=dev}}
+        {{/if}}
+        
 
     </div>
     {{#if (equals loggedUser.email user.email)}}
