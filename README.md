@@ -14,6 +14,10 @@
 2. Kurt Christian Andaya
 3. Roemer Gabriel Caliboso
 
+## Google Drive Folder (Contains the Demo Video)
+
+<https://drive.google.com/file/d/17ueWh_6dRB0Pbb6AjKdY_HSJKWRadJx-/view?usp=drive_link>
+
 ## Figma Link
 
 <https://www.figma.com/design/MCXP8nIVgwpQW89jVikrjQ/FrogCritic>
