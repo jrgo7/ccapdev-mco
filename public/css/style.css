@@ -107,6 +107,10 @@ a.btn {
 
 }
 
+option {
+    color: var(--white);
+}
+
 /* Index */
 
 .logo {
