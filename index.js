@@ -389,7 +389,8 @@ app.get('/reviews', async (req, res) => {
         "users": userLookup,
         "existingReviewId": existingReviewId || false,
         "page": page,
-        "pages": new Array(pageCount).keys().map(index => index + 1)
+        "pages": new Array(pageCount).keys().map(index => index + 1),
+        "error": req.query.error ?? null // Error notification
     });
 })
 
@@ -454,6 +455,15 @@ app.post('/submit-review', isAuthenticated, async (req, res) => {
     console.log(req.body);
     const email = req.session.user.email;
     const game = req.body.game;
+
+    // If the user is the developer of the game, stop
+    const gameEntry = await Game.findOne({title: game});
+    console.log(`DEV EMAIL IS ${gameEntry.dev_email}`);
+    console.log(email);
+    if (gameEntry.dev_email === email) {
+        res.redirect(`/reviews?game=${game}&error=You cannot review this game because you developed it.`);
+        return;
+    }
 
     const findParams = {
         email: email,
