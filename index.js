@@ -74,6 +74,34 @@ async function resetExistingUsers() {
     })
 }
 
+async function resetExistingReviews() {
+    const emailsToDelete = [
+        "main@frog.com",
+        "lowest@low.com",
+        "wafl@rain.com",
+        "roymer@roemer.com",
+        "cgk@ghj.com",
+    ];
+
+    await Review.deleteMany({ email: { $in: emailsToDelete } });
+
+    reviews.forEach(review => {
+        Review.create(
+            {
+                game: review.game,
+                title: review.title,
+                email: review.email,
+                post_date: new Date(),
+                edit_date: new Date(),
+                rating: review.rating,
+                upvotes: 0,
+                text: review.text,
+            }
+        )
+    })
+}
+
+
 /**
  * @returns JSON in the format of { game1Title: averageRating }
  * @note This is an async function, so use the `.then(result => ... )` pattern

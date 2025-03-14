@@ -151,3 +151,56 @@ exports.games = [
         }
     }
 ]
+
+exports.reviews = [
+    {
+        game: "Super Mario Bros.",
+        title: "Good game",
+        email: "wafl@rain.com",
+        post_date: "2025-03-14T12:00:00Z",
+        edit_date: "2025-03-14T12:00:00Z",
+        rating: 5,
+        upvotes: 0,
+        text: "My favorite game",
+    },
+    {
+        game: "Super Mario Bros.",
+        title: "Lots of fun",
+        email: "lowest@low.com",
+        post_date: "2025-03-14T12:00:00Z",
+        edit_date: "2025-03-14T12:00:00Z",
+        rating: 4,
+        upvotes: 0,
+        text: "Finished in 2 hours",
+    },
+    {
+        game: "Super Mario Bros.",
+        title: "Its okay",
+        email: "main@frog.com",
+        post_date: "2025-03-14T12:00:00Z",
+        edit_date: "2025-03-14T12:00:00Z",
+        rating: 3,
+        upvotes: 0,
+        text: "I like it",
+    },
+    {
+        game: "Super Mario Bros.",
+        title: "Could be better",
+        email: "roymer@roemer.com",
+        post_date: "2025-03-14T12:00:00Z",
+        edit_date: "2025-03-14T12:00:00Z",
+        rating: 2,
+        upvotes: 0,
+        text: "One directional",
+    },
+    {
+        game: "Super Mario Bros.",
+        title: "I hate it",
+        email: "cgk@ghj.com",
+        post_date: "2025-03-14T12:00:00Z",
+        edit_date: "2025-03-14T12:00:00Z",
+        rating: 1,
+        upvotes: 0,
+        text: "Its so old",
+    }
+]
