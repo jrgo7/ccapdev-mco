@@ -27,13 +27,38 @@
                 </a>
             </p>
             {{#if loggedUser}}
+            {{#if (equals game.dev_email loggedUser.email)}}
+            {{!-- Logged in as developer --}}
+            <div class="my-2">
+                <h2 class="fw-bold fs-2">Developer controls</p>
+                    <button id="edit-button" class="btn btn-primary" onclick="editContent()">
+                        Edit
+                    </button>
+                    <button id="change-boxart-button" class="btn btn-primary img-upld-btn" data-image-type="boxart"
+                        data-bs-toggle="modal" data-bs-target="#boxart-modal" style="display: none;">
+                        Change boxart
+                    </button>
+                    <button id="change-wallpaper-button" class="btn btn-primary img-upld-btn"
+                        data-image-type="wallpaper" data-bs-toggle="modal" data-bs-target="#wallpaper-modal"
+                        style="display: none;">
+                        Change wallpaper
+                    </button>
+                    <button id="delete-button" class="btn btn-danger" disabled>
+                        Delete
+                    </button>
+                    
+                    {{!-- ! --}}
+                    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#leave-review">
+                        Leave a review
+                    </button>
+            </div>
+            {{else}}
+            {{!-- Logged in as user --}}
             <div class="leave-rating">
                 <h2 class="fw-bold fs-2">Have you played this game before?</h2>
                 {{#if existingReviewId}}
-                <a href="/review?id={{existingReviewId}}">
-                    <button class="btn btn-primary">
-                        Edit existing review
-                    </button>
+                <a class="btn btn-primary" href="/review?id={{existingReviewId}}">
+                    Edit existing review
                 </a>
                 {{else}}
                 <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#leave-review">
@@ -41,40 +66,35 @@
                 </button>
                 {{/if}}
             </div>
+            {{/if}}
             {{else}}
+            {{!-- Not logged in --}}
             <div class="leave-rating">
                 <h2 class="fw-bold fs-2">Have you played this game before?</h2>
-                <button class="btn btn-primary" onclick="window.location.href='/register'">Leave a
-                    review</button>
+                <a class="btn btn-primary" href='/register'>Leave a review</a>
             </div>
             {{/if}}
-            
-            {{#if (equals game.dev_email loggedUser.email)}}
-            <div class="my-2">
-                <p class="fw-bold fs-3">Developer controls</p>
-                <button id="edit-button" class="btn btn-primary" onclick="editContent()">
-                    Edit
-                </button>
-                <button id="change-boxart-button" class="btn btn-primary img-upld-btn" data-image-type="boxart"
-                    data-bs-toggle="modal" data-bs-target="#boxart-modal" style="display: none;">
-                    Change boxart
-                </button>
-                <button id="change-wallpaper-button" class="btn btn-primary img-upld-btn" data-image-type="wallpaper"
-                    data-bs-toggle="modal" data-bs-target="#wallpaper-modal" style="display: none;">
-                    Change wallpaper
-                </button>
-                <button id="delete-button" class="btn btn-danger" disabled>
-                    Delete
-                </button>
-            </div>
-            {{/if}}
-
         </div>
     </div>
 </div>
 
 <div class="container">
-    <h2 class="fw-bold">Top reviews</h2>
+    <h2 class="fw-bold">Reviews</h2>
+    <ul id="pagination-nav" class="pagination">
+        {{#each pages}}
+        <li class="page-item">
+            {{#if (equals this (castNumber ../page))}}
+            <a class="page-link fw-bold disabled" href="/reviews?game={{../title}}&page={{this}}">
+                {{this}}
+            </a>
+            {{else}}
+            <a class="page-link" href="/reviews?game={{../title}}&page={{this}}">
+                {{this}}
+            </a>
+            {{/if}}
+        </li>
+        {{/each}}
+    </ul>
     {{> search-review}}
     <div class="d-flex flex-wrap">
         {{#if reviews}}

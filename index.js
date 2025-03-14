@@ -97,7 +97,10 @@ async function getAverageStarRatings() {
         ]
     ).then(result => {
         result.forEach(entry => {
-            out[entry._id] = entry.averageRating;
+            // Format as 0-2 decimal places (1 -> 1; 1.2 -> 1.2; 1.23 -> 1.23; 1.23456 -> 1.23)
+            // by fixing the number of decimal places to 2
+            // and then parsing the resulting string as a float
+            out[entry._id] = parseFloat(entry.averageRating.toFixed(2));
         })
     });
     return out
@@ -145,6 +148,10 @@ const hbs = create({
             return avatar ? `img/avatar/${avatar}` : "img/avatar/guest.png";
         },
 
+        castNumber(x) {
+            return Number(x);
+        },
+
         equals(x, y) {
             return x === y;
         },
@@ -168,7 +175,7 @@ const hbs = create({
         getTime(date) {
             return date.getTime();
         },
-        
+
         // Using normal `equals()` would compare the references instead of the actual values
         dateEquals(d1, d2) {
             return d1.getTime() === d2.getTime();
@@ -335,7 +342,28 @@ app.get('/', async (req, res) => {
 app.get('/reviews', async (req, res) => {
     let title = req.query.game;
 
-    const reviews = await Review.find({ game: title }).lean();
+    let page = req.query.page ?? 1; // 1-indexed page number
+    const reviewsPerPage = 4;
+
+    // ? Use Review.countDocuments() in getReviewCount helper?
+    const reviewCount = await Review.countDocuments({ game: title });
+
+    const pageCount = Math.ceil(reviewCount / reviewsPerPage);
+
+    const reviews = await Review.aggregate([
+        {
+            "$match": {
+                "game": title
+            }
+        },
+        {
+            "$skip": reviewsPerPage * (page - 1)
+        },
+        {
+            "$limit": reviewsPerPage
+        }
+    ]);
+
     const game = await Game.findOne({ title: title }).lean();
     const users = await User.find({}).lean();
 
@@ -362,7 +390,10 @@ app.get('/reviews', async (req, res) => {
         "game": game,
         "reviews": (reviews).sort(reviewByUpvotes),
         "users": userLookup,
-        "existingReviewId": existingReviewId || false
+        "existingReviewId": existingReviewId || false,
+        "page": page,
+        "pages": new Array(pageCount).keys().map(index => index + 1),
+        "error": req.query.error ?? null // Error notification
     });
 })
 
@@ -427,6 +458,15 @@ app.post('/submit-review', isAuthenticated, async (req, res) => {
     console.log(req.body);
     const email = req.session.user.email;
     const game = req.body.game;
+
+    // If the user is the developer of the game, stop
+    const gameEntry = await Game.findOne({title: game});
+    console.log(`DEV EMAIL IS ${gameEntry.dev_email}`);
+    console.log(email);
+    if (gameEntry.dev_email === email) {
+        res.redirect(`/reviews?game=${game}&error=You cannot review this game because you developed it.`);
+        return;
+    }
 
     const findParams = {
         email: email,
