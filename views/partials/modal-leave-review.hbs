@@ -10,8 +10,15 @@
                     <div class="form-group mb-3">
                         <label for="leave-review-rating">Rating</label>
                         <div id="leave-review-rating" class="star-rating-allow-editing">
-                            {{{generateStarRating review.rating true}}}
-                        </div>
+                            {{!-- Initialize star rating to the user's current rating if it exists, else 1 --}}
+                            {{log "does review exists?"}}
+                            {{#if review}}
+                            {{log "review exists"}}
+                            {{{generateStarRating review.rating}}}
+                            {{else}}
+                            {{log "review does not exist"}}
+                            {{{generateStarRating 1 true}}}
+                            {{/if}} </div>
                         <input id="leave-review-star-rating" name="rating" class="form-control" placeholder="1"
                             type="hidden" value="1" autocomplete="off" required>
                     </div>
@@ -25,12 +32,13 @@
                     <div class="form-group mb-3">
                         <label class="form-label" for="leave-review-description">Description</label>
                         <textarea name="text" class="form-control" id="leave-review-description" rows="8" cols="120"
-                            placeholder="Description" autocomplete="off" required >{{review.text}}</textarea>
+                            placeholder="Description" autocomplete="off" required>{{review.text}}</textarea>
                     </div>
 
                     <div class="form-group mb-3">
                         <label for="leave-review-attachment" name="attachment">Attachment</label>
-                        <input type="file" autocomplete="off" class="form-control" name="media" accept="image/*,video/*">
+                        <input type="file" autocomplete="off" class="form-control" name="media"
+                            accept="image/*,video/*">
                     </div>
 
                     <input type="hidden" name="game" id="leave-review-game" value="{{game.title}}" required>
@@ -44,4 +52,3 @@
         </div>
     </div>
 </div>
-

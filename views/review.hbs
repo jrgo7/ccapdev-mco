@@ -1,7 +1,7 @@
 <div class="container pt-5 col-8">
     <div class="mt-2 bg-dark shadow px-4 py-4">
         <div id="star-rating" class="star-rating pt-2">
-            {{{generateStarRating review.rating true}}}
+            {{{generateStarRating review.rating}}}
             <div class="votes">
                 <span class=" {{#if upvote}}voted{{/if}} fa fa-xl fa-thumbs-up clickable"
                     onclick="upvote('{{review._id}}')"></span>

@@ -155,6 +155,7 @@ const hbs = create({
         equals(x, y) {
             return x === y;
         },
+
         /**
          * @param {Date} date 
          */
@@ -223,25 +224,20 @@ const hbs = create({
         generateStarRating(rating, isEditable) {
             let out = "";
             for (i = 1; i <= 5; i++) {
-                let checked = "unchecked";
-                let onclick = "";
-                let unclickable = "";
-                let id = "";
-                if (isEditable) {
-                    onclick = `onclick=setStarRating(${i})`
-                    id = `id=star-${i}`;
-                    unclickable = "unclickable";
-                    if (rating === -1) { // for leaving a review, you can always "edit" the star rating
-                        unclickable = "allow-editing-always";
-                        if (i === 1) {
-                            checked = "checked"
-                        }
-                    }
+                // Stars are by default:
+                let checked = "unchecked"; // unchecked
+                let onclick = ""; // have no bound click events
+                let clickable = ""; // are unclickable
+                let id = ""; // and have no id
+                if (isEditable) { // but if it is part of an editable star rating (i.e., in leave review modal)
+                    onclick = `onclick=setStarRating(${i})` // add a function on click
+                    id = `id=star-${i}`; // set a unique ID for this star to identify it (when toggling the `checked` CSS class)
+                    clickable = "allow-editing-always"; // and always make it editable/"clickable"
                 }
                 if (i <= rating) {
                     checked = "checked";
                 }
-                out += `<span ${id} ${onclick} class="fa fa-star fa-xl ${unclickable} ${checked}"></span>`;
+                out += `<span ${id} ${onclick} class="fa fa-star fa-xl ${clickable} ${checked}"></span>`;
             }
             return out;
         },
@@ -378,7 +374,6 @@ app.get('/reviews', async (req, res) => {
         if (existingReview != null) {
             existingReviewId = existingReview._id;
         }
-        console.log(`Existing review id is ${existingReviewId}`)
     }
 
     for (let i = 0; i < reviews.length; i++) {
