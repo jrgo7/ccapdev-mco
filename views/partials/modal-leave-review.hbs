@@ -11,12 +11,9 @@
                         <label for="leave-review-rating">Rating</label>
                         <div id="leave-review-rating" class="star-rating-allow-editing">
                             {{!-- Initialize star rating to the user's current rating if it exists, else 1 --}}
-                            {{log "does review exists?"}}
                             {{#if review}}
-                            {{log "review exists"}}
                             {{{generateStarRating review.rating}}}
                             {{else}}
-                            {{log "review does not exist"}}
                             {{{generateStarRating 1 true}}}
                             {{/if}} </div>
                         <input id="leave-review-star-rating" name="rating" class="form-control" placeholder="1"
