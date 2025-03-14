@@ -130,7 +130,7 @@ async function getAverageStarRatings() {
             // Format as 0-2 decimal places (1 -> 1; 1.2 -> 1.2; 1.23 -> 1.23; 1.23456 -> 1.23)
             // by fixing the number of decimal places to 2
             // and then parsing the resulting string as a float
-            out[entry._id] = parseFloat(entry.averageRating.toFixed(2));
+            out[entry._id] = parseFloat((entry.averageRating ?? 0).toFixed(2));
         })
     });
     return out
