@@ -1,0 +1,190 @@
+[{
+  "_id": {
+    "$oid": "67d8cfb0b9a20951733b7a94"
+  },
+  "email": "nintendo@nintendo.com",
+  "password": "shigeru",
+  "username": "Nintendo",
+  "subtitle": "Official Nintendo profile",
+  "avatar": "Nintendo.jpg",
+  "description": "Welcome to the official Nintendo profile! We’re listening, too.",
+  "lastSeen": {
+    "$date": "2025-03-18T01:49:37.595Z"
+  },
+  "accountCreateDate": {
+    "$date": "2025-03-18T01:43:12.406Z"
+  },
+  "favoriteGame": "Super Mario Bros.",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67d8d243696e6ed70b87f0e5"
+  },
+  "email": "bamco@bamco.com",
+  "password": "toru",
+  "username": "Bandai Namco",
+  "subtitle": "Official FrogCritic Account of BAMCO America!",
+  "avatar": "Bamco.jpg",
+  "description": "Official FrogCritic of Bandai Namco Entertainment America!",
+  "lastSeen": {
+    "$date": "2025-03-18T01:58:34.446Z"
+  },
+  "accountCreateDate": {
+    "$date": "2025-03-18T01:54:11.311Z"
+  },
+  "favoriteGame": "",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67d8d337696e6ed70b87f11b"
+  },
+  "email": "gamefreak@gamefreak.com",
+  "password": "satoshi",
+  "username": "GameFreak",
+  "subtitle": "Official Pokemon creators",
+  "avatar": "Gamefreak.jpg",
+  "description": "Official Pokemon creators",
+  "lastSeen": {
+    "$date": "2025-03-18T03:03:58.527Z"
+  },
+  "accountCreateDate": {
+    "$date": "2025-03-18T01:58:15.294Z"
+  },
+  "favoriteGame": "",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67d8d475696e6ed70b87f192"
+  },
+  "email": "hal@hal.com",
+  "password": "shigesato",
+  "username": "HAL Laboratory",
+  "subtitle": "Creator of Heartrending Experiences",
+  "avatar": "HAL.png",
+  "description": "Creator of Heartrending Experiences",
+  "lastSeen": {
+    "$date": "2025-03-18T02:03:33.794Z"
+  },
+  "accountCreateDate": {
+    "$date": "2025-03-18T02:03:33.794Z"
+  },
+  "favoriteGame": "",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67d8d530696e6ed70b87f1ae"
+  },
+  "email": "is@is.com",
+  "password": "shouzou",
+  "username": "Intelligent Systems",
+  "subtitle": "Nintendo-affiliated game developer",
+  "avatar": "intsys.png",
+  "description": "Nintendo-affiliated game developer",
+  "lastSeen": {
+    "$date": "2025-03-18T02:06:40.427Z"
+  },
+  "accountCreateDate": {
+    "$date": "2025-03-18T02:06:40.427Z"
+  },
+  "favoriteGame": "",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67d8d5e3696e6ed70b87f1c7"
+  },
+  "email": "1234@gmail.com",
+  "password": "1234",
+  "username": "Mr. 1234",
+  "subtitle": "1234!",
+  "avatar": "Mr1234.png",
+  "description": "I love the number 1234! My e-mail is <1234@gmail.com>! But I can't tell my password, because that would be a security breach!",
+  "lastSeen": {
+    "$date": "2025-03-18T03:04:25.259Z"
+  },
+  "accountCreateDate": {
+    "$date": "2025-03-18T02:09:39.094Z"
+  },
+  "favoriteGame": "Fire Emblem: Seisen no Keifu",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67d8d6cf696e6ed70b87f1e3"
+  },
+  "email": "wafl@gmail.com",
+  "password": "waflrain",
+  "username": "wafl",
+  "subtitle": "SRPG Addict",
+  "avatar": "images.jpg",
+  "description": "I love playing SRPGs like Fire Emblem!",
+  "lastSeen": {
+    "$date": "2025-03-18T03:11:47.309Z"
+  },
+  "accountCreateDate": {
+    "$date": "2025-03-18T02:13:35.070Z"
+  },
+  "favoriteGame": "Super Mario Bros.",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67d8d780696e6ed70b87f1f0"
+  },
+  "email": "tanoshii@gmail.com",
+  "password": "fun",
+  "username": "tanoshii",
+  "subtitle": "",
+  "avatar": "sig.jpg",
+  "description": "Fun things are fun!",
+  "lastSeen": {
+    "$date": "2025-03-18T02:16:32.274Z"
+  },
+  "accountCreateDate": {
+    "$date": "2025-03-18T02:16:32.274Z"
+  },
+  "favoriteGame": "",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67d8d7c7696e6ed70b87f1fb"
+  },
+  "email": "main@frog.com",
+  "password": "mf24",
+  "username": "mainFrog",
+  "subtitle": "",
+  "avatar": "mainFrog.png",
+  "description": "greninja",
+  "lastSeen": {
+    "$date": "2025-03-18T03:11:13.693Z"
+  },
+  "accountCreateDate": {
+    "$date": "2025-03-18T02:17:43.775Z"
+  },
+  "favoriteGame": "Girls' Frontline 2",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67d8d7ed696e6ed70b87f206"
+  },
+  "email": "roymer@roemer.com",
+  "password": "password",
+  "username": "Roymer",
+  "subtitle": ":mew:",
+  "avatar": "roymer.png",
+  "description": "I'm Roemer I check my inbox pretty frequently, so feel free to send something! Good morning. Order for Roemer? No, not Robert, swap the B with an M. Also, there is no T. No it's not Romer, it's like Ro-E-mer. No, it's not Roymer. There is an E. Yeah it's before the M. No, replace the Y with an E. No, that's still not it... Yeah.... Here, let me just show you my ID...",
+  "lastSeen": {
+    "$date": "2025-03-18T03:09:14.105Z"
+  },
+  "accountCreateDate": {
+    "$date": "2025-03-18T02:18:21.687Z"
+  },
+  "favoriteGame": "RoboTek",
+  "__v": 0
+}]

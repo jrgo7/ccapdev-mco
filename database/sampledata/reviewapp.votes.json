@@ -1,0 +1,45 @@
+[{
+  "_id": {
+    "$oid": "67d8e1d53e6ce53cff4bf91e"
+  },
+  "reviewId": "67d8da35131e9efad4bf6dbd",
+  "vote": 0,
+  "userId": "67d8d6cf696e6ed70b87f1e3",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67d8e2493e6ce53cff4bf9c0"
+  },
+  "reviewId": "67d8d85d696e6ed70b87f21d",
+  "vote": 0,
+  "userId": "67d8d6cf696e6ed70b87f1e3",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67d8e2ad3e6ce53cff4bf9f3"
+  },
+  "reviewId": "67d8d85d696e6ed70b87f21d",
+  "vote": 0,
+  "userId": "67d8d337696e6ed70b87f11b",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67d8e34b3e6ce53cff4bfa4a"
+  },
+  "reviewId": "67d8e2143e6ce53cff4bf95f",
+  "vote": 1,
+  "userId": "67d8d5e3696e6ed70b87f1c7",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67d8e3513e6ce53cff4bfa6e"
+  },
+  "reviewId": "67d8da35131e9efad4bf6dbd",
+  "vote": 0,
+  "userId": "67d8d5e3696e6ed70b87f1c7",
+  "__v": 0
+}]

@@ -76,7 +76,7 @@ async function saveGame() {
     editButton.onclick = editContent;
 }
 
-async function upvote(reviewId){
+async function upvote(reviewId) {
     let formData = new FormData();
 
     formData.append("reviewId", reviewId);
@@ -89,7 +89,7 @@ async function upvote(reviewId){
     });
 }
 
-async function downvote(reviewId){
+async function downvote(reviewId) {
     let formData = new FormData();
 
     formData.append("reviewId", reviewId);
@@ -182,20 +182,22 @@ imageTypes.forEach(imageType => {
 });
 
 const registerProfile = document.getElementById("register-profile-input");
-registerProfile.addEventListener("change", function(event){
-    const file = event.target.files[0];
-    const preview = document.getElementById('register-profile-preview');
+if (registerProfile) { // Ensure element exists before adding event listener
+    registerProfile.addEventListener("change", function (event) {
+        const file = event.target.files[0];
+        const preview = document.getElementById('register-profile-preview');
 
-    if (file) {
-        const reader = new FileReader();
-        reader.onload = function (e) {
-            preview.src = e.target.result; // Set the preview image
-        };
-        reader.readAsDataURL(file);
-    } else {
-        preview.src = 'img/avatar/guest.png'; // Reset to default if no file is chosen
-    }
-})
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                preview.src = e.target.result; // Set the preview image
+            };
+            reader.readAsDataURL(file);
+        } else {
+            preview.src = 'img/avatar/guest.png'; // Reset to default if no file is chosen
+        }
+    })
+}
 
 // Search, sort, filter functions
 
@@ -295,6 +297,9 @@ function filterReviews() {
 }
 
 // Attempt to sort and filter as soon as the page finishes loading
-sortGames();
-filterGames();
-filterReviews();
+document.addEventListener("DOMContentLoaded", () => {
+    sortGames();
+    filterGames();
+    filterReviews();
+    console.log("HELLO")
+});

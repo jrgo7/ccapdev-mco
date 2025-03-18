@@ -2,7 +2,7 @@
   "_id": {
     "$oid": "67d42fc5a4fe28b70e455788"
   },
-  "dev_email": "416@hk.com",
+  "dev_email": "nintendo@nintendo.com",
   "title": "Super Mario Bros.",
   "developer": "Nintendo",
   "release_date": {
@@ -21,7 +21,7 @@
   "_id": {
     "$oid": "67d42fc5a4fe28b70e455789"
   },
-  "dev_email": "pacman@mail.com",
+  "dev_email": "bamco@bamco.com",
   "title": "Pac-Man",
   "developer": "Namco",
   "release_date": {
@@ -40,7 +40,7 @@
   "_id": {
     "$oid": "67d42fc5a4fe28b70e45578a"
   },
-  "dev_email": "pkmn@mail.com",
+  "dev_email": "gamefreak@gamefreak.com",
   "title": "Pokémon: Red Version",
   "developer": "GameFreak",
   "release_date": {
@@ -59,9 +59,9 @@
   "_id": {
     "$oid": "67d42fc5a4fe28b70e45578b"
   },
-  "dev_email": "ebound@mail.com",
+  "dev_email": "hal@hal.com",
   "title": "EarthBound",
-  "developer": "ConcernedApe",
+  "developer": "HAL Laboratory",
   "release_date": {
     "$date": "1994-01-01T00:00:00.000Z"
   },
@@ -78,7 +78,7 @@
   "_id": {
     "$oid": "67d42fc5a4fe28b70e45578c"
   },
-  "dev_email": "femblem@mail.com",
+  "dev_email": "is@is.com",
   "title": "Fire Emblem: Seisen no Keifu",
   "developer": "Intelligent Systems",
   "release_date": {

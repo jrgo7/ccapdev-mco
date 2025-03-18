@@ -27,13 +27,13 @@
                 <span class="caret"></span>
             </button>
             <div class="dropdown-menu">
+                {{#if loggedUser}}
                 <a class="dropdown-item" href="selfprofile">Account</a>
-
                 <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="logout">Logout</a>
+                {{else}}
                 <a class="dropdown-item" href="#login" data-bs-toggle="modal" data-target="#login">Log In</a>
                 <a class="dropdown-item" href="register">Register</a>
-                {{#if loggedUser}}
-                    <a class="dropdown-item" href="logout">Logout</a>
                 {{/if}}
             </div>
         </div>

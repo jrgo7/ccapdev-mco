@@ -5,7 +5,7 @@ const voteSchema = mongoose.Schema({
         type: String,
         require: true
     },
-    vote: {
+    vote: { // 0 for DISLIKE/DOWNVOTE, 1 FOR LIKE/UPVOTE
         type: Number,
         require: true,
     },

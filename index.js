@@ -19,91 +19,10 @@ const Vote = require("./database/models/voteModel");
 
 console.clear();
 
-/**
- *  Retrieve game data from `data.js`
- */
-// async function resetGames() {
-//     await Game.deleteMany({});
-//     games.forEach(game => {
-//         Game.create(
-//             {
-//                 dev_email: game.dev_email,
-//                 title: game.title,
-//                 developer: game.developer,
-//                 release_date: game.release_date,
-//                 description: game.description,
-//                 back: `${game.file}.png`,
-//                 cover: `${game.file}.png`,
-//                 source: {
-//                     name: game.source.name,
-//                     link: game.source.link
-//                 }
-//             }
-//         )
-//     })
-// }
+const reviewsPerPage = 4;
 
-// async function resetExistingUsers() {
-//     const emailsToDelete = [
-//         "416@hk.com",
-//         "main@frog.com",
-//         "lowest@low.com",
-//         "wafl@rain.com",
-//         "roymer@roemer.com",
-//         "pow@cc.com",
-//         "cgk@ghj.com",
-//         "mario@mail.com"
-//     ];
+// Sample data can be found in `/database/sampledata`. Please import these using MongoDB Compass.
 
-//     await User.deleteMany({ email: { $in: emailsToDelete } });
-
-//     users.forEach(user => {
-//         User.create(
-//             {
-//                 email: user.email,
-//                 password: user.password,
-//                 username: user.username,
-//                 subtitle: user.subtitle,
-//                 avatar: user.avatar,
-//                 description: user.description,
-//                 lastSeen: user.lastSeen,
-//                 accountCreateDate: user.accountCreateDate,
-//                 favoriteGame: user.favoriteGame
-//             }
-//         )
-//     })
-// }
-
-// async function resetExistingReviews() {
-//     const emailsToDelete = [
-//         "main@frog.com",
-//         "lowest@low.com",
-//         "wafl@rain.com",
-//         "roymer@roemer.com",
-//         "cgk@ghj.com",
-//     ];
-
-//     await Review.deleteMany({ email: { $in: emailsToDelete } });
-
-//     reviews.forEach(review => {
-//         Review.create(
-//             {
-//                 game: review.game,
-//                 title: review.title,
-//                 email: review.email,
-//                 post_date: new Date(),
-//                 edit_date: new Date(),
-//                 rating: review.rating,
-//                 upvotes: 0,
-//                 text: review.text,
-//             }
-//         )
-//     })
-// }
-
-// resetGames();
-// resetExistingUsers();
-// resetExistingReviews();
 /**
  * @returns JSON in the format of { game1Title: averageRating }
  * @note This is an async function, so use the `.then(result => ... )` pattern
@@ -159,14 +78,6 @@ async function getReviewCounts() {
     });
     return out
 }
-
-
-
-let averageStarRatings = {};
-getAverageStarRatings().then(result => averageStarRatings = result);
-
-let reviewCounts = {};
-getReviewCounts().then(result => reviewCounts = result)
 
 const pluralS = amount => amount === 1 ? "" : "s";
 
@@ -334,11 +245,17 @@ app.use(
 
 mongoose.connect("mongodb://127.0.0.1:27017/reviewapp");
 
+let averageStarRatings = {};
+getAverageStarRatings().then(result => averageStarRatings = result);
+
+let reviewCounts = {};
+getReviewCounts().then(result => reviewCounts = result);
+
 // Sorting helpers
 
 const gameByRating = (game1, game2) => averageStarRatings[game2.title] - averageStarRatings[game1.title];
 const reviewByUpvotes = (review1, review2) => review2.upvotes - review1.upvotes;
-const userByName = (user1, user2) => user1.username.localeCompare(user2.username);
+// const userByName = (user1, user2) => user1.username.localeCompare(user2.username);
 
 
 // Checks if a user is logged in
@@ -361,14 +278,16 @@ app.use((req, res, next) => {
 
 app.get('/', async (req, res) => {
     const games = (await Game.find({}).lean()).sort(gameByRating);
+    getAverageStarRatings().then(result => averageStarRatings = result);
+    getReviewCounts().then(result => reviewCounts = result);
     res.render("index", { "title": "Main Page", "games": games });
 })
+
 
 app.get('/reviews', async (req, res) => {
     let title = req.query.game;
 
     let page = req.query.page ?? 1; // 1-indexed page number
-    const reviewsPerPage = 4;
 
     // ? Use Review.countDocuments() in getReviewCount helper?
     const reviewCount = await Review.countDocuments({ game: title });
@@ -415,8 +334,10 @@ app.get('/reviews', async (req, res) => {
         "reviews": (reviews).sort(reviewByUpvotes),
         "users": userLookup,
         "existingReviewId": existingReviewId || false,
+
         "page": page,
         "pages": new Array(pageCount).keys().map(index => index + 1),
+
         "error": req.query.error ?? null // Error notification
     });
 })
@@ -427,7 +348,7 @@ app.get('/review', async (req, res) => {
     const review = await Review.findOne({ _id: id }).lean();
     const user = await User.findOne({ email: review.email }).lean();
     const game = await Game.findOne({ title: review.game }).lean();
-    const dev = await User.findOne({ email: game.dev_email}).lean();
+    const dev = await User.findOne({ email: game.dev_email }).lean();
     const voteCount = await countVotes(id);
 
     let upvote = false;
@@ -448,11 +369,44 @@ app.get('/selfprofile', isAuthenticated, async (req, res) => {
 app.get('/profile', async (req, res) => {
     let id = req.query.user;
     const user = await User.findOne({ _id: id }).lean();
+    const reviewCount = await Review.countDocuments({ email: user.email });
+    const pageCount = Math.ceil(reviewCount / reviewsPerPage);
+    let page = req.query.page ?? 1; // 1-indexed page number
+
+    const users = await User.find({}).lean();
+    const userLookup = users.reduce((acc, user) => {
+        acc[user.email] = user;
+        return acc;
+    }, {});
+
+    const reviews = await Review.aggregate([
+        {
+            "$match": {
+                email: user.email
+            }
+        },
+        {
+            "$skip": reviewsPerPage * (page - 1)
+        },
+        {
+            "$limit": reviewsPerPage
+        }
+    ]);
+
+    // This is needed whenever we need to get the vote count for a review... could be improved on
+    for (let i = 0; i < reviews.length; i++) {
+        reviews[i].votes = await countVotes(reviews[i]._id)
+    }
+
     res.render("profile", {
         "title": user.username,
         "username": user.username,
         "user": user,
-        "reviews": (await Review.find({ email: user.email }).lean()).sort(reviewByUpvotes)
+        "reviews": (reviews).sort(reviewByUpvotes),
+        "users": userLookup,
+
+        "page": page,
+        "pages": new Array(pageCount).keys().map(index => index + 1)
     });
 })
 
@@ -485,7 +439,7 @@ app.post('/submit-review', isAuthenticated, async (req, res) => {
     const game = req.body.game;
 
     // If the user is the developer of the game, stop
-    const gameEntry = await Game.findOne({title: game});
+    const gameEntry = await Game.findOne({ title: game });
     console.log(`DEV EMAIL IS ${gameEntry.dev_email}`);
     console.log(email);
     if (gameEntry.dev_email === email) {
@@ -540,13 +494,13 @@ app.post('/submit-review', isAuthenticated, async (req, res) => {
     res.redirect(`/review?id=${foundReview._id}`);
 });
 
-app.post('/submit-response', isAuthenticated, async(req, res) => {
+app.post('/submit-response', isAuthenticated, async (req, res) => {
     console.log(req.body);
     const currentuser = req.session.user.email;
     const dev = req.body.dev;
-    const game = await Game.findOne({dev_email: dev});
-    let review = await Review.findOne({_id: req.body.rev})
-    
+    const game = await Game.findOne({ dev_email: dev });
+    let review = await Review.findOne({ _id: req.body.rev })
+
     if (currentuser !== game.dev_email) {
         return;
     }
@@ -554,14 +508,14 @@ app.post('/submit-response', isAuthenticated, async(req, res) => {
     console.log(review)
 
     if (review.developer_response.text !== "") {
-        await Review.updateOne( {'_id': req.body.rev }, {
+        await Review.updateOne({ '_id': req.body.rev }, {
             $set: {
                 "developer_response.text": req.body.text,
                 "developer_response.edit_date": Date.now()
             }
         })
     } else {
-        await Review.updateOne({'_id': req.body.rev }, {
+        await Review.updateOne({ '_id': req.body.rev }, {
             $set: {
                 "developer_response.text": req.body.text,
                 "developer_response.post_date": Date.now(),
@@ -569,7 +523,7 @@ app.post('/submit-response', isAuthenticated, async(req, res) => {
             }
         })
     }
-    review = await Review.findOne({_id: req.body.rev})
+    review = await Review.findOne({ _id: req.body.rev })
     console.log(review);
     res.redirect(`/review?id=${review._id}`);
 })
@@ -577,7 +531,7 @@ app.post('/submit-response', isAuthenticated, async(req, res) => {
 app.post('/delete-response', isAuthenticated, async (req, res) => {
     let rev = req.body.response;
     console.log(rev)
-    await Review.updateOne({'_id': req.body.response }, {
+    await Review.updateOne({ '_id': req.body.response }, {
         $set: {
             "developer_response.text": "",
             "developer_response.post_date": null,
@@ -585,7 +539,7 @@ app.post('/delete-response', isAuthenticated, async (req, res) => {
         }
     })
 
-    let review = await Review.findOne({_id: req.body.response})
+    let review = await Review.findOne({ _id: req.body.response })
     console.log(review)
     res.redirect(`/review?id=${review._id}`);
 })
@@ -689,7 +643,7 @@ app.post("/register", async (req, res) => {
     const conf_password = req.body.conf_password;
     const terms = req.body.terms;
     const description = req.body.description;
-    
+
     let profile;
 
     if (req.files) {
@@ -712,7 +666,7 @@ app.post("/register", async (req, res) => {
                 title: "Register",
                 error: "Passwords don't match"
             });
-        } else if(!terms){
+        } else if (!terms) {
             return res.render("register", {
                 title: "Register",
                 error: "Please read and accept the terms and conditions"

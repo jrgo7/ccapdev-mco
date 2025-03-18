@@ -27,11 +27,6 @@ const reviewSchema = mongoose.Schema({
         type: Number,
         require: true
     },
-    upvotes: {
-        type: String,
-        require: true,
-        default: 0
-    },
     text: {
         type: String,
         require: true

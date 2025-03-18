@@ -74,7 +74,7 @@
 </div>
 
 <div class="container">
-    <h2 class="fw-bold">Reviews</h2>
+    <h2 class="fw-bold">Game Reviews</h2>
     <ul id="pagination-nav" class="pagination">
         {{#each pages}}
         <li class="page-item">
@@ -97,7 +97,7 @@
         {{> review-entry review=this review=this user=(lookup ../users this.email)}}
         {{/each}}
         {{else}}
-        <p class="bg-dark shadow py-4 px-4">There are no reviews for this game!</p>
+        <p class="bg-dark shadow py-4 px-4">No reviews yet!</p>
         {{/if}}
     </div>
 </div>
