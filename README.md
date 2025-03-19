@@ -19,9 +19,9 @@
 
 <https://github.com/jrgo7/ccapdev-mco>
 
-## Google Drive Folder (Contains the Demo Video)
+## Demo Video Link (Google Drive)
 
-<https://drive.google.com/file/d/17ueWh_6dRB0Pbb6AjKdY_HSJKWRadJx-/view?usp=drive_link>
+<https://drive.google.com/file/d/1Gksm2wcevdpJGxdrBTA0-eCWjtMen2IT/view>
 
 ## Figma Link
 
