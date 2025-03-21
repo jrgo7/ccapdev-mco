@@ -6,6 +6,7 @@ const { create } = require('express-handlebars')
 const fileUpload = require('express-fileupload')
 const path = require('path');
 const favicon = require('serve-favicon');
+require('dotenv').config();
 
 const { users, games } = require("./database/data.js");
 
@@ -243,7 +244,15 @@ app.use(
 );
 
 
-mongoose.connect("mongodb://127.0.0.1:27017/reviewapp");
+mongoose.connect(process.env.MONGO_URI)
+    .then(() => {
+        app.listen(process.env.PORT, () => {
+            console.log("Listening on port ", process.env.PORT);
+        })
+    }).catch((error) => {
+        console.log(error);
+    })
+;
 
 let averageStarRatings = {};
 getAverageStarRatings().then(result => averageStarRatings = result);
