@@ -2,13 +2,12 @@ const express = require('express')
 const mongoose = require('mongoose')
 const session = require("express-session");
 const cookieParser = require("cookie-parser");
-const { create } = require('express-handlebars')
-const fileUpload = require('express-fileupload')
-const path = require('path');
+const { create } = require('express-handlebars');
+const fileUpload = require('express-fileupload');
+const fs = require('fs').promises;
+const path = require('path')
 const favicon = require('serve-favicon');
 require('dotenv').config();
-
-const { users, games } = require("./database/data.js");
 
 const app = express();
 app.use(favicon(path.resolve(__dirname, 'public/img/favicon.ico')))
@@ -719,6 +718,9 @@ app.post('/save-game', isAuthenticated, async (req, res) => {
         const boxartPath = path.resolve(__dirname, 'public/img/cover/', boxart.name);
         await boxart.mv(boxartPath);
         //TODO DELETE PREVIOUS FILE
+        if(imgPaths.boxart){
+            await fs.unlink(path.resolve(__dirname, 'public/img/cover/', imgPaths.boxart));
+        }
         imgPaths.boxart = boxart.name;
     }
 
@@ -726,6 +728,9 @@ app.post('/save-game', isAuthenticated, async (req, res) => {
         const wallpaperPath = path.resolve(__dirname, 'public/img/back/', wallpaper.name);
         await wallpaper.mv(wallpaperPath);
         //TODO DELETE PREVIOUS FILE
+        if(imgPaths.wallpaper){
+            await fs.unlink(path.resolve(__dirname, 'public/img/back/', imgPaths.wallpaper));
+        }
         imgPaths.wallpaper = wallpaper.name;
     }
 
@@ -756,6 +761,9 @@ app.post('/save-profile', isAuthenticated, async (req, res) => {
         const profilePath = path.resolve(__dirname, 'public/img/avatar/', profile.name);
         await profile.mv(profilePath);
         //TODO DELETE PREVIOUS FILE
+        if(updatedProfile) {
+            await fs.unlink(path.resolve(__dirname, 'public/img/avatar/', updatedProfile));
+        }
         updatedProfile = profile.name;
     }
 
