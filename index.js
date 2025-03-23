@@ -476,6 +476,9 @@ app.post('/submit-review', isAuthenticated, async (req, res) => {
     // ! MongoDB upsert caused issues with syncing edit and post timestamps
     let foundReview = await Review.findOne(findParams)
     if (foundReview) {
+        if (setParams.attachment && foundReview.attachment) {
+            await fs.unlink(path.resolve(__dirname, 'public/img/review-attachment/', foundReview.attachment.filename));
+        }
         await Review.updateOne(findParams, {
             $set: {
                 ...setParams,
