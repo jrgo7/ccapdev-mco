@@ -14,8 +14,8 @@
                 <span id="game-developer" class="allow-editing">{{game.developer}}</span>,
                 <span id="game-release-date" class="allow-editing">{{formatDateYear game.release_date}}</span>
             </p>
-            <div id="star-rating" class="star-rating" title="Average Rating {{getAverageStarRating title}}">
-                {{{generateStarRating (getRoundedAverageStarRating title)}}}
+            <div id="star-rating" class="star-rating" title="Average Rating {{averageRating}}">
+                {{{generateStarRating (floor averageRating)}}}
             </div>
             <div id="game-description-text" class="allow-editing w-100">
                 {{game.description}}

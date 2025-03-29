@@ -47,7 +47,14 @@ async function getReviewCount(gameTitle) {
     }
 }
 
+async function getVoteCount(reviewId) {
+    const upvoteCount = await Vote.countDocuments({ reviewId: reviewId, vote: 1 });
+    const downvoteCount = await Vote.countDocuments({ reviewId: reviewId, vote: 0 });
+    return upvoteCount - downvoteCount;
+}
+
 module.exports = {
     getAverageRatings, getAverageRating,
-    getReviewCounts, getReviewCount
+    getReviewCounts, getReviewCount,
+    getVoteCount
 };

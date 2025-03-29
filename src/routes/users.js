@@ -6,8 +6,11 @@ const isAuthenticated = require("./is-authenticated.js");
 const Review = require("../../database/models/reviewModel");
 const User = require("../../database/models/userModel");
 const Game = require("../../database/models/gameModel");
+const globals = require('../globals.js');
+const queries = require('../queries.js');
 
 const router = Router();
+
 
 router.get('/selfprofile', isAuthenticated, async (req, res) => {
     res.redirect(`/profile?user=${req.session.user._id}`)
@@ -17,7 +20,7 @@ router.get('/profile', async (req, res) => {
     let id = req.query.user;
     const user = await User.findOne({ _id: id }).lean();
     const reviewCount = await Review.countDocuments({ email: user.email });
-    const pageCount = Math.ceil(reviewCount / reviewsPerPage);
+    const pageCount = Math.ceil(reviewCount / globals.reviewsPerPage);
     let page = req.query.page ?? 1; // 1-indexed page number
 
     const users = await User.find({}).lean();
@@ -33,23 +36,23 @@ router.get('/profile', async (req, res) => {
             }
         },
         {
-            "$skip": reviewsPerPage * (page - 1)
+            "$skip": globals.reviewsPerPage * (page - 1)
         },
         {
-            "$limit": reviewsPerPage
+            "$limit": globals.reviewsPerPage
         }
     ]);
 
     // This is needed whenever we need to get the vote count for a review... could be improved on
     for (let i = 0; i < reviews.length; i++) {
-        reviews[i].votes = await countVotes(reviews[i]._id)
+        reviews[i].votes = await queries.getVoteCount(reviews[i]._id)
     }
 
     res.render("profile", {
         "title": user.username,
         "username": user.username,
         "user": user,
-        "reviews": (reviews).sort(reviewByUpvotes),
+        "reviews": (reviews).sort(globals.sortReviewByVoteCount),
         "users": userLookup,
 
         "page": page,

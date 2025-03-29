@@ -8,9 +8,12 @@ const User = require("../../database/models/userModel");
 const Game = require("../../database/models/gameModel");
 const Vote = require("../../database/models/voteModel");
 
+const queries = require('../queries.js');
+const globals = require('../globals.js');
+
 const router = Router();
 
-const reviewsPerPage = 4;
+
 
 // * GET
 
@@ -22,7 +25,7 @@ router.get('/reviews', async (req, res) => {
     // ? Use Review.countDocuments() in getReviewCount helper?
     const reviewCount = await Review.countDocuments({ game: title });
 
-    const pageCount = Math.ceil(reviewCount / reviewsPerPage);
+    const pageCount = Math.ceil(reviewCount / globals.reviewsPerPage);
 
     const reviews = await Review.aggregate([
         {
@@ -31,14 +34,16 @@ router.get('/reviews', async (req, res) => {
             }
         },
         {
-            "$skip": reviewsPerPage * (page - 1)
+            "$skip": globals.reviewsPerPage * (page - 1)
         },
         {
-            "$limit": reviewsPerPage
+            "$limit": globals.reviewsPerPage
         }
     ]);
 
     const game = await Game.findOne({ title: title }).lean();
+    game.averageRating = await queries.getAverageRating(game.title);
+
     const users = await User.find({}).lean();
 
     const userLookup = users.reduce((acc, user) => {
@@ -55,13 +60,13 @@ router.get('/reviews', async (req, res) => {
     }
 
     for (let i = 0; i < reviews.length; i++) {
-        reviews[i].votes = await countVotes(reviews[i]._id)
+        reviews[i].votes = await queries.getVoteCount(reviews[i]._id);
     }
 
     res.render("reviews", {
         "title": title,
         "game": game,
-        "reviews": (reviews).sort(reviewByUpvotes),
+        "reviews": (reviews).sort(globals.sortReviewByVoteCount),
         "users": userLookup,
         "existingReviewId": existingReviewId || false,
 
@@ -79,7 +84,7 @@ router.get('/review', async (req, res) => {
     const user = await User.findOne({ email: review.email }).lean();
     const game = await Game.findOne({ title: review.game }).lean();
     const dev = await User.findOne({ email: game.dev_email }).lean();
-    const voteCount = await countVotes(id);
+    const voteCount = await queries.getVoteCount(id);
 
     let upvote = false;
     let downvote = false;
