@@ -151,8 +151,7 @@ router.post('/submit-review', isAuthenticated, async (req, res) => {
     }
 
     // Update average star ratings and review counts
-    getAverageStarRatings().then(result => averageStarRatings = result)
-    getReviewCounts().then(result => reviewCounts = result)
+    
 
     if (!foundReview) {
         return res.status(404).send(
@@ -207,7 +206,6 @@ router.post('/delete-response', isAuthenticated, async (req, res) => {
             "developer_response.edit_date": null,
         }
     })
-
     let review = await Review.findOne({ _id: req.body.response })
     console.log(review)
     res.redirect(`/review?id=${review._id}`);
@@ -217,10 +215,6 @@ router.post('/delete-review', isAuthenticated, async (req, res) => {
     let deletedReview = await Review.findOneAndDelete({ _id: req.body.reviewId });
     let deletedReviewGame = deletedReview.game;
     console.log(`>>>Redirecting to /reviews?game=${deletedReviewGame}...`)
-
-    getAverageStarRatings().then(result => averageStarRatings = result)
-    getReviewCounts().then(result => reviewCounts = result)
-
     res.redirect(`/reviews?game=${deletedReviewGame}`);
 })
 

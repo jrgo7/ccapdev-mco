@@ -30,9 +30,6 @@ router.get('/', async (req, res) => {
             return game
         }
     );
-    // console.log("-------START");
-    // console.log(games);
-    // console.log("-------END");
     res.render("index", { "title": "Main Page", "games": games });
 });
 

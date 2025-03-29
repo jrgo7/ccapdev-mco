@@ -130,25 +130,9 @@ const hbs = create({
             return splitText;
         },
 
-        // async getAverageStarRating(gameTitle) {
-        //     let averageRating = await queries.getAverageRating(gameTitle);
-        //     return averageRating;
-        // },
-
         floor(n) {
             return Math.floor(n);
-        },
-
-        // async getReviewCount(gameTitle) {
-        //     return queries.getReviewCount(gameTitle);
-        // },
-
-        // async getReviewCountFormatted(gameTitle) {
-        //     let count = queries.getReviewCount(gameTitle);
-        //     return `${count} review${pluralS(count)}`
-        // }
-
-
+        }
     },
     extname: ".hbs",
     defaultLayout: "main"
