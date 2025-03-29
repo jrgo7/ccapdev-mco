@@ -2,10 +2,10 @@
 {{> upload-image image-type="wallpaper"}}
 
 <div id="game-info-container" class="bg-game" style="background-image: linear-gradient(rgba(0, 0, 0, 0.5),
-    rgb(31, 25, 38)), url('/img/back/{{game.back}}');">
+    rgb(31, 25, 38)), url('{{game.back}}');">
 
     <div class="container d-flex flex-wrap flex-lg-nowrap pt-5 pb-5">
-        <img id="game-cover" class="individual-game-cover" src="img/cover/{{game.cover}}" alt="{{game.title}}">
+        <img id="game-cover" class="individual-game-cover" src="{{game.cover}}" alt="{{game.title}}">
         <div class="game-description col-lg-6">
             {{!-- allow-editing --}}
             {{!-- V --}}

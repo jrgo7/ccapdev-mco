@@ -158,41 +158,36 @@ document.querySelectorAll(".img-upld-btn").forEach(button => {
     });
 });
 
+/* Upload Image Partial */
+
 const imageTypes = ["boxart", "wallpaper", "profile"];
 
 imageTypes.forEach(imageType => {
     const inputElement = document.getElementById(imageType + "-input");
 
-    if (inputElement) { // Ensure the input exists before adding event listener
+    if (inputElement) {
         inputElement.addEventListener("change", function (event) {
-            const file = event.target.files[0];
+            const imgUrl = inputElement.value;
 
-            if (file && currentImageType) {
-                tempImages[currentImageType] = file;
+            if (imgUrl && currentImageType) {
+                tempImages[currentImageType] = imgUrl;
 
-
-                const reader = new FileReader();
-                reader.onload = function (e) {
-                    document.getElementById(currentImageType + "-preview").innerHTML = `<img src="${e.target.result}" class="img-fluid " alt="Preview">`;
-                };
-                reader.readAsDataURL(file);
+                document.getElementById(currentImageType + "-preview").innerHTML = `<img src="${imgUrl}" class="img-fluid " alt="Preview">`;
             }
         });
     }
 });
 
+// End of Upload image
+
 const registerProfile = document.getElementById("register-profile-input");
 if (registerProfile) { // Ensure element exists before adding event listener
     registerProfile.addEventListener("change", function (event) {
-        const file = event.target.files[0];
+        const imgURL = registerProfile.value;
         const preview = document.getElementById('register-profile-preview');
 
-        if (file) {
-            const reader = new FileReader();
-            reader.onload = function (e) {
-                preview.src = e.target.result; // Set the preview image
-            };
-            reader.readAsDataURL(file);
+        if (imgURL) {
+                preview.src = imgURL; // Set the preview image
         } else {
             preview.src = 'img/avatar/guest.png'; // Reset to default if no file is chosen
         }

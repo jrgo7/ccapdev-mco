@@ -32,14 +32,8 @@ const reviewSchema = mongoose.Schema({
         require: true
     },
     attachment: {
-        type: {
-            type: String,
-            require: true
-        },
-        filename: {
-            type: String,
-            require: true
-        }
+        type: String,
+        require: true
     },
     developer_response: {
         text: {

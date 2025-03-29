@@ -186,19 +186,12 @@ router.post("/register", async (req, res) => {
 })
 
 router.post('/save-profile', isAuthenticated, async (req, res) => {
-    const { username, subtitle, description, favorite } = req.body;
-    const { profile } = req.files ?? {};
+    const { username, subtitle, description, favorite, profile } = req.body;
 
     let updatedProfile = req.session.user.avatar;
 
     if (profile) {
-        const profilePath = path.resolve(__dirname, 'public/img/avatar/', profile.name);
-        await profile.mv(profilePath);
-        //TODO DELETE PREVIOUS FILE
-        if (updatedProfile) {
-            await fs.unlink(path.resolve(__dirname, 'public/img/avatar/', updatedProfile));
-        }
-        updatedProfile = profile.name;
+        updatedProfile = profile;
     }
 
     req.session.user = await User.findOneAndUpdate(

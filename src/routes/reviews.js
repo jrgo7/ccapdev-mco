@@ -103,6 +103,7 @@ router.post('/submit-review', isAuthenticated, async (req, res) => {
     console.log(req.body);
     const email = req.session.user.email;
     const game = req.body.game;
+    const media = req.body.media;
 
     // If the user is the developer of the game, stop
     const gameEntry = await Game.findOne({ title: game });
@@ -124,19 +125,13 @@ router.post('/submit-review', isAuthenticated, async (req, res) => {
         text: req.body.text,
     };
 
-    if (req.files) {
-        let { media } = req.files;
-        await media.mv(path.resolve(__dirname, 'public/img/review-attachment/', media.name));
-        mediaType = media.mimetype.startsWith('image/') ? "image" : "video";
-        setParams.attachment = { "type": mediaType, "filename": media.name };
+    if (media) {
+        setParams.attachment = media;
     }
 
     // ! MongoDB upsert caused issues with syncing edit and post timestamps
     let foundReview = await Review.findOne(findParams)
     if (foundReview) {
-        if (setParams.attachment && foundReview.attachment) {
-            await fs.unlink(path.resolve(__dirname, 'public/img/review-attachment/', foundReview.attachment.filename));
-        }
         await Review.updateOne(findParams, {
             $set: {
                 ...setParams,

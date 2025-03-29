@@ -7,7 +7,8 @@
             </div>
             <div class="modal-body">
                 <form id="upload-{{image-type}}-form">
-                    <input type="file" name="image" id="{{image-type}}-input" accept="image/*,video/*"/>
+                <label for="{{image-type}}-input" >Upload image URL:</label>
+                    <input type="url" name="image" id="{{image-type}}-input"/>
                 </form>
                 <div class="image-preview" id="{{image-type}}-preview">
                     <!-- Image preview will be inserted here -->
