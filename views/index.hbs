@@ -47,36 +47,55 @@
         </a>
     </div>
     <div id="game-entries" class="container mx-auto d-flex flex-wrap">
-        {{#each games}}
-        <div class="index-game-entry col shadow" data-title="{{title}}" data-rating="{{getAverageStarRating title}}"
-            data-developer="{{developer}}" data-release-date="{{getTime release_date}}"
-            data-review-count="{{getReviewCount title}}">
+        {{!-- <table>
+            <thead>
+                <td>title</td>
+                <td>developer</td>
+                <td>releaseDate</td>
+                <td>averageRating</td>
+                <td>reviewCount</td>
+            </thead>
+            {{#each games}}
+            <tr>
+                <td>{{title}}</td>
+                <td>{{developer}}</td>
+                <td>{{averageRating}}</td>
+                <td>{{getTime release_date}}</td>
+                <td>{{reviewCount}}</td>
+            </tr>
+            {{/each}}
+        </table> --}}
 
-            <a class="index-game-cover-container shadow" href="reviews?game={{title}}">
-                <img class="index-game-cover d-block mx-auto my-auto" src="img/cover/{{cover}}">
-            </a>
-            <div class="mx-4 my-4">
-                <h2 class="fs-4 fw-bold"><a class="block-link" href="reviews?game={{title}}">
-                        {{title}}
-                    </a></h2>
-                <div class="star-rating" title="Average Rating {{getAverageStarRating title}}">
-                    {{{generateStarRating (getRoundedAverageStarRating title)}}} ({{getAverageStarRating title}}/5,
-                    {{getReviewCountFormatted title}})
+            {{#each games}}
+            <div class="index-game-entry col shadow" data-title="{{title}}" data-rating="{{averageRating}}"
+                data-developer="{{developer}}" data-release-date="{{getTime release_date}}"
+                data-review-count="{{reviewCount}}">
+
+                <a class="index-game-cover-container shadow" href="reviews?game={{title}}">
+                    <img class="index-game-cover d-block mx-auto my-auto" src="img/cover/{{cover}}">
+                </a>
+                <div class="mx-4 my-4">
+                    <h2 class="fs-4 fw-bold"><a class="block-link" href="reviews?game={{title}}">
+                            {{title}}
+                        </a></h2>
+                    <div class="star-rating" title="Average Rating {{averageRating}}">
+                        {{{generateStarRating averageRating}}} ({{floor averageRating}}/5,
+                        {{reviewCount}} review/s)
+                    </div>
+                    <p class="fst-italic">
+                        {{developer}}, {{formatDateYear release_date}}
+                    </p>
+                    <p>
+                        {{{truncateWords description 20}}}
+                    </p>
+                    <p class="fst-italic">
+                        Source:
+                        <a class="block-link" href="{{source.link}}">
+                            {{source.name}}
+                        </a>
+                    </p>
                 </div>
-                <p class="fst-italic">
-                    {{developer}}, {{formatDateYear release_date}}
-                </p>
-                <p>
-                    {{{truncateWords description 20}}}
-                </p>
-                <p class="fst-italic">
-                    Source:
-                    <a class="block-link" href="{{source.link}}">
-                        {{source.name}}
-                    </a>
-                </p>
             </div>
-        </div>
-        {{/each}}
+            {{/each}}
     </div>
 </div>

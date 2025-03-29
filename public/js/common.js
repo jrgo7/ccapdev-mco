@@ -297,9 +297,9 @@ function filterReviews() {
 }
 
 // Attempt to sort and filter as soon as the page finishes loading
-document.addEventListener("DOMContentLoaded", () => {
-    sortGames();
-    filterGames();
-    filterReviews();
-    console.log("HELLO")
-});
+// document.addEventListener("DOMContentLoaded", () => {
+//     sortGames();
+//     filterGames();
+//     filterReviews();
+//     console.log("HELLO")
+// });
