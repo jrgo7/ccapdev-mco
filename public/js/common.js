@@ -152,6 +152,20 @@ function uploadFile() {
 }
 
 //Add listeners to buttons
+document.addEventListener("submit", function(e) {
+    if(e.target && e.target.id === "change-password-form"){
+        const pass = document.getElementById("pass").value;
+    const passConfirm = document.getElementById("pass-confirm").value;
+
+    if(pass !== passConfirm){
+        e.preventDefault();
+        document.getElementById("password-change-error").classList.remove("d-none");
+    } else {
+        document.getElementById("password-change-error").classList.add("d-none");
+    }
+    }  
+})
+
 document.querySelectorAll(".img-upld-btn").forEach(button => {
     button.addEventListener("click", function () {
         currentImageType = this.getAttribute("data-image-type");

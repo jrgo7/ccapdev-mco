@@ -44,18 +44,14 @@ const userSchema = mongoose.Schema({
     }
 })
 
-/*
-userModel.pre('save', async function(next) {
+userSchema.pre('save', async function(next) {
     if (!this.isModified('password')) return next(); // if password is changed, no need to hash.
     this.password = await bcrypt.hash(this.password, await bcrypt.genSalt(10));
     next();
 });
 
-userModel.methods.isValidPassword = async function(password){
-    try {
-        return await bcrypt.compare(password, this.password);
-    }
-}
-*/
+userSchema.methods.isValidPassword = async function(password){
+    return await bcrypt.compare(password, this.password);
+};
 
 module.exports = mongoose.model('Users', userSchema);

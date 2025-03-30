@@ -1,5 +1,6 @@
 // NPM Modules
 const { Router } = require('express');
+const bcrypt = require('bcrypt');
 
 // MCO3 Modules
 const isAuthenticated = require("./is-authenticated.js");
@@ -86,11 +87,12 @@ router.get("/logout", (req, res) => {
 router.post("/login", async (req, res) => {
     const email = req.body.email;
     const password = req.body.password;
-
+    
     try {
         const user = await User.findOne({ email: email }).lean();
-
-        if (!user || user.password !== password) {
+        console.log(await bcrypt.compare(password, user.password));
+        console.log(user.password);
+        if (!user || !(await bcrypt.compare(password, user.password))) {
             const games = await Game.find({}).lean();
             return res.status(401).render(
                 "index", {
@@ -121,6 +123,18 @@ router.post("/login", async (req, res) => {
         res.status(500).render("index", { "title": "Main Page", "games": games, "error": error }
         );
     }
+})
+
+router.post("/change-password", async (req, res) => {
+    const email = req.body.email;
+    const newPassword = req.body.password;
+
+    console.log(req.body);
+    const user = await User.findOne({ email: email });
+    user.password = newPassword;
+    await user.save();
+
+    res.redirect(`/profile?user=${req.session.user._id}`)
 })
 
 router.post("/register", async (req, res) => {
@@ -173,6 +187,10 @@ router.post("/register", async (req, res) => {
         })
 
         req.session.user = await User.findOne({ email: email }).lean();
+        console.log(req.body);
+        const nonleaneduser = await User.findOne({ email: email });
+        nonleaneduser.password = password;
+        await nonleaneduser.save();
         res.cookie("sessionID", req.sessionID);
 
         res.redirect("/");

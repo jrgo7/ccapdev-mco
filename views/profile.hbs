@@ -1,4 +1,5 @@
 {{> upload-image image-type="profile"}}
+{{> change-password email=user.email}}
 <div class="container my-5 py-5 px-5">
     <div id="hero" class="bg-dark shadow d-flex flex-wrap px-4 py-4">
         <img id="avatar" class="avatar avatar-big me-4" src="{{defaultAvatar user.avatar}}">
@@ -44,7 +45,7 @@
         <button id="delete-button" class="btn btn-danger" disabled>
             Delete
         </button>
-        <button id="password-button" class="btn btn-danger">
+        <button id="password-button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#change-password">
             Change Password
         </button>
     </div>
