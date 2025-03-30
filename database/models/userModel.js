@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const bcrypt = require('bcrypt');
 
 const userSchema = mongoose.Schema({
     email: {
@@ -9,6 +10,7 @@ const userSchema = mongoose.Schema({
     password: {
         type: String, 
         required: true
+        //min
     },
     username: {
         type: String, 
@@ -41,5 +43,19 @@ const userSchema = mongoose.Schema({
         required: false
     }
 })
+
+/*
+userModel.pre('save', async function(next) {
+    if (!this.isModified('password')) return next(); // if password is changed, no need to hash.
+    this.password = await bcrypt.hash(this.password, await bcrypt.genSalt(10));
+    next();
+});
+
+userModel.methods.isValidPassword = async function(password){
+    try {
+        return await bcrypt.compare(password, this.password);
+    }
+}
+*/
 
 module.exports = mongoose.model('Users', userSchema);
