@@ -88,7 +88,7 @@ const hbs = create({
          */
         generateStarRating(rating, isEditable) {
             let out = "";
-            for (i = 1; i <= 5; i++) {
+            for (let i = 1; i <= 5; i++) {
                 // Stars are by default:
                 let checked = "unchecked"; // unchecked
                 let onclick = ""; // have no bound click events

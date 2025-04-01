@@ -20,38 +20,14 @@ const router = Router();
 router.get('/reviews', async (req, res) => {
     let title = req.query.game;
 
-    let page = req.query.page ?? 1; // 1-indexed page number
-
-    // ? Use Review.countDocuments() in getReviewCount helper?
-    const reviewCount = await Review.countDocuments({ game: title });
-
-    const pageCount = Math.ceil(reviewCount / globals.reviewsPerPage);
-
-    const reviews = await Review.aggregate([
-        {
-            "$match": {
-                "game": title
-            }
-        },
-        {
-            "$skip": globals.reviewsPerPage * (page - 1)
-        },
-        {
-            "$limit": globals.reviewsPerPage
-        }
-    ]);
-
     const game = await Game.findOne({ title: title }).lean();
     game.averageRating = await queries.getAverageRating(game.title);
-
     const users = await User.find({}).lean();
-
     const userLookup = users.reduce((acc, user) => {
         acc[user.email] = user;
         return acc;
     }, {});
 
-    let existingReviewId;
     if (req.session.user) {
         let existingReview = await Review.findOne({ game: title, email: req.session.user.email }).lean();
         if (existingReview != null) {
@@ -59,22 +35,19 @@ router.get('/reviews', async (req, res) => {
         }
     }
 
-    for (let i = 0; i < reviews.length; i++) {
-        reviews[i].votes = await queries.getVoteCount(reviews[i]._id);
-    }
-
     res.render("reviews", {
         "title": title,
         "game": game,
-        "reviews": (reviews).sort(globals.sortReviewByVoteCount),
         "users": userLookup,
-        "existingReviewId": existingReviewId || false,
-
-        "page": page,
-        "pages": new Array(pageCount).keys().map(index => index + 1),
-
-        "error": req.query.error ?? null // Error notification
+        "error": req.query.error ?? null
     });
+})
+
+router.get('/get-reviews', async (req, res) => {
+    let { gameTitle, username, searchQuery, page } = req.query;
+    console.log(gameTitle, username);
+    let retval = await queries.getReviews(gameTitle, username, searchQuery, page);
+    res.send(retval);
 })
 
 router.get('/review', async (req, res) => {

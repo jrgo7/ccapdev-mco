@@ -1,6 +1,5 @@
 {{> upload-image image-type="boxart"}}
 {{> upload-image image-type="wallpaper"}}
-
 <div id="game-info-container" class="bg-game" style="background-image: linear-gradient(rgba(0, 0, 0, 0.5),
     rgb(31, 25, 38)), url('/img/back/{{game.back}}');">
 
@@ -15,7 +14,7 @@
                 <span id="game-release-date" class="allow-editing">{{formatDateYear game.release_date}}</span>
             </p>
             <div id="star-rating" class="star-rating" title="Average Rating {{averageRating}}">
-                {{{generateStarRating (floor averageRating)}}}
+                {{{generateStarRating (floor game.averageRating)}}}
             </div>
             <div id="game-description-text" class="allow-editing w-100">
                 {{game.description}}
@@ -73,31 +72,4 @@
     </div>
 </div>
 
-<div class="container">
-    <h2 class="fw-bold">Game Reviews</h2>
-    <ul id="pagination-nav" class="pagination">
-        {{#each pages}}
-        <li class="page-item">
-            {{#if (equals this (castNumber ../page))}}
-            <a class="page-link fw-bold disabled" href="/reviews?game={{../title}}&page={{this}}">
-                {{this}}
-            </a>
-            {{else}}
-            <a class="page-link" href="/reviews?game={{../title}}&page={{this}}">
-                {{this}}
-            </a>
-            {{/if}}
-        </li>
-        {{/each}}
-    </ul>
-    {{> search-review}}
-    <div class="d-flex flex-wrap">
-        {{#if reviews}}
-        {{#each reviews}}
-        {{> review-entry review=this review=this user=(lookup ../users this.email)}}
-        {{/each}}
-        {{else}}
-        <p class="bg-dark shadow py-4 px-4">No reviews yet!</p>
-        {{/if}}
-    </div>
-</div>
+{{>review-entry-template title="Game Reviews"}}

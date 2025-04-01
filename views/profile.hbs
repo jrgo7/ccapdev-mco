@@ -53,35 +53,4 @@
     {{/if}}
 </div>
 
-{{!-- This technically pretty much the same as Game Reviews --}}
-{{!-- Differences: h2 has User Reviews, href tag is different --}}
-{{!-- TODO: Refactor User Reviews and Game Reviews into one partial? --}}
-<div class="container">
-    <h2 class="fw-bold">User Reviews</h2>
-    <ul id="pagination-nav" class="pagination">
-        {{#each pages}}
-        <li class="page-item">
-            {{#if (equals this (castNumber ../page))}}
-            <a class="page-link fw-bold disabled" href="/profile?user={{../user._id}}&page={{this}}">
-                {{this}}
-            </a>
-            {{else}}
-            <a class="page-link" href="/profile?user={{../user._id}}&page={{this}}">
-                {{this}}
-            </a>
-            {{/if}}
-        </li>
-        {{/each}}
-    </ul>
-    {{> search-review}}
-    <div class="d-flex flex-wrap">
-        {{#if reviews}}
-        {{#each reviews}}
-        {{log this}}
-        {{> review-entry review=this review=this user=(lookup ../users this.email)}}
-        {{/each}}
-        {{else}}
-        <p class="bg-dark shadow py-4 px-4">No reviews yet!</p>
-        {{/if}}
-    </div>
-</div>
+{{>review-entry-template title="User Reviews"}}

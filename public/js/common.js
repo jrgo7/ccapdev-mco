@@ -152,18 +152,18 @@ function uploadFile() {
 }
 
 //Add listeners to buttons
-document.addEventListener("submit", function(e) {
-    if(e.target && e.target.id === "change-password-form"){
+document.addEventListener("submit", function (e) {
+    if (e.target && e.target.id === "change-password-form") {
         const pass = document.getElementById("pass").value;
-    const passConfirm = document.getElementById("pass-confirm").value;
+        const passConfirm = document.getElementById("pass-confirm").value;
 
-    if(pass !== passConfirm){
-        e.preventDefault();
-        document.getElementById("password-change-error").classList.remove("d-none");
-    } else {
-        document.getElementById("password-change-error").classList.add("d-none");
+        if (pass !== passConfirm) {
+            e.preventDefault();
+            document.getElementById("password-change-error").classList.remove("d-none");
+        } else {
+            document.getElementById("password-change-error").classList.add("d-none");
+        }
     }
-    }  
 })
 
 document.querySelectorAll(".img-upld-btn").forEach(button => {
@@ -215,62 +215,132 @@ if (registerProfile) { // Ensure element exists before adding event listener
 
 // Search, sort, filter functions
 
-function sortGames() {
-    const SortImplementations = Object.freeze([
-        {
-            key: "none",
-            comparator: (a, b) => 0
-        },
-        {
-            key: "rating",
-            comparator: (a, b) => Number(b.key) - Number(a.key)
-        },
-        {
-            key: "title",
-            comparator: (a, b) => String(b.key).localeCompare(String(a.key))
-        },
-        {
-            key: "developer",
-            comparator: (a, b) => String(b.key).localeCompare(String(a.key))
-        },
-        {
-            key: "releaseDate",
-            comparator: (a, b) => Number(b.key) - Number(a.key)
-        },
-        {
-            key: "reviewCount",
-            comparator: (a, b) => Number(b.key) - Number(a.key)
+/**
+ * @param {String} text 
+ * @param {Number} wordCount
+ * @returns A trimmed version of `text` having only the specified `wordCount`, with "..." appended if the original length exceeds it
+ */
+function truncateWords(text, wordCount) {
+    let splitText = text.split(" ").splice(0, wordCount).join(" ");
+    splitText.trimEnd(",");
+    let lastCharacter;
+    let lastCharacterIsPunctuation;
+    do {
+        lastCharacter = splitText.slice(-1);
+        lastCharacterIsPunctuation = lastCharacter === ',';
+        if (lastCharacterIsPunctuation) {
+            splitText = splitText.substring(0, splitText.length - 1);
         }
-    ])
-    let sortType = Number(document.querySelector("#order-type-select").value);
-    let sortOrder = Number(document.querySelector("#order-arrangement-select").value);
-
-    let gameEntries = document.querySelectorAll(".index-game-entry");
-    let key = SortImplementations[sortType].key;
-    console.log(`Sorting by ${key}`)
-
-    let sortArr = []; // [{node, key}]
-    gameEntries.forEach(
-        entry => {
-            sortArr.push({
-                node: entry,
-                key: entry.dataset[key]
-            })
-        }
-    )
-
-    console.log("Before sorting:")
-    console.log(sortArr);
-    sortArr.sort((a, b) => SortImplementations[sortType].comparator(a, b));
-    if (sortOrder == 1) {
-        sortArr.reverse();
+    } while (lastCharacterIsPunctuation);
+    if (splitText != text) {
+        splitText += "...";
     }
-    console.log("After sorting:")
-    console.log(sortArr);
+    return splitText;
+}
 
-    sortArr.forEach((entry, i) => {
-        entry.node.style.order = i;
-    })
+function generateStarRating(rating) {
+    let out = "";
+    for (let i = 1; i <= 5; i++) {
+        let checked = "unchecked";
+        if (i <= rating) {
+            checked = "checked";
+        }
+        out += `<span class="fa fa-star fa-xl ${checked}"></span>`;
+    }
+    return out;
+}
+
+function resetPage() {
+    document.querySelector('#page-number').value = 1;
+}
+
+function formatDate(post_date, edit_date) {
+    if (post_date == edit_date) {
+        return new Date(post_date).toDateString();
+    } else {
+        return new Date(post_date).toDateString() + " (edited " + new Date(edit_date).toDateString() + ")";
+    }
+}
+
+async function listReviews() {
+    let gameTitle = document.querySelector('#game-title')
+    if (gameTitle) { gameTitle = gameTitle.textContent; }
+    let username = document.querySelector('#username');
+    if (username) { username = username.textContent; }
+
+    let searchQuery = document.querySelector('#search-text').value;
+    let page = document.querySelector('#page-number').value;
+    const reviewsPerPage = 4;
+
+    let reviewContainer = document.querySelector("#reviews-container");
+    reviewContainer.innerHTML = 'Loading...';
+
+    let paginationNav = document.querySelector('#pagination-nav');
+    paginationNav.innerHTML = "";
+
+    await fetch('/get-reviews?' + new URLSearchParams({
+        gameTitle, username, searchQuery, page
+    })).then(res => res.json()).then(reviews => {
+        reviewContainer.innerHTML = '';
+        paginationNav.innerHTML = "";
+        let reviewTemplate = document.querySelector("template#review");
+        let reviewCount = 0;
+        let pageCount = 1;
+        reviews.forEach(review => {
+            console.log(review);
+            let reviewHtml = reviewTemplate.content.cloneNode(true);
+            let reviewStarRating = reviewHtml.querySelector('#review-star-rating');
+            let reviewVotes = reviewHtml.querySelector('#review-votes');
+            let reviewLink = reviewHtml.querySelector('#review-link');
+            let reviewText = reviewHtml.querySelector("#review-text");
+            let reviewAuthorUsername = reviewHtml.querySelector("#review-author-username");
+            let reviewGameTitle = reviewHtml.querySelector("#review-game-title");
+            let reviewDate = reviewHtml.querySelector("#review-date");
+
+            reviewStarRating.innerHTML = generateStarRating(review.rating);
+            
+            reviewVotes.textContent = `${review.votes} vote(s)`;
+            
+            reviewLink.href = `/review?id=${review._id}`;
+            reviewLink.textContent = review.title;
+            
+            reviewText.textContent = truncateWords(review.text, 7);
+            
+            reviewContainer.append(reviewHtml);
+
+            reviewAuthorUsername.textContent = review.user.username;
+            reviewAuthorUsername.href = `profile?user=${review.user._id}`;
+
+            reviewGameTitle.textContent = review.game;
+            reviewGameTitle.href = `reviews?game=${review.game}`
+            
+            reviewDate.textContent = formatDate(review.post_date, review.edit_date);
+
+            reviewCount++;
+            if (reviewCount % reviewsPerPage === 0) {
+                pageCount++;
+            }
+        })
+
+        for (let i = 1; i <= Math.max(pageCount, page); i++) {
+            let pageButtonListItem = document.createElement('li');
+            pageButtonListItem.classList.add("page-item");
+            let pageButton = document.createElement('a');
+            pageButton.textContent = i;
+            pageButton.classList.add("page-link");
+            if (i == page) {
+                pageButton.classList.add("disabled");
+                pageButton.classList.add("fw-bold");
+            } else {
+                pageButton.onclick = () => {
+                    document.querySelector('#page-number').value = i
+                    listReviews();
+                };
+            }
+            pageButtonListItem.append(pageButton);
+            paginationNav.append(pageButtonListItem);
+        }
+    });
 }
 
 function filterGames() {
@@ -290,30 +360,6 @@ function filterGames() {
     })
 }
 
-function filterReviews() {
-    let searchText = document.querySelector("#search-text").value;
-    let key = searchText.toLowerCase();
-    let reviewEntries = document.querySelectorAll(".review");
-    reviewEntries.forEach(entry => {
-        let title = entry.querySelector(".review-title").textContent.toLowerCase();
-        let text = entry.dataset.text.toLowerCase();
-        if (title.includes(key)) {
-            entry.toggleAttribute("hidden", false)
-            entry.title = ""
-        } else if (text.includes(key)) {
-            entry.toggleAttribute("hidden", false)
-            entry.title = "Search query found in body"
-        } else {
-            entry.toggleAttribute("hidden", true)
-            entry.title = ""
-        }
-    })
-}
-
-// Attempt to sort and filter as soon as the page finishes loading
-// document.addEventListener("DOMContentLoaded", () => {
-//     sortGames();
-//     filterGames();
-//     filterReviews();
-//     console.log("HELLO")
-// });
+document.addEventListener('DOMContentLoaded', () => {
+    listReviews();
+})

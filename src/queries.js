@@ -3,6 +3,7 @@ const Review = require("../database/models/reviewModel");
 const User = require("../database/models/userModel");
 const Game = require("../database/models/gameModel");
 const Vote = require("../database/models/voteModel");
+const globals = require('./globals.js');
 
 async function getAverageRatings() {
     return await Review.aggregate(
@@ -22,7 +23,7 @@ async function getAverageRatings() {
 async function getAverageRating(gameTitle) {
     let averageRatings = await getAverageRatings();
     let averageRatingEntry = averageRatings.find(
-        entry => entry.id === gameTitle
+        entry => entry._id === gameTitle
     );
     if (averageRatingEntry) {
         return averageRatingEntry.averageRating;
@@ -53,8 +54,52 @@ async function getVoteCount(reviewId) {
     return upvoteCount - downvoteCount;
 }
 
+async function getReviews(gameTitle, username, searchQuery, page) {
+    let matchQuery;
+    if (gameTitle != "null") {
+        console.log(">>>Searching reviews by Game Title: " + gameTitle);
+        matchQuery = {
+            "$match": {
+                "game": gameTitle,
+                "title": {
+                    "$regex": '.*' + searchQuery + '.*'
+                }
+            }
+        }
+    } else if (username != "null") {
+        console.log(">>>Searching reviews by Username: " + username);
+        let user = await User.findOne({username}).lean();
+        console.log("   >>>Email: " + user.email);
+        matchQuery = {
+            "$match": {
+                "email": user.email,
+                "title": {
+                    "$regex": '.*' + searchQuery + '.*'
+                }
+            }
+        }
+    }
+    let reviews = await Review.aggregate([
+        matchQuery,
+        {
+            "$skip": globals.reviewsPerPage * (page - 1)
+        },
+        {
+            "$limit": globals.reviewsPerPage
+        }
+    ]);
+    for (let i = 0; i < reviews.length; i++) {
+        reviews[i].votes = await getVoteCount(reviews[i]._id);
+        
+        // TODO Can be optimized by storing previous results
+        reviews[i].user = await User.findOne({email: reviews[i].email}).lean();
+    }
+    return reviews;
+}
+
 module.exports = {
     getAverageRatings, getAverageRating,
     getReviewCounts, getReviewCount,
+    getReviews,
     getVoteCount
 };

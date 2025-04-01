@@ -1,0 +1,63 @@
+<div class="container">
+    <h2 class="fw-bold">{{title}}</h2>
+    <div class="search-box input-group mb-3">
+        <div class="input-group-prepend">
+            <span class="input-group-text">🔎</span>
+        </div>
+        <input id="search-text" type="text" class="form-control" placeholder="Search query"
+            oninput="resetPage(); listReviews()" autocomplete="off">
+        <input id="page-number" type="number" value="1" hidden>
+    </div>
+    <ul id="pagination-nav" class="pagination">
+    </ul>
+    <div id="reviews-container" class="d-flex flex-wrap">
+    </div>
+</div>
+
+<template id="review">
+    <div class="col-6 bg-dark shadow review">
+        <div class="star-rating">
+            <span id="review-star-rating">
+                {{!-- {{{generateStarRating review.rating}}} --}}
+            </span>
+            <div id="review-votes" class="votes">
+                {{!-- {{review.votes}} --}}
+            </div>
+        </div>
+        <h3 id="review-title" class="fw-bold fs-4">
+            <a id="review-link" class="block-link review-title" href="review?id={{review._id}}">
+                {{!-- {{review.title}} --}}
+            </a>
+        </h3>
+        <div>
+            <p id="review-text">
+                {{!-- {{truncateWords review.text 7}} --}}
+            </p>
+        </div>
+        <div id="review-author-data">
+            <div id="reviews" class="d-flex flex-wrap">
+                {{!-- <a href="profile?user={{user._id}}">
+                    <img class="avatar me-2" src="{{defaultAvatar user.avatar}}" alt="{{user.username}}">
+                </a> --}}
+                <div class="author-date">
+                    <p class="fw-bold reviewer-name">
+                        <a id="review-author-username" class="block-link" href="profile?user={{user._id}}">
+                            {{!-- {{user.username}} --}}
+                        </a>
+                        &mdash;
+                        <a id="review-game-title" class="block-link" href="reviews?game={{review.game}}">
+                            {{!-- {{review.game}} --}}
+                        </a>
+
+                    </p>
+                    <p id="review-date" class="fst-italic review-date">
+                        {{!-- {{formatDate review.post_date}}
+                        {{#unless (dateEquals review.post_date review.edit_date)}}
+                        | edited {{formatDate review.edit_date}}
+                        {{/unless}} --}}
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>
