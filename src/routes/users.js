@@ -145,15 +145,7 @@ router.post("/register", async (req, res) => {
     const conf_password = req.body.conf_password;
     const terms = req.body.terms;
     const description = req.body.description;
-
-    let profile;
-
-    if (req.files) {
-        const { avatar } = req.files;
-        await avatar.mv(path.resolve(__dirname, 'public/img/avatar/', avatar.name));
-
-        profile = avatar.name;
-    }
+    const profile = req.body.avatar;
 
     try {
         const user = await User.findOne({ email: email }).lean();
