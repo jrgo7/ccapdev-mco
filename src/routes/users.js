@@ -104,7 +104,7 @@ router.post("/login", async (req, res) => {
 
         req.session.user = user;
         res.cookie("sessionID", req.sessionID);
-
+  
         await User.updateOne(
             {
                 email: email
@@ -128,13 +128,14 @@ router.post("/login", async (req, res) => {
 router.post("/change-password", async (req, res) => {
     const email = req.body.email;
     const newPassword = req.body.password;
+    const confirm = req.body.password["pass-confirm"]
 
-    console.log(req.body);
+   if(newPassword === confirm){
     const user = await User.findOne({ email: email });
     user.password = newPassword;
     await user.save();
-
-    res.redirect(`/profile?user=${req.session.user._id}`)
+   }
+   res.redirect(`/profile?user=${req.session.user._id}`)
 })
 
 router.post("/register", async (req, res) => {

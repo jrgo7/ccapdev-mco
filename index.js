@@ -2,6 +2,7 @@
 const express = require('express')
 const session = require("express-session");
 const cookieParser = require("cookie-parser");
+const mongoConnect = require("connect-mongo");
 const fileUpload = require('express-fileupload');
 const fs = require('fs').promises;
 const path = require('path')
@@ -40,6 +41,12 @@ async function main() {
                 secret: "secret-key",
                 resave: false,
                 saveUninitialized: false,
+                store: mongoConnect.create({
+                    mongoUrl: process.env.MONGO_URI
+                }),
+                cookie: {
+                    secure: false
+                }
             }
         )
     );
