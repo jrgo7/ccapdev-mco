@@ -21,15 +21,15 @@
             Toggle attachment
         </button>
         <div id="attachment-container" class="collapse">
-            {{#if (equals review.attachment.type "image")}}
+            {{!-- {{#if (equals review.attachment.type "image")}} --}}
             <img id="attachment" class="attachment attachment-img my-4"
-                src="/img/review-attachment/{{review.attachment.filename}}" alt="{{review.attachment.filename}}">
-            {{/if}}
-            {{#if (equals review.attachment.type "video")}}
+                src="{{review.attachment}}" alt="{{review.attachment}}">
+            {{!-- {{/if}} --}}
+            {{!-- {{#if (equals review.attachment.type "video")}}
             <video id="attachment" class="attachment attachment-video my-4" controls>
                 <source src="img/review-attachment/{{review.attachment.filename}}">
             </video>
-            {{/if}}
+            {{/if}} --}}
         </div>
         {{else}}
         <p class="mb-2">

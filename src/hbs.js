@@ -10,7 +10,7 @@ const hbs = create({
     helpers: {
 
         defaultAvatar: function (avatar) {
-            return avatar ? `img/avatar/${avatar}` : "img/avatar/guest.png";
+            return avatar ? `${avatar}` : "img/avatar/guest.png";
         },
 
         castNumber(x) {
