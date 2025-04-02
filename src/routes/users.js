@@ -87,7 +87,14 @@ router.get("/logout", (req, res) => {
 router.post("/login", async (req, res) => {
     const email = req.body.email;
     const password = req.body.password;
-    
+    const remember = req.body.remember ? true : false;
+
+    if (remember) {
+        req.session.cookie.maxAge = 21 * 24 * 60 * 60 * 1000; // 3 weeks
+      } else {
+        req.session.cookie.expires = false;
+      }
+
     try {
         const user = await User.findOne({ email: email }).lean();
         console.log(await bcrypt.compare(password, user.password));
