@@ -50,15 +50,9 @@
             {{!-- Logged in as user --}}
             <div class="leave-rating">
                 <h2 class="fw-bold fs-2">Have you played this game before?</h2>
-                {{#if existingReviewId}}
-                <a class="btn btn-primary" href="/review?id={{existingReviewId}}">
-                    Edit existing review
-                </a>
-                {{else}}
-                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#leave-review">
+                <button id="leave-review-button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#leave-review">
                     Leave a review
                 </button>
-                {{/if}}
             </div>
             {{/if}}
             {{else}}

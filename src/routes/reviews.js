@@ -50,6 +50,17 @@ router.get('/get-reviews', async (req, res) => {
     res.send(retval);
 })
 
+router.get('/get-review-of-game-by-user', async (req, res) => {
+    if (req.session.user) {
+        let { gameTitle } = req.query;
+        let retval = await queries.getReviewOfGameByUser(gameTitle, req.session.user.email);
+        console.log(retval);
+        res.send(retval);
+    } else {
+        res.send(false);
+    }
+})
+
 router.get('/review', async (req, res) => {
     let id = req.query.id;
 
@@ -119,7 +130,7 @@ router.post('/submit-review', isAuthenticated, async (req, res) => {
     }
 
     // Update average star ratings and review counts
-    
+
 
     if (!foundReview) {
         return res.status(404).send(

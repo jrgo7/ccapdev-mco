@@ -97,9 +97,19 @@ async function getReviews(gameTitle, username, searchQuery, page) {
     return reviews;
 }
 
+async function getReviewOfGameByUser(gameTitle, email) {
+    console.log(gameTitle, email);
+    let retval = await Review.findOne({
+        "game": gameTitle,
+        "email": email
+    });
+    console.log(retval);
+    return retval;
+}
+
 module.exports = {
     getAverageRatings, getAverageRating,
     getReviewCounts, getReviewCount,
-    getReviews,
+    getReviews, getReviewOfGameByUser,
     getVoteCount
 };

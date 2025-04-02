@@ -355,6 +355,23 @@ function filterGames() {
     })
 }
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
     listReviews();
+    let href = window.location.href;
+    if (href.includes('/reviews')) {
+        // Check if user has an existing review.
+        let gameTitle = document.querySelector('#game-title').textContent;
+        await fetch('/get-review-of-game-by-user?' + new URLSearchParams({
+            gameTitle
+        })).then(res => res.json()).then(review => {
+            console.log(review);
+            if (review) {
+                let leaveReviewButton = document.querySelector('#leave-review-button');
+                leaveReviewButton.textContent = "Edit existing review";
+                leaveReviewButton.dataset.bsToggle = '';
+                leaveReviewButton.dataset.bsTarget = '';
+                leaveReviewButton.onclick = () => window.location.href = `/review?id=${review._id}`;
+            }
+        })
+    }
 })

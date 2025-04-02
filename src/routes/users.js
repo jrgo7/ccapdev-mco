@@ -96,9 +96,10 @@ router.post("/login", async (req, res) => {
       }
 
     try {
-        const user = await User.findOne({ email: email }).lean();
-        console.log(await bcrypt.compare(password, user.password));
-        console.log(user.password);
+        console.log(email);
+        console.log(password);
+        const user = await User.findOne({ email }).lean();
+        console.log(user);
         if (!user || !(await bcrypt.compare(password, user.password))) {
             const games = await Game.find({}).lean();
             return res.status(401).render(
