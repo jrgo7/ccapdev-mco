@@ -92,7 +92,7 @@ router.post("/login", async (req, res) => {
     if (remember) {
         req.session.cookie.maxAge = 21 * 24 * 60 * 60 * 1000; // 3 weeks
       } else {
-        req.session.cookie.expires = 0;
+        req.session.cookie.maxAge = null;
       }
 
     try {
