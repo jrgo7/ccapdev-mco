@@ -72,6 +72,9 @@ nav {
     font-size: larger;
 }
 
+.hidden {
+    display: none;
+}
 
 body {
     background-image: url("/img/background.png");

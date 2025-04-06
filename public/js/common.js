@@ -375,3 +375,20 @@ document.addEventListener('DOMContentLoaded', async () => {
         })
     }
 })
+
+function showInput(type) {
+    let imageInput = document.getElementById("image-input");
+    let videoInput = document.getElementById("video-input");
+    let attachmentType = document.getElementById("attachment-type");
+
+    if (type === "image") {
+        imageInput.classList.remove("hidden");
+        videoInput.classList.add("hidden"); 
+        attachmentType.value = "image";
+
+    } else if (type === "video") {
+        videoInput.classList.remove("hidden");
+        imageInput.classList.add("hidden"); 
+        attachmentType.value = "video";
+    }
+}

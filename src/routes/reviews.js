@@ -87,8 +87,11 @@ router.post('/submit-review', isAuthenticated, async (req, res) => {
     console.log(req.body);
     const email = req.session.user.email;
     const game = req.body.game;
-    const media = req.body.media;
+    const image = req.body.image;
+    const video = req.body.video;
+    const type = req.body.type;
 
+    console.log(req.body)
     // If the user is the developer of the game, stop
     const gameEntry = await Game.findOne({ title: game });
     console.log(`DEV EMAIL IS ${gameEntry.dev_email}`);
@@ -107,10 +110,15 @@ router.post('/submit-review', isAuthenticated, async (req, res) => {
         title: req.body.title,
         rating: Number(req.body.rating),
         text: req.body.text,
+        attachment: {},
     };
 
-    if (media) {
-        setParams.attachment = media;
+    if (type === "image") {
+        setParams.attachment.link = image;
+        setParams.attachment.type = "image";
+    } else if (type === "video") {
+        setParams.attachment.link = video;
+        setParams.attachment.type = "video";
     }
 
     // ! MongoDB upsert caused issues with syncing edit and post timestamps
