@@ -1,0 +1,17 @@
+{{!--Change Password Modal--}}
+<div class="modal modal-lg fade fade-in" id="delete-account">
+    <div class="modal-dialog">
+        <div class="modal-content bg-dark shadow">
+            <div class="modal-header">
+                <h5>Are you sure you want to delete your account?</h5>
+            </div>
+            <form id="delete-account-form" action="/delete-account" method="post">
+                    <input type="hidden" name="email" id="user-email" value="{{user.email}}" required>
+                <div class="modal-footer">
+                    <button type="submit" id="dekete-account-btn" class="btn btn-danger">Yes I want to Delete.</button>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>

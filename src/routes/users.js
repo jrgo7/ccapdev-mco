@@ -7,6 +7,7 @@ const isAuthenticated = require("./is-authenticated.js");
 const Review = require("../../database/models/reviewModel");
 const User = require("../../database/models/userModel");
 const Game = require("../../database/models/gameModel");
+const Vote = require("../../database/models/voteModel");
 const globals = require('../globals.js');
 const queries = require('../queries.js');
 
@@ -136,12 +137,13 @@ router.post("/login", async (req, res) => {
 router.post("/change-password", async (req, res) => {
     const email = req.body.email;
     const newPassword = req.body.password;
-    const confirm = req.body.password["pass-confirm"]
+    const confirm = req.body["pass-confirm"];
 
    if(newPassword === confirm && newPassword.length >= 8){
     const user = await User.findOne({ email: email });
     user.password = newPassword;
     await user.save();
+    console.log("Password Successfully Saved");
    }
    res.redirect(`/profile?user=${req.session.user._id}`)
 })
@@ -233,6 +235,19 @@ router.post('/save-profile', isAuthenticated, async (req, res) => {
     );
 
     res.json({ success: true, refresh: true, message: "Profile updated successfully" });
+});
+
+router.post('/delete-account', isAuthenticated, async (req, res) => {
+    console.log(req.body);
+    account = req.body.email;
+    await Review.deleteMany({email: account});
+    await User.deleteMany({email: account});
+    await Vote.deleteMany({userId: req.session.user._id});
+    
+    req.session.destroy(() => {
+        res.clearCookie("sessionID");
+        res.redirect("/")
+    })
 });
 
 module.exports = router;
