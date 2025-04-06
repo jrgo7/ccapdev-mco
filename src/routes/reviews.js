@@ -88,7 +88,7 @@ router.post('/submit-review', isAuthenticated, async (req, res) => {
     const email = req.session.user.email;
     const game = req.body.game;
     const image = req.body.image;
-    const video = req.body.video;
+    let video = req.body.video;
     const type = req.body.type;
 
     console.log(req.body)
@@ -117,6 +117,10 @@ router.post('/submit-review', isAuthenticated, async (req, res) => {
         setParams.attachment.link = image;
         setParams.attachment.type = "image";
     } else if (type === "video") {
+        if (video.includes("watch?v=")){
+            let id = video.split("?v=")[1];
+            video = "http://www.youtube.com/embed/" + id; 
+        }
         setParams.attachment.link = video;
         setParams.attachment.type = "video";
     }
