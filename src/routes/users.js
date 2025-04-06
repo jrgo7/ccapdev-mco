@@ -173,6 +173,11 @@ router.post("/register", async (req, res) => {
                 title: "Register",
                 error: "Please read and accept the terms and conditions"
             });
+        } else if (password.length < 8) {
+            return res.render("register", {
+                title: "Register",
+                error: "Password doesn't meet the required length"
+            });
         }
 
         await User.create({
