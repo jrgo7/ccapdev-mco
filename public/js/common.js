@@ -179,6 +179,16 @@ const imageTypes = ["boxart", "wallpaper", "profile"];
 imageTypes.forEach(imageType => {
     const inputElement = document.getElementById(imageType + "-input");
 
+    document.addEventListener("DOMContentLoaded", function () {
+        if (inputElement) {
+            inputElement.addEventListener("keydown", function (e) {
+                if (e.key === "Enter") {
+                    e.preventDefault();
+                }
+            });
+        }
+    });
+      
     if (inputElement) {
         inputElement.addEventListener("change", function (event) {
             const imgUrl = inputElement.value;
@@ -392,3 +402,4 @@ function showInput(type) {
         attachmentType.value = "video";
     }
 }
+
