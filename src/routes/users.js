@@ -138,7 +138,7 @@ router.post("/change-password", async (req, res) => {
     const newPassword = req.body.password;
     const confirm = req.body.password["pass-confirm"]
 
-   if(newPassword === confirm && newPassword.length > 8){
+   if(newPassword === confirm && newPassword.length >= 8){
     const user = await User.findOne({ email: email });
     user.password = newPassword;
     await user.save();
