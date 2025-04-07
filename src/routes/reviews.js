@@ -117,8 +117,8 @@ router.post('/submit-review', isAuthenticated, async (req, res) => {
         setParams.attachment.link = image;
         setParams.attachment.type = "image";
     } else if (type === "video") {
-        if (!video.includes("https")) {
-            video = video.replace("http", "https");
+        if (video.startsWith("http://")) {
+            video = video.replace("http://", "https://");
         }
         if (video.includes("watch?v=")){
             let id = video.split("?v=")[1];
