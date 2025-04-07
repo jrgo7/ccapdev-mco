@@ -1,6 +1,8 @@
 # FrogCritic
 
-> A retro video game reviews web app
+> A video game reviews web app
+
+FrogCritic is a video games review web application. Here, users may submit reviews for the games listed, although they must have created and logged into an account to do so. These reviews are aggregated into a game's average rating. The reviews themselves may also be "rated" via an upvotes system, and developers can respond to these reviews. Developers who wish to add their games to FrogCritic should submit a request via the Google Forms link found in the main page.
 
 ## Members
 
@@ -15,11 +17,19 @@
 3. Visit `http://localhost:3000/`.
 4. Using MongoDB Compass, import sample data from the `/database/sampledata/` directory.
 
+## Special Thanks
+
+* Bootstrap
+* Node.js
+* Express
+* MongoDB
+* Render
+
 ## GitHub Repo Link
 
 <https://github.com/jrgo7/ccapdev-mco>
 
-## Demo Video Link (Google Drive)
+## MCO2 Demo Video Link (Google Drive)
 
 <https://drive.google.com/file/d/1Gksm2wcevdpJGxdrBTA0-eCWjtMen2IT/view>
 
