@@ -273,7 +273,7 @@ async function listReviews() {
     let username = document.querySelector('#username');
     if (username) { username = username.textContent; }
 
-    let searchQuery = document.querySelector('#search-text').value;
+    let searchQuery = document.querySelector('#search-text')?.value;
     let page = document.querySelector('#page-number').value;
     const reviewsPerPage = 4;
 
