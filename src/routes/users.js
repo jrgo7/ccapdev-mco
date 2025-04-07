@@ -103,12 +103,7 @@ router.post("/login", async (req, res) => {
         console.log(user);
         if (!user || !(await bcrypt.compare(password, user.password))) {
             const games = await Game.find({}).lean();
-            return res.status(401).render(
-                "index", {
-                "title": "Main Page",
-                "games": games,
-                "error": "Invalid login credentials."
-            });
+            return res.redirect(`/?error=${"Incorrect Login Credentials"}`);
         }
 
         req.session.user = user;

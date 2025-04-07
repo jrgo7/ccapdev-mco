@@ -12,7 +12,7 @@ const router = Router();
 router.get('/', async (req, res) => {
     let averageRatings = await queries.getAverageRatings();
     let reviewCounts = await queries.getReviewCounts();
-
+    let error = req.query.error ?? null;
     let games = (await Game.find({}).sort('title').lean());
     games = games.map((game) => {
             let averageRating = averageRatings.find(entry => entry._id == game.title);
@@ -30,7 +30,7 @@ router.get('/', async (req, res) => {
             return game
         }
     );
-    res.render("index", { "title": "Main Page", "games": games });
+    res.render("index", { "title": "Main Page", "games": games, "error": error });
 });
 
 // * POST routes
