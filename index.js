@@ -17,6 +17,7 @@ const gameRoutes = require('./src/routes/games.js');
 const reviewRoutes = require('./src/routes/reviews.js');
 const userRoutes = require('./src/routes/users.js');
 const voteRoutes = require('./src/routes/votes.js');
+const otherRoutes = require('./src/routes/other.js');
 
 async function main() {
     console.clear();
@@ -60,6 +61,7 @@ async function main() {
     app.use(reviewRoutes);
     app.use(userRoutes);
     app.use(voteRoutes);
+    app.use(otherRoutes);
     // ---
 
     const PORT = 3000;
