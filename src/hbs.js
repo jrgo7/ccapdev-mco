@@ -13,6 +13,15 @@ const hbs = create({
             return avatar ? `${avatar}` : "img/avatar/guest.png";
         },
 
+        getPreviousRating: function(review){
+            if(review){
+                return review.rating;
+            }
+            else{
+                return 1;
+            }
+        },
+
         castNumber(x) {
             return Number(x);
         },

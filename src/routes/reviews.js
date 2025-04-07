@@ -120,9 +120,10 @@ router.post('/submit-review', isAuthenticated, async (req, res) => {
         if (video.startsWith("http://")) {
             video = video.replace("http://", "https://");
         }
+        
         if (video.includes("watch?v=")){
             let id = video.split("?v=")[1];
-            video = "http://www.youtube.com/embed/" + id; 
+            video = "https://www.youtube.com/embed/" + id; 
         }
         setParams.attachment.link = video;
         setParams.attachment.type = "video";
