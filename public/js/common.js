@@ -403,3 +403,68 @@ function showInput(type) {
     }
 }
 
+function sortGames() {
+    const SortImplementations = Object.freeze([
+        {
+            key: "none",
+            comparator: (a, b) => 0
+        },
+        {
+            key: "rating",
+            comparator: (a, b) => Number(b.key) - Number(a.key)
+        },
+        {
+            key: "title",
+            comparator: (a, b) => String(b.key).localeCompare(String(a.key))
+        },
+        {
+            key: "developer",
+            comparator: (a, b) => String(b.key).localeCompare(String(a.key))
+        },
+        {
+            key: "releaseDate",
+            comparator: (a, b) => Number(b.key) - Number(a.key)
+        },
+        {
+            key: "reviewCount",
+            comparator: (a, b) => Number(b.key) - Number(a.key)
+        }
+    ])
+    let sortType = Number(document.querySelector("#order-type-select").value);
+    let sortOrder = Number(document.querySelector("#order-arrangement-select").value);
+
+    let gameEntries = document.querySelectorAll(".index-game-entry");
+    let key = SortImplementations[sortType].key;
+    console.log(`Sorting by ${key}`)
+
+    let sortArr = []; // [{node, key}]
+    gameEntries.forEach(
+        entry => {
+            sortArr.push({
+                node: entry,
+                key: entry.dataset[key]
+            })
+        }
+    )
+
+    console.log("Before sorting:")
+    console.log(sortArr);
+    sortArr.sort((a, b) => SortImplementations[sortType].comparator(a, b));
+    if (sortOrder == 1) {
+        sortArr.reverse();
+    }
+    console.log("After sorting:")
+    console.log(sortArr);
+
+    sortArr.forEach((entry, i) => {
+        entry.node.style.order = i;
+    })
+}
+
+// Attempt to sort and filter as soon as the page finishes loading
+document.addEventListener("DOMContentLoaded", () => {
+    sortGames();
+    filterGames();
+    filterReviews();
+    console.log("HELLO")
+});
