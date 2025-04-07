@@ -188,7 +188,7 @@ imageTypes.forEach(imageType => {
             });
         }
     });
-      
+
     if (inputElement) {
         inputElement.addEventListener("change", function (event) {
             const imgUrl = inputElement.value;
@@ -211,7 +211,7 @@ if (registerProfile) { // Ensure element exists before adding event listener
         const preview = document.getElementById('register-profile-preview');
 
         if (imgURL) {
-                preview.src = imgURL; // Set the preview image
+            preview.src = imgURL; // Set the preview image
         } else {
             preview.src = 'img/avatar/guest.png'; // Reset to default if no file is chosen
         }
@@ -303,14 +303,14 @@ async function listReviews() {
             let reviewDate = reviewHtml.querySelector("#review-date");
 
             reviewStarRating.innerHTML = generateStarRating(review.rating);
-            
+
             reviewVotes.textContent = `${review.votes} vote(s)`;
-            
+
             reviewLink.href = `/review?id=${review._id}`;
             reviewLink.textContent = review.title;
-            
+
             reviewText.textContent = truncateWords(review.text, 7);
-            
+
             reviewContainer.append(reviewHtml);
 
             reviewAuthorUsername.textContent = review.user.username;
@@ -318,7 +318,7 @@ async function listReviews() {
 
             reviewGameTitle.textContent = review.game;
             reviewGameTitle.href = `reviews?game=${review.game}`
-            
+
             reviewDate.textContent = formatDate(review.post_date, review.edit_date);
 
             reviewCount++;
@@ -366,29 +366,37 @@ function filterGames() {
 }
 
 document.addEventListener('DOMContentLoaded', async () => {
-    // Attempt to sort and filter games when the page loads (index page)
-    sortGames();
-    filterGames();
-
-    // List reviews (reviews page, profile page)
-    listReviews();
-
     let href = window.location.href;
-    if (href.includes('/reviews')) {
-        // Check if user has an existing review.
-        let gameTitle = document.querySelector('#game-title').textContent;
-        await fetch('/get-review-of-game-by-user?' + new URLSearchParams({
-            gameTitle
-        })).then(res => res.json()).then(review => {
-            console.log(review);
-            if (review) {
-                let leaveReviewButton = document.querySelector('#leave-review-button');
-                leaveReviewButton.textContent = "Edit existing review";
-                leaveReviewButton.dataset.bsToggle = '';
-                leaveReviewButton.dataset.bsTarget = '';
-                leaveReviewButton.onclick = () => window.location.href = `/review?id=${review._id}`;
-            }
-        })
+
+    let isInReviewsPage = href.includes('/reviews');
+    let isInProfilePage = href.includes('/profile');
+
+    if (isInReviewsPage || isInProfilePage) {
+        listReviews();
+
+        /**
+         * If we're in the reviews page and a user has an existing review,
+         * change the "Leave a review" button to an "Edit existing review" button.
+         */
+        if (isInReviewsPage) {
+            let gameTitle = document.querySelector('#game-title').textContent;
+            await fetch('/get-review-of-game-by-user?' + new URLSearchParams({
+                gameTitle
+            })).then(res => res.json()).then(review => {
+                console.log(review);
+                if (review) {
+                    let leaveReviewButton = document.querySelector('#leave-review-button');
+                    leaveReviewButton.textContent = "Edit existing review";
+                    leaveReviewButton.dataset.bsToggle = '';
+                    leaveReviewButton.dataset.bsTarget = '';
+                    leaveReviewButton.onclick = () => window.location.href = `/review?id=${review._id}`;
+                }
+            })
+        }
+    } else {
+        // Attempt to sort and filter games when the page loads (if in index page, otherwise this crashes)
+        sortGames();
+        filterGames();
     }
 })
 
@@ -399,12 +407,12 @@ function showInput(type) {
 
     if (type === "image") {
         imageInput.classList.remove("hidden");
-        videoInput.classList.add("hidden"); 
+        videoInput.classList.add("hidden");
         attachmentType.value = "image";
 
     } else if (type === "video") {
         videoInput.classList.remove("hidden");
-        imageInput.classList.add("hidden"); 
+        imageInput.classList.add("hidden");
         attachmentType.value = "video";
     }
 }
