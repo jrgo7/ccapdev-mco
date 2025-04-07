@@ -366,7 +366,13 @@ function filterGames() {
 }
 
 document.addEventListener('DOMContentLoaded', async () => {
+    // Attempt to sort and filter games when the page loads (index page)
+    sortGames();
+    filterGames();
+
+    // List reviews (reviews page, profile page)
     listReviews();
+
     let href = window.location.href;
     if (href.includes('/reviews')) {
         // Check if user has an existing review.
@@ -429,6 +435,7 @@ function sortGames() {
             key: "reviewCount",
             comparator: (a, b) => Number(b.key) - Number(a.key)
         }
+
     ])
     let sortType = Number(document.querySelector("#order-type-select").value);
     let sortOrder = Number(document.querySelector("#order-arrangement-select").value);
@@ -460,11 +467,3 @@ function sortGames() {
         entry.node.style.order = i;
     })
 }
-
-// Attempt to sort and filter as soon as the page finishes loading
-document.addEventListener("DOMContentLoaded", () => {
-    sortGames();
-    filterGames();
-    filterReviews();
-    console.log("HELLO")
-});
